@@ -12,9 +12,9 @@ export function FilterPill({ active = false, children, onClick }: FilterPillProp
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
+        "rounded-xl border px-3 py-1.5 text-xs font-medium transition-colors",
         active
-          ? "border-cyan-300/40 bg-cyan-300/10 text-cyan-100"
+          ? "border-cyan-300/25 bg-cyan-300/12 text-cyan-100"
           : "border-white/10 bg-white/[0.03] text-slate-300 hover:border-white/20 hover:text-white",
       )}
     >

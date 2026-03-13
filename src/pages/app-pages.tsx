@@ -65,9 +65,9 @@ function GlassBlock({ children, className = "" }: { children: ReactNode; classNa
 
 function MiniStat({ label, value, detail }: { label: string; value: string; detail?: string }) {
   return (
-    <div className="rounded-[22px] border border-white/10 bg-white/[0.03] px-4 py-4">
-      <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">{label}</p>
-      <p className="mt-2 text-lg font-semibold text-white">{value}</p>
+    <div className="rounded-[18px] border border-white/10 bg-white/[0.03] px-4 py-3.5">
+      <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{label}</p>
+      <p className="mt-2 text-base font-semibold text-white">{value}</p>
       {detail ? <p className="mt-1 text-xs text-slate-400">{detail}</p> : null}
     </div>
   );
@@ -93,11 +93,11 @@ function QuickActionTile({
   return (
     <Link
       to={to}
-      className="group rounded-[24px] border border-white/10 bg-white/[0.03] px-4 py-4 transition hover:border-cyan-300/20 hover:bg-white/[0.05]"
+      className="group rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-4 transition hover:border-cyan-300/20 hover:bg-white/[0.05]"
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-[#081425]">
+          <div className="flex h-9 w-9 items-center justify-center rounded-[14px] border border-white/10 bg-[#0b1626]">
             <Icon className="h-4 w-4 text-cyan-200" />
           </div>
           <div>
@@ -153,7 +153,7 @@ function TimelineFeed({ contactId, compact = false }: { contactId: string; compa
   return (
     <div className="space-y-3">
       {timeline.map((item) => (
-        <div key={item.id} className={`rounded-2xl border border-white/10 bg-white/[0.03] ${compact ? "px-4 py-3" : "px-4 py-4"}`}>
+        <div key={item.id} className={`rounded-[18px] border border-white/10 bg-white/[0.03] ${compact ? "px-4 py-3" : "px-4 py-4"}`}>
           <div className="flex items-center justify-between gap-4">
             <p className="text-[10px] uppercase tracking-[0.18em] text-cyan-200/80">{item.module}</p>
             <StatusBadge value={item.outcome} tone={item.tone} />
@@ -190,7 +190,7 @@ function useContact360(data: ReturnType<typeof getWorkspaceData>, contactId: str
 function ContactRecord({ record }: { record: NonNullable<ReturnType<typeof useContact360>> }) {
   return (
     <div className="space-y-4">
-      <div className="rounded-[28px] border border-white/10 bg-[#081425] p-5">
+      <div className="rounded-[22px] border border-white/10 bg-[#0b1626] p-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-[10px] uppercase tracking-[0.18em] text-cyan-200/80">Selected contact</p>
@@ -229,7 +229,7 @@ function ContactRecord({ record }: { record: NonNullable<ReturnType<typeof useCo
           <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Next best actions</p>
           <div className="mt-4 space-y-3">
             {record.tasks.map((task) => (
-              <div key={task.id} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
+              <div key={task.id} className="rounded-[18px] border border-white/10 bg-white/[0.03] px-4 py-4">
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-medium text-white">{task.title}</p>
                   <StatusBadge value={task.status} tone={toneForStatus(task.status)} />
