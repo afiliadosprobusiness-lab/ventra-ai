@@ -2,18 +2,22 @@
 
 ## Que es Ventra
 
-Ventra es un Revenue OS comercial para equipos que necesitan descubrir demanda, captar oportunidades, operar conversaciones, seguir pipeline y medir revenue desde una sola interfaz.
-
-No se describe como un CRM generico ni como un set de herramientas sueltas. La propuesta es una sola plataforma operativa con foco comercial.
+Ventra es un sistema de ventas enfocado en revenue. Ya no se presenta como una suite amplia de operaciones, sino como un MVP claro para captar leads, nutrir conversaciones y convertir ventas.
 
 ## Que resuelve
 
 Ventra ayuda a:
-- descubrir prospectos con mayor intencion
-- centralizar seguimiento comercial
-- mantener pipeline, conversaciones y campanas dentro del mismo contexto
-- reducir fuga entre captacion, contacto y cierre
-- dar visibilidad ejecutiva del rendimiento comercial
+- generar assets y mensajes comerciales desde Marketing
+- captar oportunidades calificadas desde Adquisicion
+- responder y dar seguimiento desde Nurturing
+- organizar contexto comercial dentro del CRM
+- reducir fuga entre lead entrante, conversacion y cierre
+
+## Flujo oficial del producto
+
+El producto debe comunicar siempre este flujo:
+
+`Marketing genera assets y mensajes -> Adquisicion trae leads -> Nurturing conversa y da seguimiento -> CRM organiza -> se cierra la venta`
 
 ## Modulos incluidos en la base actual
 
@@ -21,21 +25,19 @@ Ventra ayuda a:
 - Quiz de recomendacion
 - Login / Register / Forgot password
 - Onboarding
-- Overview
-- Acquisition
-- Prospector AI
-- Widgets
-- Voice AI
-- Creative Studio
-- Conversations
-- Pipeline
-- Contacts
-- Campaigns
-- Analytics
-- Automations
-- Community
-- Workspaces
-- Settings
+- Cockpit de ventas
+- Adquisicion
+  - Captacion
+  - Prospeccion IA
+- Nurturing
+  - Chatbot WhatsApp
+  - CRM
+- Marketing
+  - Generador de ads
+  - Variantes de ads
+  - Copys
+  - Creativos
+- Configuracion
 
 ## Naturaleza del repo
 
@@ -44,36 +46,35 @@ Este repositorio es el frontend ejecutable oficial de Ventra en modo mockup de a
 Eso significa:
 - la experiencia es navegable y consistente
 - los datasets son mock y viven en frontend
-- no existe backend real detras de auth, contacts, pipeline o analytics
-- no existe integracion productiva con CRM, WhatsApp, Voice AI o billing
+- no existe backend real detras de auth, CRM, nurturing o marketing
+- no existe integracion productiva con WhatsApp, Ads Manager o billing
 - el acceso de prueba se resuelve con almacenamiento local en el navegador
 
 ## Base actual del producto
 
-La base oficial vigente proviene de la nueva entrega integrada a este repo el 2026-03-14.
+La base oficial vigente parte de la entrega integrada el 2026-03-14 y simplificada el mismo dia hacia un MVP de ventas.
 
 Decisiones clave:
-- la base oficial actual es la referencia principal de estructura, layout y composicion
-- se mantuvo la marca Ventra
-- se conservaron aliases de rutas antiguas solo como compatibilidad
-- no se mantuvieron modulos viejos en paralelo
+- la experiencia privada visible se redujo a tres modulos
+- el dashboard raiz funciona como cockpit comercial y no como overview inflado
+- las rutas no prioritarias siguen existiendo solo como compatibilidad mediante redirects
+- la marca Ventra se mantiene
 
 ## Estado funcional real
 
 La app hoy comunica:
 - una landing comercial clara
 - un onboarding basico de workspace
-- una app privada con modulos resumidos pero coherentes
-- una navegacion privada compacta en sidebar con grupos colapsables por etapa comercial y enlaces secundarios ligeros
-- un switch de tema claro/oscuro persistente dentro del shell autenticado
-- un sistema visual listo para seguir iterando
+- un cockpit privado de revenue
+- una navegacion lateral corta con solo tres grupos principales
+- un foco visual y verbal en captar, nutrir y cerrar
 
 La app no comunica:
 - persistencia real
 - permisos reales de backend
-- detalle profundo por entidad
-- automatizaciones o llamadas ejecutadas en produccion
+- automatizaciones productivas
+- una suite operativa extensa o multiproposito
 
 ## Regla de continuidad futura
 
-Cualquier iteracion futura debe partir de esta base y no reabrir el frontend anterior como segunda referencia.
+Cualquier iteracion futura debe mantener el producto enfocado en revenue y evitar expandir la navegacion privada fuera del flujo comercial principal salvo que exista una necesidad real y comprobable.

@@ -4,7 +4,7 @@
 
 - Product: `Ventra`
 - Repo role: official frontend mockup repo
-- Current base: official frontend base integrated on 2026-03-14
+- Current product shape: focused sales MVP
 - Stack: React 18, TypeScript, Vite, React Router, Tailwind CSS, shadcn/ui, TanStack Query
 - State mode: static mock data in frontend
 
@@ -24,17 +24,12 @@
 - `/app`
 - `/app/acquisition`
 - `/app/prospector`
-- `/app/widgets`
 - `/app/voice-ai`
-- `/app/creative-studio`
 - `/app/conversations`
-- `/app/pipeline`
-- `/app/contacts`
+- `/app/creative-studio`
 - `/app/campaigns`
+- `/app/widgets`
 - `/app/analytics`
-- `/app/automations`
-- `/app/community`
-- `/app/workspaces`
 - `/app/settings`
 
 ### Compatibility aliases
@@ -43,7 +38,8 @@
 - `/faq`
 - `/workspaces/select`
 - `/workspaces/new`
-- old detail and nested routes redirected to canonical modules
+- `/app/overview`
+- legacy app routes redirected into the focused MVP flow
 
 ## Main UI shells
 
@@ -57,21 +53,38 @@
 ## Data stance
 
 - core demo data lives in `src/lib/mock-data.ts`
-- frontend auth now lives in `src/lib/demo-auth.tsx`
+- frontend auth lives in `src/lib/demo-auth.tsx`
 - session is stored locally for demo use only
-- all app modules are present as static or mock-driven views
+- all app modules are static or mock-driven views
+
+## Product structure
+
+- Cockpit de ventas
+- Adquisicion
+  - Captacion
+  - Prospeccion IA
+- Nurturing
+  - Chatbot WhatsApp
+  - CRM
+- Marketing
+  - Generador de ads
+  - Variantes de ads
+  - Copys
+  - Creativos
+- Configuracion
 
 ## Visual stance
 
 - landing: high-clarity SaaS marketing page
-- app shell: operational dashboard with light and dark support
-- navigation: compact sidebar with collapsible stage rows, indented secondary links and topbar with theme switch
+- app shell: compact operational dashboard with light and dark support
+- navigation: three focused groups and one compact settings entry
 - brand accent: green / teal Ventra
 - typography: `Space Grotesk` + `Manrope`
+- message: captar leads, nutrir conversaciones y cerrar ventas
 
 ## Constraints
 
-- treat the current official base as the structural source of truth
-- do not revive the removed frontend tree
+- treat the current focused sales MVP as the structural source of truth
+- do not revive removed utility modules as first-class navigation
 - keep legacy redirects aligned with `docs/contract.md`
 - keep the repo described as frontend/mockup, not backend product

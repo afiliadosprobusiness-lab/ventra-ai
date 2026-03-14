@@ -1,95 +1,199 @@
-import { BarChart3, Bot, Clock, Phone, PhoneCall, Play } from "lucide-react";
+import { Bot, Play, Settings, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 
-const callLogs = [
-  { contact: "Ana Garcia", duration: "3:24", status: "Completada", summary: "Interesada en paquete premium. Solicita cotizacion formal.", score: 92, time: "Hace 15 min" },
-  { contact: "Carlos Mendoza", duration: "5:12", status: "Completada", summary: "Confirmo interes. Programar demo para el viernes.", score: 88, time: "Hace 1h" },
-  { contact: "Laura Sanchez", duration: "1:45", status: "No contesto", summary: "Sin respuesta. Reintento programado para manana.", score: 65, time: "Hace 2h" },
-  { contact: "Roberto Diaz", duration: "4:30", status: "Completada", summary: "Cerro negocio. Enviar factura y confirmacion.", score: 95, time: "Hace 3h" },
-  { contact: "Diana Lopez", duration: "0:00", status: "Programada", summary: "Llamada de seguimiento automatica.", score: 71, time: "En 2h" },
+const objections = [
+  "Es muy caro",
+  "Necesito pensarlo",
+  "Ya compre en otro lado",
+  "No tengo dinero ahora",
+  "Tienen descuento?",
+  "No estoy seguro",
 ];
 
-const stats = [
-  { icon: PhoneCall, label: "Llamadas hoy", value: "24", sub: "8 completadas" },
-  { icon: Clock, label: "Duracion promedio", value: "3:42", sub: "+0:30 vs ayer" },
-  { icon: Bot, label: "Tasa de contacto", value: "68%", sub: "+5% esta semana" },
-  { icon: BarChart3, label: "Conversiones", value: "12", sub: "50% de contactados" },
+const activators = [
+  { label: "Primer mensaje del lead", enabled: true },
+  { label: "Sin respuesta en 30 min", enabled: true },
+  { label: "Lead pregunta por precio", enabled: true },
+  { label: "Objecion detectada", enabled: true },
+  { label: "Lead pide descuento", enabled: false },
+  { label: "Conversacion abandonada 24h", enabled: true },
+];
+
+const templates = [
+  {
+    label: "Saludo inicial",
+    text: "Hola {nombre}. Gracias por escribirnos. Te ayudo a resolver dudas y llevarte a la mejor opcion para cerrar hoy.",
+  },
+  {
+    label: "Respuesta a precio",
+    text: "Nuestro paquete premium cuesta {precio} e incluye envio gratis. Si te parece, te muestro rapido por que es la mejor opcion para tu caso.",
+  },
+  {
+    label: "Cierre",
+    text: "Perfecto. Para confirmar tu compra solo necesito nombre completo, telefono y direccion de entrega.",
+  },
+];
+
+const advancedSettings = [
+  ["Tiempo de espera antes de responder", "3 - 8 segundos"],
+  ["Maximo de mensajes por conversacion", "15"],
+  ["Escalar a humano despues de", "3 objeciones"],
+  ["Idioma principal", "Espanol LATAM"],
+  ["Uso de emojis", "Si, moderado"],
 ];
 
 export default function VoiceAIPage() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold">Llamadas IA</h2>
-          <p className="text-sm text-muted-foreground">Llamadas automaticas para avanzar negociaciones mas rapido.</p>
-        </div>
-        <Button className="gradient-ventra text-primary-foreground shadow-ventra">
-          <Phone className="mr-2 h-4 w-4" />
-          Nueva llamada
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="rounded-xl border bg-card p-5 shadow-card">
-            <stat.icon className="mb-3 h-5 w-5 text-primary" />
-            <p className="text-2xl font-bold tabular-nums">{stat.value}</p>
-            <p className="mt-1 text-sm font-medium">{stat.label}</p>
-            <p className="text-xs text-muted-foreground">{stat.sub}</p>
+      <section className="flex flex-col gap-4 rounded-[1.5rem] border bg-card p-6 shadow-card lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex items-start gap-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <Bot className="h-6 w-6" />
           </div>
-        ))}
-      </div>
-
-      <div className="overflow-hidden rounded-xl border bg-card shadow-card">
-        <div className="border-b p-4">
-          <h3 className="font-semibold">Historial de llamadas</h3>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Nurturing</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em]">Chatbot WhatsApp enfocado en conversion.</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              El bot existe para responder objeciones, recuperar interes y empujar al lead hacia el cierre o al CRM.
+            </p>
+          </div>
         </div>
-        <table className="w-full">
-          <thead>
-            <tr className="bg-muted/50 text-xs text-muted-foreground">
-              <th className="p-4 text-left font-medium">Contacto</th>
-              <th className="p-4 text-left font-medium">Duracion</th>
-              <th className="p-4 text-left font-medium">Estado</th>
-              <th className="p-4 text-left font-medium">Resumen IA</th>
-              <th className="p-4 text-left font-medium">Score</th>
-              <th className="p-4 text-left font-medium">Tiempo</th>
-              <th className="p-4 text-right font-medium"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {callLogs.map((call) => (
-              <tr key={`${call.contact}-${call.time}`} className="border-t transition-colors hover:bg-muted/30">
-                <td className="p-4 text-sm font-medium">{call.contact}</td>
-                <td className="p-4 text-sm tabular-nums text-muted-foreground">{call.duration}</td>
-                <td className="p-4">
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                    call.status === "Completada"
-                      ? "bg-success/10 text-success"
-                      : call.status === "No contesto"
-                        ? "bg-destructive/10 text-destructive"
-                        : "bg-warning/10 text-warning"
-                  }`}>
-                    {call.status}
-                  </span>
-                </td>
-                <td className="max-w-xs truncate p-4 text-xs text-muted-foreground">{call.summary}</td>
-                <td className="p-4">
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${call.score >= 85 ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"}`}>
-                    {call.score}
-                  </span>
-                </td>
-                <td className="p-4 text-xs text-muted-foreground">{call.time}</td>
-                <td className="p-4 text-right">
-                  <Button variant="ghost" size="sm">
-                    <Play className="h-3.5 w-3.5" />
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <div className="flex items-center gap-3">
+          <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">Activo</span>
+          <Button variant="outline" className="rounded-xl">
+            <Play className="mr-2 h-4 w-4" />
+            Simular
+          </Button>
+        </div>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+        <div className="space-y-6">
+          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+            <h3 className="text-lg font-semibold">Configuracion general</h3>
+            <div className="mt-5 space-y-4">
+              <div>
+                <label className="text-sm font-medium">Nombre del asistente</label>
+                <Input defaultValue="Cerrador WhatsApp Ventra" className="mt-2" />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Objetivo comercial</label>
+                <Input defaultValue="Cerrar ventas" className="mt-2" />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Tono de comunicacion</label>
+                <Input defaultValue="Amigable, directo y comercial" className="mt-2" />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Reglas de comportamiento</label>
+                <Textarea
+                  className="mt-2 min-h-[160px]"
+                  defaultValue={
+                    "- Saludar por nombre si existe\n- Responder objeciones con empatia\n- Priorizar cierre o siguiente paso claro\n- No ofrecer descuento en la primera objecion\n- Escalar a humano cuando la conversacion se enfrie"
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+            <h3 className="text-lg font-semibold">Objeciones frecuentes</h3>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {objections.map((item) => (
+                <span key={item} className="rounded-full bg-warning/10 px-3 py-1.5 text-sm text-warning">
+                  {item}
+                </span>
+              ))}
+            </div>
+            <button className="mt-4 text-sm font-medium text-primary">+ Agregar objecion</button>
+          </div>
+
+          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+            <div className="mb-4 flex items-center gap-2">
+              <Zap className="h-4 w-4 text-primary" />
+              <h3 className="text-lg font-semibold">Activadores</h3>
+            </div>
+            <div className="space-y-3">
+              {activators.map((item) => (
+                <div key={item.label} className="flex items-center justify-between rounded-2xl border bg-muted/20 px-4 py-3">
+                  <span className="text-sm">{item.label}</span>
+                  <Switch checked={item.enabled} aria-label={item.label} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="overflow-hidden rounded-[1.5rem] border bg-card shadow-card">
+            <div className="flex items-center justify-between bg-sidebar px-5 py-4 text-sidebar-foreground">
+              <div className="flex items-center gap-2">
+                <Bot className="h-4 w-4 text-primary" />
+                <span className="font-semibold">Vista previa de conversacion</span>
+              </div>
+              <Button variant="outline" size="sm" className="border-white/10 bg-white/5 text-sidebar-foreground hover:bg-white/10">
+                <Play className="mr-2 h-3.5 w-3.5" />
+                Simular
+              </Button>
+            </div>
+
+            <div className="grid gap-4 bg-background p-4">
+              <div className="flex justify-end">
+                <div className="max-w-sm rounded-2xl rounded-br-md bg-primary px-4 py-3 text-sm text-primary-foreground">
+                  Hola, cuanto cuesta?
+                </div>
+              </div>
+              <div className="max-w-sm rounded-2xl rounded-bl-md border bg-card px-4 py-3 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">IA</p>
+                <p className="mt-2 text-sm leading-relaxed">
+                  Hola. Nuestro producto cuesta $1,200 MXN con envio gratis. Quieres que te comparta beneficios y promo activa?
+                </p>
+              </div>
+              <div className="flex justify-end">
+                <div className="max-w-sm rounded-2xl rounded-br-md bg-primary px-4 py-3 text-sm text-primary-foreground">
+                  Se me hace un poco caro.
+                </div>
+              </div>
+              <div className="max-w-sm rounded-2xl rounded-bl-md border bg-card px-4 py-3 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">IA</p>
+                <p className="mt-2 text-sm leading-relaxed">
+                  Entiendo. Muchos clientes pensaron lo mismo, pero terminan comprando porque recuperan la inversion rapido. Hoy tambien tienes 10% off si cierras ahora.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+            <h3 className="text-lg font-semibold">Mensajes de ejemplo</h3>
+            <div className="mt-4 space-y-3">
+              {templates.map((item) => (
+                <div key={item.label} className="rounded-2xl border bg-muted/20 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{item.label}</p>
+                  <p className="mt-2 text-sm leading-relaxed">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+            <div className="mb-4 flex items-center gap-2">
+              <Settings className="h-4 w-4 text-primary" />
+              <h3 className="text-lg font-semibold">Configuracion avanzada</h3>
+            </div>
+            <div className="space-y-3">
+              {advancedSettings.map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0">
+                  <span className="text-sm text-muted-foreground">{label}</span>
+                  <span className="text-sm font-medium">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

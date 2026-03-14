@@ -4,15 +4,16 @@
 
 | Fecha | Cambio | Tipo | Impacto |
 | --- | --- | --- | --- |
+| 2026-03-14 | Se simplifico la experiencia privada a un MVP de ventas con solo tres modulos visibles: Adquisicion, Nurturing y Marketing. | non-breaking | Las rutas legacy siguen respondiendo, pero varias ahora redirigen al flujo comercial enfocado. |
 | 2026-03-14 | Se reemplazo la base anterior del frontend por la nueva base oficial y se redujo el mapa de vistas a una sola arquitectura coherente. | breaking | Las rutas canonicas cambiaron; varias rutas legacy ahora redirigen a vistas consolidadas. |
 
 ## 1. Alcance actual
 
-Este contrato describe la base oficial vigente del frontend de Ventra despues del reemplazo por la nueva base del producto.
+Este contrato describe la base oficial vigente del frontend de Ventra.
 
 Incluye:
 - estructura real del frontend
-- rutas canonicas
+- rutas canonicas visibles
 - aliases legacy conservados por compatibilidad
 - modulos visibles en la UI
 - reglas de alcance del mockup
@@ -70,7 +71,7 @@ No introducir otro framework base.
 
 ## 5. Rutas principales
 
-### 5.1 Rutas canonicas
+### 5.1 Rutas canonicas visibles
 
 - `/`
 - `/quiz`
@@ -81,17 +82,12 @@ No introducir otro framework base.
 - `/app`
 - `/app/acquisition`
 - `/app/prospector`
-- `/app/widgets`
 - `/app/voice-ai`
-- `/app/creative-studio`
 - `/app/conversations`
-- `/app/pipeline`
-- `/app/contacts`
+- `/app/creative-studio`
 - `/app/campaigns`
+- `/app/widgets`
 - `/app/analytics`
-- `/app/automations`
-- `/app/community`
-- `/app/workspaces`
 - `/app/settings`
 
 ### 5.2 Aliases legacy soportados
@@ -101,14 +97,18 @@ Se mantienen redirecciones limpias para no romper accesos previos:
 - `/pricing` y `/faq` vuelven a la landing
 - `/workspaces/select` y `/workspaces/new` redirigen a `/onboarding`
 - `/app/overview` redirige a `/app`
-- rutas detalladas o anidadas del frontend anterior redirigen a su modulo canonico
+- rutas secundarias o legacy del dashboard anterior redirigen a un modulo vigente del MVP
 
 Ejemplos:
 - `/app/acquisition/prospector-ai` -> `/app/prospector`
+- `/app/acquisition/widgets` -> `/app/acquisition`
 - `/app/widgets/:widgetId` -> `/app/widgets`
 - `/app/voice-ai/calls/:callId` -> `/app/voice-ai`
-- `/app/community/members` -> `/app/community`
-- `/app/settings/profile` -> `/app/settings`
+- `/app/pipeline` -> `/app/conversations`
+- `/app/contacts` -> `/app/conversations`
+- `/app/automations` -> `/app/voice-ai`
+- `/app/community/*` -> `/app`
+- `/app/workspaces/*` -> `/app`
 
 ## 6. Modulos visibles
 
@@ -123,28 +123,26 @@ Ejemplos:
 
 ### 6.2 Privados
 
-- Overview
-- Acquisition
-- Prospector AI
-- Widgets
-- Voice AI
-- Creative Studio
-- Conversations
-- Pipeline
-- Contacts
-- Campaigns
-- Analytics
-- Automations
-- Community
-- Workspaces
-- Settings
+- Cockpit de ventas
+- Adquisicion de clientes
+  - Captacion
+  - Prospeccion IA
+- Nurturing
+  - Chatbot WhatsApp
+  - CRM
+- Marketing
+  - Generador de ads
+  - Variantes de ads
+  - Copys
+  - Creativos
+- Configuracion
 
 ## 7. Restricciones
 
 - La marca visible debe seguir siendo `Ventra`.
 - No se deben reintroducir modulos del frontend viejo como vistas paralelas.
-- No se deben recrear detail pages antiguas salvo que la nueva base las necesite de verdad.
-- El shell privado debe seguir siendo una sola experiencia; no mezclar layouts viejos con la base actual.
+- No se deben crear menus utilitarios largos que compitan con el flujo comercial principal.
+- El shell privado debe seguir siendo una sola experiencia enfocada en revenue.
 - Los datos siguen siendo mock y centralizados en `src/lib/mock-data.ts`.
 
 ## 8. Alcance real del frontend
@@ -152,10 +150,11 @@ Ejemplos:
 El repo actual representa:
 - un mockup comercial navegable
 - una base oficial de UI para seguir iterando producto
-- una demostracion coherente de Ventra como Revenue OS
+- una demostracion coherente de Ventra como sistema de ventas enfocado en revenue
 
 El repo no representa:
 - producto listo para produccion backend
 - autorizacion real de servidor
 - seguridad real de credenciales
-- flujos operativos profundos por entidad
+- automatizaciones productivas
+- modulos operativos fuera del flujo de captar, nutrir y cerrar

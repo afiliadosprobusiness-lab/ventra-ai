@@ -1,91 +1,123 @@
-import { Copy, Download, Image, Layout, Plus } from "lucide-react";
+import { ArrowRight, Palette, Sparkles, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
-const assets = [
-  { name: "Banner Black Friday", type: "Banner", size: "1200x628", status: "Publicado", date: "Hace 2 dias" },
-  { name: "Historia Instagram - Promo", type: "Historia", size: "1080x1920", status: "Borrador", date: "Hace 5h" },
-  { name: "Carrusel - Beneficios", type: "Carrusel", size: "1080x1080", status: "Publicado", date: "Hace 1 semana" },
-  { name: "Cabecera de email", type: "Email", size: "600x200", status: "En revision", date: "Ayer" },
-  { name: "Creativo para retargeting", type: "Anuncio", size: "1080x1080", status: "Publicado", date: "Hace 3 dias" },
-  { name: "Hero de landing", type: "Hero", size: "1920x1080", status: "Borrador", date: "Hoy" },
+const generatedAds = [
+  {
+    title: "Oferta directa",
+    hook: "Convierte consultas en ventas por WhatsApp en menos de 24 horas.",
+    angle: "Urgencia + beneficio inmediato",
+    cta: "Escribenos ahora",
+  },
+  {
+    title: "Prueba social",
+    hook: "Las marcas que ordenan sus conversaciones venden mas sin contratar mas equipo.",
+    angle: "Credibilidad + eficiencia comercial",
+    cta: "Quiero verlo",
+  },
+  {
+    title: "Recuperacion de interes",
+    hook: "No pierdas leads por respuestas lentas ni CRM desordenado.",
+    angle: "Dolor + solucion concreta",
+    cta: "Activar demo",
+  },
 ];
 
-const templates = [
-  "Post promocional",
-  "Historia con CTA",
-  "Banner de descuento",
-  "Cabecera de email",
-  "Creativo para anuncio",
-  "Carrusel de producto",
+const assetPackages = [
+  { name: "Pack lanzamiento", detail: "3 ads, 2 copys y 1 creativo principal", status: "Listo" },
+  { name: "Pack remarketing", detail: "2 variantes para leads tibios", status: "En revision" },
+  { name: "Pack oferta premium", detail: "1 pieza hero y 3 mensajes de cierre", status: "Listo" },
 ];
 
 export default function CreativeStudioPage() {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold">Estudio creativo</h2>
-          <p className="text-sm text-muted-foreground">Crea piezas listas para vender sin salir del flujo.</p>
-        </div>
-        <Button className="gradient-ventra text-primary-foreground shadow-ventra">
-          <Plus className="mr-2 h-4 w-4" />
-          Nuevo diseno
-        </Button>
-      </div>
+      <section className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Marketing</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em]">Generador de ads con foco total en revenue.</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            Parte de un brief, define angulos y genera mensajes listos para atraer leads de mejor calidad.
+          </p>
 
-      <div>
-        <h3 className="mb-3 text-sm font-semibold">Plantillas rapidas</h3>
-        <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
-          {templates.map((template) => (
-            <button key={template} className="rounded-xl border bg-card p-4 text-center transition-all hover:border-primary/20 hover:shadow-card-hover">
-              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Image className="h-5 w-5 text-primary" />
-              </div>
-              <p className="text-xs font-medium">{template}</p>
-            </button>
-          ))}
+          <div className="mt-6 space-y-4">
+            <div>
+              <label className="text-sm font-medium">Brief comercial</label>
+              <Textarea
+                className="mt-2 min-h-[180px]"
+                defaultValue={
+                  "Producto: plataforma de ventas enfocada en WhatsApp.\nObjetivo: captar leads listos para conversar.\nOferta: demo guiada + activacion rapida.\nAudiencia: negocios que dependen de mensajes para vender."
+                }
+              />
+            </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              {[
+                ["Objetivo", "Generar leads"],
+                ["Canal", "Meta Ads"],
+                ["CTA", "Escribenos ahora"],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-2xl border bg-muted/20 px-4 py-3">
+                  <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
+                  <p className="mt-1 text-sm font-semibold">{value}</p>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-3">
+              <Button className="gradient-ventra rounded-xl text-primary-foreground shadow-ventra">
+                <Sparkles className="mr-2 h-4 w-4" />
+                Generar lote
+              </Button>
+              <Button variant="outline" className="rounded-xl">Guardar brief</Button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <h3 className="mb-3 text-sm font-semibold">Activos recientes</h3>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {assets.map((asset) => (
-            <div key={asset.name} className="overflow-hidden rounded-xl border bg-card shadow-card transition-all hover:shadow-card-hover">
-              <div className="flex h-36 items-center justify-center bg-gradient-to-br from-primary/10 to-info/10">
-                <Layout className="h-8 w-8 text-muted-foreground/30" />
-              </div>
-              <div className="p-4">
-                <div className="mb-2 flex items-center justify-between gap-3">
-                  <h4 className="truncate text-sm font-medium">{asset.name}</h4>
-                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                    asset.status === "Publicado"
-                      ? "bg-success/10 text-success"
-                      : asset.status === "Borrador"
-                        ? "bg-muted text-muted-foreground"
-                        : "bg-warning/10 text-warning"
-                  }`}>
-                    {asset.status}
-                  </span>
+        <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Resultado esperado</p>
+              <h3 className="mt-1 text-xl font-semibold">Ads listos para adquisicion</h3>
+            </div>
+            <Target className="h-5 w-5 text-primary" />
+          </div>
+
+          <div className="mt-5 space-y-4">
+            {generatedAds.map((item) => (
+              <div key={item.title} className="rounded-2xl border bg-muted/20 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold">{item.title}</p>
+                  <ArrowRight className="h-4 w-4 text-primary" />
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  {asset.type} · {asset.size} · {asset.date}
-                </p>
-                <div className="mt-3 flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1 text-xs">
-                    <Download className="mr-1 h-3 w-3" />
-                    Descargar
-                  </Button>
-                  <Button variant="outline" size="sm" className="flex-1 text-xs">
-                    <Copy className="mr-1 h-3 w-3" />
-                    Duplicar
-                  </Button>
+                <p className="mt-3 text-lg font-semibold tracking-[-0.02em]">{item.hook}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">{item.angle}</span>
+                  <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">{item.cta}</span>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-[1.5rem] border bg-card p-6 shadow-card">
+        <div className="mb-5 flex items-center gap-2">
+          <Palette className="h-4 w-4 text-primary" />
+          <h3 className="text-lg font-semibold">Paquetes de assets</h3>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {assetPackages.map((item) => (
+            <div key={item.name} className="rounded-2xl border bg-muted/20 p-5">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm font-semibold">{item.name}</p>
+                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${item.status === "Listo" ? "bg-primary/10 text-primary" : "bg-warning/10 text-warning"}`}>
+                  {item.status}
+                </span>
+              </div>
+              <p className="mt-3 text-sm text-muted-foreground">{item.detail}</p>
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

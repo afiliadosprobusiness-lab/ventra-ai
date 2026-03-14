@@ -20,13 +20,8 @@ import WidgetsPage from "./pages/app/WidgetsPage.tsx";
 import VoiceAIPage from "./pages/app/VoiceAIPage.tsx";
 import CreativeStudioPage from "./pages/app/CreativeStudioPage.tsx";
 import ConversationsPage from "./pages/app/ConversationsPage.tsx";
-import PipelinePage from "./pages/app/PipelinePage.tsx";
-import ContactsPage from "./pages/app/ContactsPage.tsx";
 import CampaignsPage from "./pages/app/CampaignsPage.tsx";
 import AnalyticsPage from "./pages/app/AnalyticsPage.tsx";
-import AutomationsPage from "./pages/app/AutomationsPage.tsx";
-import CommunityPage from "./pages/app/CommunityPage.tsx";
-import WorkspacesPage from "./pages/app/WorkspacesPage.tsx";
 import SettingsPage from "./pages/app/SettingsPage.tsx";
 
 const queryClient = new QueryClient();
@@ -65,7 +60,7 @@ const App = () => (
               <Route path="acquisition" element={<AcquisitionPage />} />
               <Route path="prospector" element={<ProspectorPage />} />
               <Route path="acquisition/prospector-ai" element={<Navigate to="/app/prospector" replace />} />
-              <Route path="acquisition/widgets" element={<Navigate to="/app/widgets" replace />} />
+              <Route path="acquisition/widgets" element={<Navigate to="/app/acquisition" replace />} />
               <Route path="acquisition/forms" element={<Navigate to="/app/acquisition" replace />} />
               <Route path="acquisition/quiz" element={<Navigate to="/app/acquisition" replace />} />
               <Route path="acquisition/sources" element={<Navigate to="/app/acquisition" replace />} />
@@ -83,23 +78,23 @@ const App = () => (
               <Route path="creative-studio/templates" element={<Navigate to="/app/creative-studio" replace />} />
               <Route path="conversations" element={<ConversationsPage />} />
               <Route path="conversations/:threadId" element={<Navigate to="/app/conversations" replace />} />
-              <Route path="pipeline" element={<PipelinePage />} />
-              <Route path="pipeline/:dealId" element={<Navigate to="/app/pipeline" replace />} />
-              <Route path="contacts" element={<ContactsPage />} />
-              <Route path="contacts/:contactId" element={<Navigate to="/app/contacts" replace />} />
+              <Route path="pipeline" element={<Navigate to="/app/conversations" replace />} />
+              <Route path="pipeline/:dealId" element={<Navigate to="/app/conversations" replace />} />
+              <Route path="contacts" element={<Navigate to="/app/conversations" replace />} />
+              <Route path="contacts/:contactId" element={<Navigate to="/app/conversations" replace />} />
               <Route path="campaigns" element={<CampaignsPage />} />
               <Route path="campaigns/:campaignId" element={<Navigate to="/app/campaigns" replace />} />
               <Route path="analytics" element={<AnalyticsPage />} />
-              <Route path="automations" element={<AutomationsPage />} />
-              <Route path="community" element={<CommunityPage />} />
-              <Route path="community/setup" element={<Navigate to="/app/community" replace />} />
-              <Route path="community/home" element={<Navigate to="/app/community" replace />} />
-              <Route path="community/feed" element={<Navigate to="/app/community" replace />} />
-              <Route path="community/members" element={<Navigate to="/app/community" replace />} />
-              <Route path="community/events" element={<Navigate to="/app/community" replace />} />
-              <Route path="community/settings" element={<Navigate to="/app/community" replace />} />
-              <Route path="workspaces" element={<WorkspacesPage />} />
-              <Route path="workspaces/:workspaceId" element={<Navigate to="/app/workspaces" replace />} />
+              <Route path="automations" element={<Navigate to="/app/voice-ai" replace />} />
+              <Route path="community" element={<Navigate to="/app" replace />} />
+              <Route path="community/setup" element={<Navigate to="/app" replace />} />
+              <Route path="community/home" element={<Navigate to="/app" replace />} />
+              <Route path="community/feed" element={<Navigate to="/app" replace />} />
+              <Route path="community/members" element={<Navigate to="/app" replace />} />
+              <Route path="community/events" element={<Navigate to="/app" replace />} />
+              <Route path="community/settings" element={<Navigate to="/app" replace />} />
+              <Route path="workspaces" element={<Navigate to="/app" replace />} />
+              <Route path="workspaces/:workspaceId" element={<Navigate to="/app" replace />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="settings/profile" element={<Navigate to="/app/settings" replace />} />
               <Route path="settings/team" element={<Navigate to="/app/settings" replace />} />
