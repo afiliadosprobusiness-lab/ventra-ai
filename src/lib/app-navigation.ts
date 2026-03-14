@@ -28,21 +28,14 @@ export type AppNavigationLink = {
 export type AppNavigationGroup = {
   id: string;
   title: string;
-  description: string;
   icon: LucideIcon;
   children: AppNavigationLink[];
-};
-
-export type AppSecondaryNavigationSection = {
-  title: string;
-  items: AppNavigationLink[];
 };
 
 export const appNavigationGroups: AppNavigationGroup[] = [
   {
     id: "acquisition",
     title: "Adquisicion de clientes",
-    description: "Trae leads nuevos desde anuncios, formularios y prospeccion.",
     icon: Megaphone,
     children: [
       { title: "Captacion", url: "/app/acquisition", icon: Megaphone },
@@ -54,7 +47,6 @@ export const appNavigationGroups: AppNavigationGroup[] = [
   {
     id: "nurture",
     title: "Nutricion y respuesta",
-    description: "Mantiene el contacto activo con mensajes, llamadas, seguimiento y creativos.",
     icon: MessageSquare,
     children: [
       { title: "Conversaciones", url: "/app/conversations", icon: MessageSquare },
@@ -65,24 +57,14 @@ export const appNavigationGroups: AppNavigationGroup[] = [
   },
 ];
 
-export const appSecondaryNavigationSections: AppSecondaryNavigationSection[] = [
-  {
-    title: "Vista general",
-    items: [
-      { title: "Resumen", url: "/app", icon: LayoutDashboard, exact: true },
-      { title: "Contactos", url: "/app/contacts", icon: Users },
-      { title: "Automatizaciones", url: "/app/automations", icon: Zap },
-      { title: "Analitica", url: "/app/analytics", icon: BarChart3 },
-      { title: "Comunidad", url: "/app/community", icon: Globe },
-    ],
-  },
-  {
-    title: "Workspace",
-    items: [
-      { title: "Espacios", url: "/app/workspaces", icon: Building2 },
-      { title: "Configuracion", url: "/app/settings", icon: Settings },
-    ],
-  },
+export const appUtilityNavigation: AppNavigationLink[] = [
+  { title: "Resumen", url: "/app", icon: LayoutDashboard, exact: true },
+  { title: "Contactos", url: "/app/contacts", icon: Users },
+  { title: "Automatizaciones", url: "/app/automations", icon: Zap },
+  { title: "Analitica", url: "/app/analytics", icon: BarChart3 },
+  { title: "Comunidad", url: "/app/community", icon: Globe },
+  { title: "Espacios", url: "/app/workspaces", icon: Building2 },
+  { title: "Configuracion", url: "/app/settings", icon: Settings },
 ];
 
 export const appRouteTitles: Record<string, string> = {

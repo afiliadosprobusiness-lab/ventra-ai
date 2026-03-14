@@ -55,8 +55,9 @@ Caracteristicas:
 ### Sidebar
 
 - navegacion agrupada por etapa o intencion comercial
-- grupos principales en patron accordion con un solo panel abierto cuando aplique
-- subitems internos mas ligeros que el contenedor principal, sin tarjetas pesadas repetidas
+- grupos principales como filas compactas horizontales, no como cards altas
+- patron accordion con un solo panel abierto cuando aplique
+- subitems internos indentados y ligeros, sin tarjetas pesadas repetidas
 - active state con color de marca
 - branding arriba
 - cuenta y settings abajo
