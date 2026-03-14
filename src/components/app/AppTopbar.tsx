@@ -22,13 +22,23 @@ export function AppTopbar({ isDarkMode, onToggleDarkMode }: AppTopbarProps) {
     .join("")
     .slice(0, 2)
     .toUpperCase() ?? "VD";
+  const primaryActionTarget =
+    location.pathname === "/app"
+      ? "/app/acquisition"
+      : location.pathname === "/app/acquisition"
+        ? "/app/acquisition"
+        : location.pathname === "/app/automatic-attention"
+          ? "/app/automatic-attention"
+          : location.pathname === "/app/closing"
+            ? "/app/closing"
+            : location.pathname;
 
   return (
     <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between border-b border-border/70 bg-background/85 px-4 backdrop-blur-xl">
       <div className="flex items-center gap-3">
         <SidebarTrigger className="text-muted-foreground" />
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/70">Revenue focus</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/70">Ventra AI</p>
           <h1 className="text-lg font-semibold">{routeMeta.title}</h1>
         </div>
         <p className="hidden max-w-xl text-sm text-muted-foreground xl:block">{routeMeta.description}</p>
@@ -53,7 +63,11 @@ export function AppTopbar({ isDarkMode, onToggleDarkMode }: AppTopbarProps) {
           <Switch checked={isDarkMode} onCheckedChange={onToggleDarkMode} aria-label="Cambiar modo oscuro" />
         </div>
 
-        <Button size="sm" className="gradient-ventra rounded-xl text-primary-foreground shadow-ventra">
+        <Button
+          size="sm"
+          className="gradient-ventra rounded-xl text-primary-foreground shadow-ventra"
+          onClick={() => navigate(primaryActionTarget)}
+        >
           {routeMeta.primaryAction}
           <ArrowRight className="h-4 w-4" />
         </Button>

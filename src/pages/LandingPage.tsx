@@ -1,381 +1,515 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  ArrowRight, CheckCircle2, Search, MessageSquare, Phone, BarChart3,
-  Zap, Users, Send, Globe, Palette, GitBranch, ChevronDown, Star, Play,
-  Target, TrendingUp, Shield, Clock
-} from "lucide-react";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { VentraLogo } from "@/components/brand/ventra-logo";
+import { LandingQuizWizard } from "@/components/landing/LandingQuizWizard";
+import { LandingSection } from "@/components/landing/LandingSection";
+import { LandingThemeToggle } from "@/components/landing/LandingThemeToggle";
+import {
+  landingBenefits,
+  landingFaqs,
+  landingLayers,
+  landingPainPoints,
+  landingPlans,
+  landingSteps,
+  landingTrustNotes,
+} from "@/lib/landing-content";
+import { getInitialLandingDarkMode, persistLandingTheme } from "@/lib/landing-theme";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } }),
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, delay },
+  }),
 };
 
-const logos = ["Shopify", "HubSpot", "Stripe", "Zapier", "Slack", "Meta"];
-
-const modules = [
-  { icon: Search, title: "Prospector AI", desc: "Descubre prospectos de alta intención con scoring inteligente." },
-  { icon: MessageSquare, title: "Conversations", desc: "Inbox unificado con WhatsApp, Instagram y más." },
-  { icon: Phone, title: "Voice AI", desc: "Llamadas automatizadas de seguimiento con IA." },
-  { icon: GitBranch, title: "Pipeline", desc: "Visualiza y gestiona cada oportunidad de cierre." },
-  { icon: Send, title: "Campaigns", desc: "Lanza campañas multicanal y mide resultados." },
-  { icon: Palette, title: "Creative Studio", desc: "Crea activos de marketing listos para convertir." },
-  { icon: Zap, title: "Automations", desc: "Automatiza follow-ups, scoring y asignaciones." },
-  { icon: Globe, title: "Community", desc: "Construye y gestiona tu comunidad integrada." },
-];
-
-const benefits = [
-  { icon: Target, title: "Captura más oportunidades", desc: "Encuentra prospectos que tus competidores ignoran con Prospector AI." },
-  { icon: Clock, title: "Sigue más rápido", desc: "Automatiza follow-ups en minutos, no en días. Cada lead recibe atención." },
-  { icon: TrendingUp, title: "Cierra más ingresos", desc: "Pipeline visual + insights de IA = decisiones que generan revenue." },
-  { icon: Shield, title: "Opera desde un solo sistema", desc: "CRM, messaging, calls, campaigns, analytics. Todo en Ventra." },
-];
-
-const faqs = [
-  { q: "¿Ventra reemplaza mi CRM actual?", a: "Sí. Ventra es un Revenue OS completo que incluye CRM, messaging, pipeline, analytics y más. No necesitas herramientas adicionales." },
-  { q: "¿Puedo conectar WhatsApp Business?", a: "Absolutamente. Ventra se integra nativamente con WhatsApp Business API para conversaciones bidireccionales." },
-  { q: "¿Cómo funciona Voice AI?", a: "Voice AI realiza llamadas automatizadas de seguimiento, calificación y nurturing usando inteligencia artificial conversacional." },
-  { q: "¿Qué incluye el plan Growth?", a: "El plan Growth incluye todos los módulos core, hasta 10 usuarios, 5,000 contactos, Voice AI y soporte prioritario." },
-  { q: "¿Puedo importar mis contactos existentes?", a: "Sí. Importa desde CSV, HubSpot, Salesforce o cualquier CRM. La migración es asistida por nuestro equipo." },
-];
-
-const pricing = [
-  {
-    name: "Starter", price: "$49", period: "/mes", desc: "Para negocios que inician su operación comercial.",
-    features: ["Hasta 3 usuarios", "1,000 contactos", "Conversations básico", "Pipeline", "Email support"],
-    cta: "Comenzar gratis", highlighted: false,
-  },
-  {
-    name: "Growth", price: "$149", period: "/mes", desc: "Para equipos que quieren escalar ingresos.",
-    features: ["Hasta 10 usuarios", "5,000 contactos", "Todos los módulos", "Voice AI", "Prospector AI", "Automations", "Soporte prioritario"],
-    cta: "Empezar prueba gratuita", highlighted: true,
-  },
-  {
-    name: "Enterprise", price: "Custom", period: "", desc: "Para operaciones de alto volumen.",
-    features: ["Usuarios ilimitados", "Contactos ilimitados", "API access", "SSO", "Account manager", "SLA garantizado", "Onboarding dedicado"],
-    cta: "Contactar ventas", highlighted: false,
-  },
-];
-
 export default function LandingPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(getInitialLandingDarkMode);
+
+  useEffect(() => {
+    persistLandingTheme(isDarkMode);
+  }, [isDarkMode]);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b">
-        <div className="container mx-auto flex items-center justify-between h-16 px-4">
-          <Link to="/" className="inline-flex">
-            <VentraLogo markClassName="h-10 w-10" wordmarkClassName="text-2xl" />
-          </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#modules" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Módulos</a>
-            <a href="#benefits" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Beneficios</a>
-            <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
-            <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">FAQ</a>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link to="/login">
-              <Button variant="ghost" size="sm">Iniciar sesión</Button>
-            </Link>
-            <Link to="/register">
-              <Button size="sm" className="gradient-ventra text-primary-foreground shadow-ventra">
-                Comenzar gratis
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+    <div className={isDarkMode ? "dark" : undefined}>
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[720px] bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_34%),radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_26%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.22),transparent_34%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.18),transparent_26%)]" />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
-        <div className="container mx-auto px-4 pt-20 pb-24 text-center relative">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}
-            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-            <Zap className="h-3.5 w-3.5" />
-            Revenue OS para equipos comerciales
-          </motion.div>
-          <motion.h1 initial="hidden" animate="visible" variants={fadeUp} custom={1}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] max-w-4xl mx-auto">
-            Deja de gestionar leads.{" "}
-            <span className="text-gradient-hero">Empieza a cerrar ingresos.</span>
-          </motion.h1>
-          <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={2}
-            className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Descubre, capta, sigue y cierra más clientes desde un solo sistema.
-            CRM, WhatsApp, Voice AI, Campaigns y más — todo en Ventra.
-          </motion.p>
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={3}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/register">
-              <Button size="lg" className="gradient-ventra text-primary-foreground shadow-ventra text-base px-8 h-12">
-                Comenzar prueba gratuita
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+        <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
+          <div className="container mx-auto flex items-center justify-between gap-4 px-4 py-4">
+            <Link to="/" className="inline-flex">
+              <VentraLogo markClassName="h-10 w-10" wordmarkClassName="text-[1.6rem]" />
             </Link>
-            <Link to="/quiz">
-              <Button size="lg" variant="outline" className="text-base px-8 h-12">
-                <Play className="mr-2 h-4 w-4" />
-                Descubre tu plan ideal
-              </Button>
-            </Link>
-          </motion.div>
-          <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={4}
-            className="mt-4 text-sm text-muted-foreground">
-            Sin tarjeta de crédito · Setup en 2 minutos · Cancela cuando quieras
-          </motion.p>
 
-          {/* Product Shot */}
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={5}
-            className="mt-16 relative max-w-5xl mx-auto">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-ventra-blue/20 to-primary/20 rounded-2xl blur-2xl opacity-50" />
-            <div className="relative rounded-xl border shadow-card-hover overflow-hidden bg-card">
-              <div className="h-8 bg-muted/50 flex items-center px-4 gap-2 border-b">
-                <div className="h-3 w-3 rounded-full bg-destructive/60" />
-                <div className="h-3 w-3 rounded-full bg-warning/60" />
-                <div className="h-3 w-3 rounded-full bg-success/60" />
-                <span className="text-xs text-muted-foreground ml-2">app.ventra.io/overview</span>
+            <nav className="hidden items-center gap-7 lg:flex">
+              <a href="#solution" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Sistema</a>
+              <a href="#benefits" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Beneficios</a>
+              <a href="#quiz" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Diagnostico</a>
+              <a href="#pricing" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Planes</a>
+            </nav>
+
+            <div className="flex items-center gap-3">
+              <LandingThemeToggle checked={isDarkMode} onCheckedChange={setIsDarkMode} />
+              <Link to="/login" className="hidden sm:block">
+                <Button variant="ghost" className="rounded-xl">Iniciar sesion</Button>
+              </Link>
+              <Link to="/register">
+                <Button className="gradient-ventra rounded-xl text-primary-foreground shadow-ventra">Solicitar implementacion</Button>
+              </Link>
+            </div>
+          </div>
+        </header>
+
+        <main className="relative">
+          <section className="overflow-hidden pb-20 pt-16 md:pb-24 md:pt-24">
+            <div className="container mx-auto px-4">
+              <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+                <div className="max-w-3xl">
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeUp}
+                    custom={0}
+                    className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary"
+                  >
+                    Sistema comercial implementado para vender mas
+                  </motion.div>
+
+                  <motion.h1
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeUp}
+                    custom={0.08}
+                    className="mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.07em] md:text-7xl"
+                  >
+                    Te implementamos un sistema comercial para atraer clientes, atender consultas y cerrar mas ventas.
+                  </motion.h1>
+
+                  <motion.p
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeUp}
+                    custom={0.16}
+                    className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl"
+                  >
+                    Ventra AI ayuda a negocios que quieren responder mejor, dar seguimiento con mas orden y dejar de
+                    depender tanto de operacion manual para vender.
+                  </motion.p>
+
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeUp}
+                    custom={0.24}
+                    className="mt-8 flex flex-col gap-3 sm:flex-row"
+                  >
+                    <Link to="/register">
+                      <Button size="lg" className="gradient-ventra h-12 rounded-xl px-8 text-base text-primary-foreground shadow-ventra">
+                        Solicitar implementacion
+                      </Button>
+                    </Link>
+                    <a href="#quiz">
+                      <Button size="lg" variant="outline" className="h-12 rounded-xl px-8 text-base">
+                        Hacer diagnostico
+                      </Button>
+                    </a>
+                  </motion.div>
+
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={fadeUp}
+                    custom={0.32}
+                    className="mt-8 grid gap-3 sm:grid-cols-3"
+                  >
+                    {[
+                      ["Mas oportunidades", "Campanas mas claras para atraer mejores consultas."],
+                      ["Respuestas mas rapidas", "Atencion automatica para no dejar enfriar interes."],
+                      ["Mas cierres", "Seguimiento simple para mover prospectos hasta la venta."],
+                    ].map(([title, detail]) => (
+                      <div key={title} className="rounded-[1.35rem] border bg-card/85 p-4 shadow-card backdrop-blur-xl">
+                        <p className="text-sm font-semibold">{title}</p>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{detail}</p>
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={fadeUp}
+                  custom={0.18}
+                  className="relative"
+                >
+                  <div className="absolute left-10 top-14 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
+                  <div className="absolute bottom-10 right-6 h-44 w-44 rounded-full bg-info/20 blur-3xl" />
+
+                  <div className="relative rounded-[2rem] border border-border/80 bg-card/90 p-5 shadow-card-hover backdrop-blur-xl">
+                    <div className="rounded-[1.5rem] border bg-background/80 p-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">Sistema comercial Ventra</p>
+                          <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em]">Tres capas. Un resultado.</h3>
+                        </div>
+                        <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">Implementacion guiada</span>
+                      </div>
+
+                      <div className="mt-5 space-y-3">
+                        {landingLayers.map((layer, index) => (
+                          <div key={layer.id} className="rounded-[1.35rem] border bg-card p-4 shadow-card">
+                            <div className="flex items-start gap-4">
+                              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                                <layer.icon className="h-5 w-5" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center justify-between gap-3">
+                                  <p className="text-sm font-semibold">{index + 1}. {layer.title}</p>
+                                  <span className="rounded-full bg-muted px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                                    {layer.plan}
+                                  </span>
+                                </div>
+                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{layer.description}</p>
+                                <p className="mt-3 text-sm font-medium text-foreground">{layer.outcome}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
+                      <div className="rounded-[1.35rem] border bg-muted/20 p-4">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Visual del proceso</p>
+                        <div className="mt-4 flex items-center gap-3">
+                          <div className="rounded-2xl bg-primary/10 px-3 py-2 text-sm font-semibold text-primary">Consulta</div>
+                          <div className="h-px flex-1 bg-border" />
+                          <div className="rounded-2xl bg-primary/10 px-3 py-2 text-sm font-semibold text-primary">Respuesta</div>
+                          <div className="h-px flex-1 bg-border" />
+                          <div className="rounded-2xl bg-primary/10 px-3 py-2 text-sm font-semibold text-primary">Cierre</div>
+                        </div>
+                      </div>
+                      <div className="rounded-[1.35rem] border bg-muted/20 p-4">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Resultado esperado</p>
+                        <p className="mt-3 text-3xl font-semibold tracking-[-0.05em]">+23%</p>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                          Cuando el negocio responde mejor y hace seguimiento con mas claridad, las conversiones suben.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-              <div className="grid grid-cols-4 gap-3 p-6">
-                {[
-                  { label: "Leads nuevos", value: "284", change: "+18%" },
-                  { label: "Conversaciones", value: "127", change: "+7%" },
-                  { label: "Oportunidades", value: "43", change: "-12%" },
-                  { label: "Ingresos", value: "$48,320", change: "+23%" },
-                ].map((card, i) => (
-                  <div key={i} className="rounded-xl border bg-background p-4">
-                    <p className="text-xs text-muted-foreground">{card.label}</p>
-                    <p className="text-2xl font-bold mt-1 tabular-nums">{card.value}</p>
-                    <p className={`text-xs mt-1 font-medium ${card.change.startsWith('+') ? 'text-success' : 'text-destructive'}`}>{card.change}</p>
+            </div>
+          </section>
+
+          <LandingSection
+            id="problem"
+            eyebrow="Problema"
+            title="La mayoria no pierde ventas por falta de interes. Las pierde por desorden comercial."
+            description="Llegan consultas, se responden tarde, falta seguimiento y todo termina dependiendo de operacion manual. Esa mezcla hace que el marketing traiga ruido, no cierres."
+          >
+            <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
+              <div className="grid gap-4">
+                {landingPainPoints.map((item) => (
+                  <div key={item.title} className="rounded-[1.5rem] border bg-card p-5 shadow-card">
+                    <div className="flex items-start gap-4">
+                      {item.icon ? (
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+                          <item.icon className="h-5 w-5" />
+                        </div>
+                      ) : null}
+                      <div>
+                        <p className="text-lg font-semibold">{item.title}</p>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
-              <div className="px-6 pb-6">
-                <div className="h-48 bg-muted/30 rounded-xl border flex items-end justify-around px-8 pb-6">
-                  {[40, 55, 45, 65, 80, 72, 88, 95, 85, 100].map((h, i) => (
-                    <div key={i} className="w-8 rounded-t-md gradient-ventra" style={{ height: `${h}%` }} />
+
+              <div className="rounded-[1.75rem] border bg-muted/20 p-6 shadow-card">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Asi se ve hoy en muchos negocios</p>
+                <div className="mt-5 grid gap-4">
+                  {[
+                    ["Marketing trae consultas", "Pero no siempre llegan con un mensaje claro."],
+                    ["WhatsApp se llena de conversaciones", "Y algunas quedan abiertas sin siguiente paso."],
+                    ["El seguimiento depende del equipo", "Entonces la consistencia comercial se rompe rapido."],
+                  ].map(([title, detail]) => (
+                    <div key={title} className="rounded-[1.35rem] border bg-background/80 p-4">
+                      <p className="text-sm font-semibold">{title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{detail}</p>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </LandingSection>
 
-      {/* Social Proof */}
-      <section className="border-y bg-muted/30 py-12">
-        <div className="container mx-auto px-4">
-          <p className="text-center text-sm text-muted-foreground mb-8">Empresas que confían en Ventra para cerrar más ingresos</p>
-          <div className="flex items-center justify-center gap-12 flex-wrap">
-            {logos.map((logo) => (
-              <span key={logo} className="text-xl font-bold text-muted-foreground/30 hover:text-muted-foreground/60 transition-colors cursor-default">
-                {logo}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section id="benefits" className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">¿Por qué Ventra?</h2>
-            <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
-              No es otro CRM. Es tu sistema operativo de ingresos.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {benefits.map((b, i) => (
-              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}
-                className="group rounded-xl border bg-card p-6 shadow-card hover:shadow-card-hover transition-all hover:border-primary/20">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <b.icon className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{b.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{b.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Problem / Solution */}
-      <section className="py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            <div className="rounded-xl border bg-background p-8">
-              <h3 className="text-xl font-bold mb-6 text-destructive">Sin Ventra</h3>
-              {["Leads perdidos entre herramientas", "Follow-ups manuales que nunca suceden", "Sin visibilidad del pipeline real", "Datos dispersos en 5+ plataformas", "Oportunidades que caducan en silencio"].map((item, i) => (
-                <div key={i} className="flex items-start gap-3 py-3 border-b last:border-0">
-                  <span className="text-destructive mt-0.5">✕</span>
-                  <span className="text-sm text-muted-foreground">{item}</span>
-                </div>
-              ))}
-            </div>
-            <div className="rounded-xl border-2 border-primary/20 bg-background p-8 shadow-ventra">
-              <h3 className="text-xl font-bold mb-6 text-primary">Con Ventra</h3>
-              {["Todos los leads centralizados y con scoring", "Follow-ups automáticos a las 24h", "Pipeline visual con insights de IA", "Un solo sistema para todo el revenue", "Alertas proactivas de oportunidades calientes"].map((item, i) => (
-                <div key={i} className="flex items-start gap-3 py-3 border-b last:border-0">
-                  <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                  <span className="text-sm">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Modules */}
-      <section id="modules" className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">Todo lo que necesitas para cerrar más</h2>
-            <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
-              8 módulos integrados que trabajan juntos para maximizar tus ingresos.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-            {modules.map((m, i) => (
-              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}
-                className="group rounded-xl border bg-card p-5 hover:shadow-card-hover hover:border-primary/20 transition-all cursor-default">
-                <m.icon className="h-5 w-5 text-primary mb-3" />
-                <h3 className="font-semibold text-sm mb-1">{m.title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{m.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section id="pricing" className="py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">Pricing simple, sin sorpresas</h2>
-            <p className="mt-4 text-muted-foreground text-lg">Elige el plan que se adapte a tu operación.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {pricing.map((plan, i) => (
-              <div key={i} className={`rounded-xl border bg-card p-8 flex flex-col ${plan.highlighted ? "border-2 border-primary shadow-ventra relative" : "shadow-card"}`}>
-                {plan.highlighted && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                    Más popular
-                  </span>
-                )}
-                <h3 className="font-bold text-lg">{plan.name}</h3>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold">{plan.price}</span>
-                  <span className="text-muted-foreground text-sm">{plan.period}</span>
-                </div>
-                <p className="text-sm text-muted-foreground mt-2">{plan.desc}</p>
-                <ul className="mt-6 space-y-3 flex-1">
-                  {plan.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link to="/register" className="mt-8">
-                  <Button className={`w-full ${plan.highlighted ? "gradient-ventra text-primary-foreground shadow-ventra" : ""}`}
-                    variant={plan.highlighted ? "default" : "outline"}>
-                    {plan.cta}
-                  </Button>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="py-24">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Preguntas frecuentes</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div key={i} className="rounded-xl border bg-card overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left"
-                >
-                  <span className="font-medium text-sm">{faq.q}</span>
-                  <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
-                </button>
-                {openFaq === i && (
-                  <div className="px-5 pb-5">
-                    <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+          <LandingSection
+            id="solution"
+            eyebrow="La solucion"
+            title="Ventra ordena el proceso comercial en tres capas faciles de entender."
+            description="No es una suite de herramientas sueltas. Es un sistema comercial claro para atraer oportunidades, responder mejor y empujar el cierre."
+          >
+            <div className="grid gap-5 xl:grid-cols-3">
+              {landingLayers.map((layer) => (
+                <div key={layer.id} className="rounded-[1.75rem] border bg-card p-6 shadow-card transition-transform duration-200 hover:-translate-y-1 hover:shadow-card-hover">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      {layer.icon ? <layer.icon className="h-5 w-5" /> : null}
+                    </div>
+                    <span className="rounded-full bg-muted px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      {layer.plan}
+                    </span>
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                  <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em]">{layer.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{layer.description}</p>
+                  <div className="mt-5 rounded-[1.2rem] border bg-muted/20 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Beneficio directo</p>
+                    <p className="mt-2 text-sm font-medium">{layer.outcome}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </LandingSection>
 
-      {/* CTA */}
-      <section className="py-24 bg-muted/30">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold max-w-2xl mx-auto">
-            Empieza a cerrar más ingresos hoy
-          </h2>
-          <p className="mt-4 text-muted-foreground text-lg max-w-xl mx-auto">
-            Únete a cientos de equipos que usan Ventra para operar su revenue.
-          </p>
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <Link to="/register">
-              <Button size="lg" className="gradient-ventra text-primary-foreground shadow-ventra px-8 h-12">
-                Comenzar gratis <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+          <LandingSection
+            id="benefits"
+            eyebrow="Beneficios"
+            title="La landing debe vender resultado, no complejidad. Por eso los beneficios son directos."
+            description="Ventra ayuda a que el negocio responda mejor, haga seguimiento con mas orden y convierta mas consultas en clientes."
+          >
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {landingBenefits.map((benefit) => (
+                <div key={benefit.title} className="rounded-[1.5rem] border bg-card p-5 shadow-card">
+                  {benefit.icon ? (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <benefit.icon className="h-5 w-5" />
+                    </div>
+                  ) : null}
+                  <p className="mt-5 text-lg font-semibold">{benefit.title}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{benefit.description}</p>
+                </div>
+              ))}
+            </div>
+          </LandingSection>
 
-      {/* Footer */}
-      <footer className="border-t py-12 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="mb-4">
-                <VentraLogo markClassName="h-9 w-9" wordmarkClassName="text-xl" />
+          <LandingSection
+            eyebrow="Como funciona"
+            title="Tres pasos para ordenar el proceso comercial."
+            description="La experiencia debe entenderse rapido: atraes mejor, atiendes mejor y cierras con mas consistencia."
+          >
+            <div className="grid gap-4 lg:grid-cols-3">
+              {landingSteps.map((step, index) => (
+                <div key={step.title} className="rounded-[1.6rem] border bg-card p-6 shadow-card">
+                  <span className="inline-flex rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+                    Paso {index + 1}
+                  </span>
+                  <h3 className="mt-5 text-xl font-semibold">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+                </div>
+              ))}
+            </div>
+          </LandingSection>
+
+          <LandingSection
+            id="quiz"
+            eyebrow="Diagnostico interactivo"
+            title="Descubre que necesita primero tu negocio."
+            description="Este wizard te ayuda a detectar si hoy el cuello de botella esta en adquisicion, atencion automatica o cierre, y te recomienda por donde empezar."
+          >
+            <div className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
+              <div className="rounded-[1.75rem] border bg-muted/20 p-6 shadow-card">
+                <h3 className="text-2xl font-semibold tracking-[-0.04em]">No es un formulario aburrido.</h3>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  El diagnostico pregunta por tu tipo de negocio, como llegan consultas, si dependes de WhatsApp, si pierdes leads por demora y como haces seguimiento hoy.
+                </p>
+                <div className="mt-6 grid gap-3">
+                  {[
+                    "Detecta si el mayor impacto esta en captacion, respuesta o seguimiento.",
+                    "Te recomienda si conviene empezar con el plan basico o la solucion completa.",
+                    "Convierte la conversacion comercial en una recomendacion consultiva y clara.",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 rounded-[1.2rem] border bg-background/80 px-4 py-3">
+                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
+                      <p className="text-sm leading-relaxed">{item}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 rounded-[1.35rem] border bg-primary/5 p-4">
+                  <p className="text-sm font-semibold">Ejemplos de resultado</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    "Tu mayor cuello de botella esta en atencion automatica" o "Tu mejor oportunidad esta en mejorar captacion y respuesta".
+                  </p>
+                </div>
               </div>
-              <p className="text-sm text-muted-foreground">Revenue OS para equipos que quieren cerrar más.</p>
+
+              <LandingQuizWizard ctaLabel="Solicitar implementacion" />
             </div>
-            <div>
-              <h4 className="font-semibold text-sm mb-4">Producto</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#modules" className="hover:text-foreground transition-colors">Módulos</a></li>
-                <li><a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Integraciones</a></li>
-              </ul>
+          </LandingSection>
+
+          <LandingSection
+            id="pricing"
+            eyebrow="Planes"
+            title="Empieza simple y escala cuando tenga sentido."
+            description="La estructura de precios acompana la logica del producto: puedes empezar con la capa basica y crecer hacia la solucion completa."
+            align="center"
+            className="bg-muted/20"
+          >
+            <div className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-2">
+              {landingPlans.map((plan, index) => (
+                <div
+                  key={plan.name}
+                  className={`rounded-[1.9rem] border bg-card p-7 shadow-card ${index === 1 ? "border-primary/20 shadow-ventra" : ""}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">{plan.name}</p>
+                      <p className="mt-3 text-4xl font-semibold tracking-[-0.05em]">
+                        {plan.price}
+                        <span className="text-base font-medium text-muted-foreground">{plan.period}</span>
+                      </p>
+                    </div>
+                    {plan.highlight ? (
+                      <span className="rounded-full bg-primary/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary">
+                        Recomendado
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{plan.description}</p>
+                  <p className="mt-4 text-sm leading-relaxed">{plan.highlight}</p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {plan.includedLayers.map((layer) => (
+                      <span key={layer} className="rounded-full bg-muted px-3 py-1.5 text-sm font-medium text-foreground">
+                        {layer}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    {plan.outcomes.map((outcome) => (
+                      <div key={outcome} className="flex items-start gap-3">
+                        <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
+                        <p className="text-sm leading-relaxed text-muted-foreground">{outcome}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Link to="/register" className="mt-8 block">
+                    <Button
+                      className={`h-12 w-full rounded-xl ${index === 1 ? "gradient-ventra text-primary-foreground shadow-ventra" : ""}`}
+                      variant={index === 1 ? "default" : "outline"}
+                    >
+                      {plan.ctaLabel}
+                    </Button>
+                  </Link>
+                </div>
+              ))}
             </div>
-            <div>
-              <h4 className="font-semibold text-sm mb-4">Empresa</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Sobre nosotros</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Careers</a></li>
-              </ul>
+          </LandingSection>
+
+          <LandingSection
+            eyebrow="Confianza"
+            title="Una solucion comercial clara tambien necesita confianza clara."
+            description="Ventra sirve mejor cuando el negocio ya quiere vender con mas orden, responder mejor y reducir carga operativa repetitiva."
+          >
+            <div className="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+              <div className="grid gap-4">
+                {landingTrustNotes.map((item) => (
+                  <div key={item.title} className="rounded-[1.5rem] border bg-card p-5 shadow-card">
+                    <p className="text-lg font-semibold">{item.title}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-[1.75rem] border bg-card p-6 shadow-card">
+                <h3 className="text-2xl font-semibold tracking-[-0.04em]">Preguntas frecuentes</h3>
+                <Accordion type="single" collapsible className="mt-5">
+                  {landingFaqs.map((faq, index) => (
+                    <AccordionItem key={faq.title} value={`faq-${index}`} className="border-b last:border-0">
+                      <AccordionTrigger className="text-left text-base font-semibold hover:no-underline">
+                        {faq.title}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+                        {faq.description}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
             </div>
+          </LandingSection>
+
+          <section className="pb-24 pt-6">
+            <div className="container mx-auto px-4">
+              <div className="overflow-hidden rounded-[2rem] border bg-card p-8 shadow-card md:p-10">
+                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                  <div>
+                    <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+                      Cierre de la landing
+                    </div>
+                    <h2 className="mt-5 max-w-3xl text-3xl font-semibold tracking-[-0.05em] md:text-5xl">
+                      Si quieres vender mas, responder mejor y reducir carga operativa, Ventra te ayuda a montar ese sistema.
+                    </h2>
+                    <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                      Atrae mejores oportunidades, atiende consultas automaticamente y empuja el cierre con mas orden.
+                      Esa es la promesa. Esa es la experiencia que debe comunicar la landing.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <Link to="/register" className="block">
+                      <Button size="lg" className="gradient-ventra h-12 w-full rounded-xl text-base text-primary-foreground shadow-ventra">
+                        Solicitar implementacion
+                      </Button>
+                    </Link>
+                    <a href="#quiz" className="block">
+                      <Button size="lg" variant="outline" className="h-12 w-full rounded-xl text-base">
+                        Hacer diagnostico primero
+                      </Button>
+                    </a>
+                    <div className="rounded-[1.35rem] border bg-muted/20 p-4">
+                      <p className="text-sm font-semibold">Resultado esperado</p>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        Mas oportunidades, respuestas mas rapidas, mejor seguimiento y un proceso comercial mucho mas claro.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer className="border-t border-border/70 py-10">
+          <div className="container mx-auto flex flex-col gap-4 px-4 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
             <div>
-              <h4 className="font-semibold text-sm mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Privacidad</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Términos</a></li>
-              </ul>
+              <VentraLogo markClassName="h-9 w-9" wordmarkClassName="text-xl" />
+              <p className="mt-3 max-w-md">
+                Ventra AI ayuda a negocios a atraer clientes, atender consultas y cerrar mas ventas con un sistema comercial mas claro.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-5">
+              <a href="#solution" className="transition-colors hover:text-foreground">Sistema</a>
+              <a href="#quiz" className="transition-colors hover:text-foreground">Diagnostico</a>
+              <a href="#pricing" className="transition-colors hover:text-foreground">Planes</a>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t flex items-center justify-between text-sm text-muted-foreground">
-            <p>© 2026 Ventra Revenue OS. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }

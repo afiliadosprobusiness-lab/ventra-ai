@@ -1,9 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { SidebarNavGroup } from "@/components/app/SidebarNavGroup";
 import { VentraLogo } from "@/components/brand/ventra-logo";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar";
 import { useDemoAuth } from "@/lib/demo-auth";
-import { appNavigationGroups, appSettingsLink } from "@/lib/app-navigation";
+import { appNavigationSections, appSettingsLink } from "@/lib/app-navigation";
 import { cn } from "@/lib/utils";
 
 export function AppSidebar() {
@@ -28,9 +27,9 @@ export function AppSidebar() {
         <Link to="/app" className="inline-flex">
           <VentraLogo markClassName="h-11 w-11" wordmarkClassName="text-sidebar-foreground" />
         </Link>
-        <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground/60">MVP ventas</p>
+        <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground/60">Ventra AI</p>
         <p className="mt-2 max-w-[14rem] text-xs leading-relaxed text-muted-foreground/80">
-          Captar demanda, nutrir conversaciones y convertir cierres sin menus largos.
+          Atrae mejores oportunidades, respondelas rapido y empuja el cierre sin ruido visual.
         </p>
       </div>
 
@@ -47,24 +46,56 @@ export function AppSidebar() {
                   : "border-sidebar-border/80 bg-white/[0.03] text-muted-foreground hover:bg-white/[0.05] hover:text-sidebar-foreground",
               )}
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">Flujo comercial</p>
-              <p className="mt-1 text-sm font-semibold text-sidebar-foreground">Marketing - Adquisicion - Nurturing - CRM - venta</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">Centro de control</p>
+              <p className="mt-1 text-sm font-semibold text-sidebar-foreground">Adquisicion - Atencion automatica - Cierre</p>
               <p className="mt-2 text-xs leading-relaxed">
-                El dashboard raiz resume lo que hoy esta frenando ingresos.
+                El tablero principal resume donde actuar para vender mas esta semana.
               </p>
             </Link>
 
             <div className="space-y-1.5">
-              <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/55">Modulos</p>
-              <div className="space-y-3">
-                {appNavigationGroups.map((group) => (
-                  <SidebarNavGroup
-                    key={group.id}
-                    group={group}
-                    isGroupActive={group.children.some((item) => isItemActive(item.url, item.exact))}
-                    isItemActive={isItemActive}
-                  />
-                ))}
+              <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/55">Capas del producto</p>
+              <div className="space-y-2">
+                {appNavigationSections.map((section) => {
+                  const SectionIcon = section.icon;
+                  const isActive = isItemActive(section.url, section.exact);
+
+                  return (
+                    <Link
+                      key={section.url}
+                      to={section.url}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "block rounded-2xl border px-3 py-3 transition-all duration-200",
+                        isActive
+                          ? "border-primary/20 bg-primary/10 text-sidebar-foreground shadow-[inset_0_0_0_1px_rgba(16,185,129,0.12)]"
+                          : "border-sidebar-border/70 bg-white/[0.03] text-muted-foreground hover:bg-white/[0.05] hover:text-sidebar-foreground",
+                      )}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={cn(
+                            "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/6 bg-white/[0.04]",
+                            isActive && "border-primary/20 bg-primary/12 text-primary",
+                          )}
+                        >
+                          <SectionIcon className="h-4 w-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="text-[13px] font-semibold tracking-[-0.01em] text-sidebar-foreground">{section.title}</p>
+                            {section.plan ? (
+                              <span className="rounded-full bg-white/[0.06] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                                {section.plan}
+                              </span>
+                            ) : null}
+                          </div>
+                          {section.description ? <p className="mt-1 text-xs leading-relaxed">{section.description}</p> : null}
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </SidebarGroupContent>

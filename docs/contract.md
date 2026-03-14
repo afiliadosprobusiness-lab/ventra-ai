@@ -4,9 +4,9 @@
 
 | Fecha | Cambio | Tipo | Impacto |
 | --- | --- | --- | --- |
-| 2026-03-14 | El modulo `/app/acquisition` ahora concentra un workspace interno completo de Captacion con overview, listado, detail view, importacion, formularios, segmentos y campanas WhatsApp mock. | non-breaking | No cambia rutas canonicas; la profundidad del modulo vive dentro de la misma ruta para mantener compatibilidad con el MVP. |
-| 2026-03-14 | Se simplifico la experiencia privada a un MVP de ventas con solo tres modulos visibles: Adquisicion, Nurturing y Marketing. | non-breaking | Las rutas legacy siguen respondiendo, pero varias ahora redirigen al flujo comercial enfocado. |
-| 2026-03-14 | Se reemplazo la base anterior del frontend por la nueva base oficial y se redujo el mapa de vistas a una sola arquitectura coherente. | breaking | Las rutas canonicas cambiaron; varias rutas legacy ahora redirigen a vistas consolidadas. |
+| 2026-03-14 | La landing comercial fue refactorizada para vender la promesa de sistema comercial en 3 capas e incluir dark mode y un wizard consultivo reutilizable. | non-breaking | No cambia rutas canonicas; cambia la narrativa publica, el flujo visual y la reutilizacion del diagnostico entre `/` y `/quiz`. |
+| 2026-03-14 | La app privada se reorganizo oficialmente en tres capas visibles: `/app/acquisition`, `/app/automatic-attention` y `/app/closing`. | breaking | Las rutas canonicas del producto cambiaron para simplificar la experiencia; las rutas legacy se mantienen como redirects para no romper accesos previos. |
+| 2026-03-14 | Se preparo la experiencia para una escalera comercial con plan basico y plan completo. | non-breaking | No agrega backend ni billing real; cambia el posicionamiento visible del producto. |
 
 ## 1. Alcance actual
 
@@ -32,7 +32,7 @@ Ventra sigue siendo un frontend mockup de alta fidelidad.
 
 Reglas:
 - describir la app como demo navegable con datos mock
-- no prometer integraciones reales con CRM, WhatsApp, telefonia o billing
+- no prometer integraciones reales con CRM, WhatsApp, Ads Manager o billing
 - no documentar automatizaciones como si ejecutaran procesos productivos
 - usar la base oficial actual como source of truth de estructura y experiencia
 - el acceso demo usa solo `localStorage` del navegador
@@ -67,8 +67,8 @@ No introducir otro framework base.
 - `src/components/app/`: sidebar y topbar del producto
 - `src/components/ui/`: primitives de shadcn/ui
 - `src/layouts/`: layout principal autenticado
-- `src/lib/mock-data.ts`: datasets mock compartidos del cockpit base
-- `src/lib/acquisition/`: tipos, config, helpers y datasets mock del workspace de Captacion
+- `src/lib/mock-data.ts`: datasets mock compartidos del frontend
+- `src/lib/acquisition/`: datasets y helpers legacy reutilizables, fuera del menu principal
 - `src/lib/demo-auth.tsx`: sesion mock, usuario demo y registro local
 
 ## 5. Rutas principales
@@ -83,13 +83,8 @@ No introducir otro framework base.
 - `/onboarding`
 - `/app`
 - `/app/acquisition`
-- `/app/prospector`
-- `/app/voice-ai`
-- `/app/conversations`
-- `/app/creative-studio`
-- `/app/campaigns`
-- `/app/widgets`
-- `/app/analytics`
+- `/app/automatic-attention`
+- `/app/closing`
 - `/app/settings`
 
 ### 5.2 Aliases legacy soportados
@@ -99,16 +94,19 @@ Se mantienen redirecciones limpias para no romper accesos previos:
 - `/pricing` y `/faq` vuelven a la landing
 - `/workspaces/select` y `/workspaces/new` redirigen a `/onboarding`
 - `/app/overview` redirige a `/app`
-- rutas secundarias o legacy del dashboard anterior redirigen a un modulo vigente del MVP
+- rutas legacy del frontend anterior redirigen a una de las tres capas activas
 
 Ejemplos:
-- `/app/acquisition/prospector-ai` -> `/app/prospector`
-- `/app/acquisition/widgets` -> `/app/acquisition`
-- `/app/widgets/:widgetId` -> `/app/widgets`
-- `/app/voice-ai/calls/:callId` -> `/app/voice-ai`
-- `/app/pipeline` -> `/app/conversations`
-- `/app/contacts` -> `/app/conversations`
-- `/app/automations` -> `/app/voice-ai`
+- `/app/prospector` -> `/app/acquisition`
+- `/app/creative-studio` -> `/app/acquisition`
+- `/app/campaigns` -> `/app/acquisition`
+- `/app/widgets` -> `/app/acquisition`
+- `/app/analytics` -> `/app/acquisition`
+- `/app/voice-ai` -> `/app/automatic-attention`
+- `/app/automations` -> `/app/automatic-attention`
+- `/app/conversations` -> `/app/closing`
+- `/app/pipeline` -> `/app/closing`
+- `/app/contacts` -> `/app/closing`
 - `/app/community/*` -> `/app`
 - `/app/workspaces/*` -> `/app`
 
@@ -116,7 +114,8 @@ Ejemplos:
 
 ### 6.1 Publicos
 
-- Landing comercial
+- Landing comercial con narrativa de sistema comercial en 3 capas
+- Diagnostico consultivo embebido dentro de la landing
 - Quiz de recomendacion
 - Login
 - Register
@@ -125,44 +124,54 @@ Ejemplos:
 
 ### 6.2 Privados
 
-- Cockpit de ventas
-- Adquisicion de clientes
-  - Captacion
-    - overview operativo
-    - listado y detail view
-    - importacion CSV
-    - formularios y widgets
-    - segmentos
-    - campanas WhatsApp
-  - Prospeccion IA
-- Nurturing
-  - Chatbot WhatsApp
-  - CRM
-- Marketing
-  - Generador de ads
-  - Variantes de ads
-  - Copys
-  - Creativos
+- Centro de control comercial
+- Adquisicion
+  - wizard / quiz de campana
+  - ideas para anuncios
+  - hooks
+  - copys
+  - recomendaciones accionables
+- Atencion automatica
+  - configuracion del asistente
+  - objetivos
+  - objeciones
+  - prompt e instrucciones
+  - preview conversacional
+- Cierre
+  - clasificacion y etiquetas
+  - seguimiento comercial
+  - copys personalizados
+  - metricas simples de conversion
 - Configuracion
 
-## 7. Restricciones
+## 7. Posicionamiento y planes
+
+La UI debe soportar este esquema visible:
+
+- Plan basico: `9.99 USD / mes`, incluye solo `Atencion automatica`
+- Plan completo: `99 USD / mes`, incluye `Adquisicion + Atencion automatica + Cierre`
+
+Regla:
+- la experiencia debe hacer evidente que el producto puede crecer por capas
+
+## 8. Restricciones
 
 - La marca visible debe seguir siendo `Ventra`.
-- No se deben reintroducir modulos del frontend viejo como vistas paralelas.
-- No se deben crear menus utilitarios largos que compitan con el flujo comercial principal.
-- El shell privado debe seguir siendo una sola experiencia enfocada en revenue.
-- Los datos siguen siendo mock y pueden vivir en archivos de dominio mientras mantengan tipado y consistencia con el MVP.
+- No se debe usar `Nurturing` como nombre visible en la experiencia.
+- No se deben reintroducir menus utilitarios largos que compitan con el flujo comercial principal.
+- El shell privado debe seguir siendo una sola experiencia enfocada en atraer, atender y cerrar.
+- Los datos siguen siendo mock y pueden vivir en archivos de dominio mientras mantengan tipado y consistencia con el frontend.
 
-## 8. Alcance real del frontend
+## 9. Alcance real del frontend
 
 El repo actual representa:
 - un mockup comercial navegable
 - una base oficial de UI para seguir iterando producto
-- una demostracion coherente de Ventra como sistema de ventas enfocado en revenue
+- una demostracion coherente de Ventra como sistema comercial simple
 
 El repo no representa:
 - producto listo para produccion backend
 - autorizacion real de servidor
 - seguridad real de credenciales
 - automatizaciones productivas
-- modulos operativos fuera del flujo de captar, nutrir y cerrar
+- modulos operativos fuera del flujo de Adquisicion, Atencion automatica y Cierre

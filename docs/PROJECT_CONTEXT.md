@@ -4,7 +4,7 @@
 
 - Product: `Ventra`
 - Repo role: official frontend mockup repo
-- Current product shape: focused sales MVP
+- Current product shape: simple commercial system in three layers
 - Stack: React 18, TypeScript, Vite, React Router, Tailwind CSS, shadcn/ui, TanStack Query
 - State mode: static mock data in frontend
 
@@ -23,14 +23,8 @@
 
 - `/app`
 - `/app/acquisition`
-  - workspace interno de Captacion con overview, leads, detail, importacion, formularios, segmentos y campanas WhatsApp
-- `/app/prospector`
-- `/app/voice-ai`
-- `/app/conversations`
-- `/app/creative-studio`
-- `/app/campaigns`
-- `/app/widgets`
-- `/app/analytics`
+- `/app/automatic-attention`
+- `/app/closing`
 - `/app/settings`
 
 ### Compatibility aliases
@@ -40,7 +34,7 @@
 - `/workspaces/select`
 - `/workspaces/new`
 - `/app/overview`
-- legacy app routes redirected into the focused MVP flow
+- legacy app routes redirected into one of the three active layers
 
 ## Main UI shells
 
@@ -54,40 +48,46 @@
 ## Data stance
 
 - shared demo data lives in `src/lib/mock-data.ts`
-- acquisition-specific mock data lives in `src/lib/acquisition/`
+- acquisition-specific mock data remains available in `src/lib/acquisition/`
 - frontend auth lives in `src/lib/demo-auth.tsx`
 - session is stored locally for demo use only
 - all app modules are static or mock-driven views
 
 ## Product structure
 
-- Cockpit de ventas
+- Centro de control comercial
 - Adquisicion
-  - Captacion
-    - experiencia interna tabbed dentro de `/app/acquisition`
-  - Prospeccion IA
-- Nurturing
-  - Chatbot WhatsApp
-  - CRM
-- Marketing
-  - Generador de ads
-  - Variantes de ads
-  - Copys
-  - Creativos
+  - campanas guiadas
+  - ideas de anuncios
+  - hooks
+  - copys
+  - recomendaciones accionables
+- Atencion automatica
+  - configuracion del asistente
+  - objetivos y objeciones
+  - prompt e instrucciones
+  - preview conversacional
+- Cierre
+  - seguimiento comercial
+  - etiquetas e intencion
+  - mensajes personalizados
+  - metricas simples de conversion
 - Configuracion
 
 ## Visual stance
 
-- landing: high-clarity SaaS marketing page
-- app shell: compact operational dashboard with light and dark support
-- navigation: three focused groups and one compact settings entry
+- landing: narrativa comercial clara, hero fuerte, soporte light/dark y wizard consultivo reutilizable
+- app shell: compacta, premium y sobria
+- navigation: solo tres capas principales y una entrada de configuracion
+- dashboard: centro de control corto y orientado a resultado
 - brand accent: green / teal Ventra
 - typography: `Space Grotesk` + `Manrope`
-- message: captar leads, nutrir conversaciones y cerrar ventas
+- message: atraer clientes, atenderlos automaticamente y cerrar mas ventas
 
 ## Constraints
 
-- treat the current focused sales MVP as the structural source of truth
-- do not revive removed utility modules as first-class navigation
+- `docs/context.md` is the product source of truth
+- treat the three-layer model as the official structure
 - keep legacy redirects aligned with `docs/contract.md`
 - keep the repo described as frontend/mockup, not backend product
+- do not revive hidden legacy modules as first-class navigation

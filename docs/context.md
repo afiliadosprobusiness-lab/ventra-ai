@@ -2,86 +2,124 @@
 
 ## Que es Ventra
 
-Ventra es un sistema de ventas enfocado en revenue. Ya no se presenta como una suite amplia de operaciones, sino como un MVP claro para captar leads, nutrir conversaciones y convertir ventas.
+Ventra es una solucion comercial simple para ayudar a un negocio a:
+- atraer mejores oportunidades
+- atender prospectos automaticamente
+- dar seguimiento y cerrar mas ventas
 
-## Que resuelve
+La experiencia del producto ya no debe sentirse como una suite amplia de herramientas IA.
+Debe sentirse como un sistema claro, corto y facil de vender.
 
-Ventra ayuda a:
-- generar assets y mensajes comerciales desde Marketing
-- captar oportunidades calificadas desde Adquisicion
-- responder y dar seguimiento desde Nurturing
-- organizar contexto comercial dentro del CRM
-- reducir fuga entre lead entrante, conversacion y cierre
+## Promesa oficial del producto
+
+Ventra comunica un flujo de tres capas:
+
+`Adquisicion -> Atencion automatica -> Cierre`
+
+Cada capa existe para empujar resultado comercial, no complejidad.
 
 ## Flujo oficial del producto
 
-El producto debe comunicar siempre este flujo:
+### 1. Adquisicion
 
-`Marketing genera assets y mensajes -> Adquisicion trae leads -> Nurturing conversa y da seguimiento -> CRM organiza -> se cierra la venta`
+Mensaje visible:
 
-## Modulos incluidos en la base actual
+`Te ayudamos a crear mejores campanas para atraer nuevos clientes.`
 
-- Landing comercial
-- Quiz de recomendacion
+Enfoque:
+- wizard o quiz corto para definir campana
+- generador de ideas para anuncios
+- angulos sugeridos
+- hooks
+- copys
+- estructuras de anuncios
+- recomendaciones accionables para captar mejores leads
+
+No debe sentirse como:
+- un set de tools tecnicas
+- un studio inflado
+- un modulo centrado en scraping
+
+### 2. Atencion automatica
+
+Mensaje visible:
+
+`Configura tu asistente para atender prospectos automaticamente.`
+
+Enfoque:
+- objetivo principal del asistente
+- objetivos comunes
+- objeciones comunes
+- editor simple de instrucciones
+- prompt del asistente
+- preview conversacional
+- mejora iterativa de respuestas
+
+Regla:
+- no usar la palabra `Nurturing` en la experiencia visible
+
+### 3. Cierre
+
+Mensaje visible:
+
+`Te ayudamos a dar seguimiento a tus prospectos y empujar el cierre.`
+
+Enfoque:
+- etiquetado por interes e intencion
+- clasificacion basica de leads
+- seguimiento comercial
+- mensajes personalizados para uso manual
+- metricas simples de conversion
+
+No debe convertirse en:
+- un CRM gigante
+- un panel saturado de widgets y etapas
+
+## Estructura visible oficial
+
+### Publico
+
+- Landing comercial enfocada en la promesa de sistema comercial de 3 capas
+- Landing con hero, problema, solucion, beneficios, como funciona, quiz consultivo, planes, confianza y CTA final
+- Landing con soporte claro/oscuro visible
+- Quiz
 - Login / Register / Forgot password
 - Onboarding
-- Cockpit de ventas
+
+### Privado
+
+- Centro de control comercial
 - Adquisicion
-  - Captacion
-    - overview con metricas, distribuciones y segmentos activos
-    - listado de leads con filtros, bulk actions y detail view lateral
-    - importacion CSV mock con mapeo, warnings, errores y duplicados
-    - formularios y widgets inbound con preview, codigo embebible y performance
-    - segmentos guardados y builder de audiencias
-    - campanas WhatsApp con flujo controlado y plantillas aprobadas
-  - Prospeccion IA
-- Nurturing
-  - Chatbot WhatsApp
-  - CRM
-- Marketing
-  - Generador de ads
-  - Variantes de ads
-  - Copys
-  - Creativos
+- Atencion automatica
+- Cierre
 - Configuracion
 
 ## Naturaleza del repo
 
-Este repositorio es el frontend ejecutable oficial de Ventra en modo mockup de alta fidelidad.
+Este repositorio sigue siendo el frontend ejecutable oficial de Ventra en modo mockup de alta fidelidad.
 
 Eso significa:
 - la experiencia es navegable y consistente
 - los datasets son mock y viven en frontend
-- no existe backend real detras de auth, CRM, nurturing o marketing
-- no existe integracion productiva con WhatsApp, Ads Manager o billing
-- el acceso de prueba se resuelve con almacenamiento local en el navegador
+- no existe backend real detras de auth, chatbot, seguimiento o billing
+- no existe integracion productiva con WhatsApp, Ads Manager o CRM externo
+- el acceso demo se resuelve con almacenamiento local en el navegador
 
-## Base actual del producto
+## Posicionamiento comercial
 
-La base oficial vigente parte de la entrega integrada el 2026-03-14 y simplificada el mismo dia hacia un MVP de ventas.
+Ventra debe quedar preparado para dos escalones de producto:
 
-Decisiones clave:
-- la experiencia privada visible se redujo a tres modulos
-- el dashboard raiz funciona como cockpit comercial y no como overview inflado
-- las rutas no prioritarias siguen existiendo solo como compatibilidad mediante redirects
-- la marca Ventra se mantiene
+- Plan basico: 9.99 USD / mes, incluye solo Atencion automatica
+- Plan completo: 99 USD / mes, incluye Adquisicion + Atencion automatica + Cierre
 
-## Estado funcional real
-
-La app hoy comunica:
-- una landing comercial clara
-- un onboarding basico de workspace
-- un cockpit privado de revenue
-- una navegacion lateral corta con solo tres grupos principales
-- un workspace profundo de Captacion dentro de `/app/acquisition` sin abrir rutas nuevas
-- un foco visual y verbal en captar, nutrir y cerrar
-
-La app no comunica:
-- persistencia real
-- permisos reales de backend
-- automatizaciones productivas
-- una suite operativa extensa o multiproposito
+La UI debe hacer evidente que:
+- un negocio puede empezar por la capa basica
+- luego crecer hacia la solucion completa
 
 ## Regla de continuidad futura
 
-Cualquier iteracion futura debe mantener el producto enfocado en revenue y evitar expandir la navegacion privada fuera del flujo comercial principal salvo que exista una necesidad real y comprobable.
+Cualquier iteracion futura debe mantener estas reglas:
+- menos cosas, mas claridad
+- menos modulos visibles, mas foco comercial
+- menos lenguaje tecnico, mas lenguaje orientado a negocio
+- si una seccion no aporta a Adquisicion, Atencion automatica o Cierre, no debe vivir en el menu principal
