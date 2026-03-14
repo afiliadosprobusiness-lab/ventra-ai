@@ -80,9 +80,9 @@ export const appRouteMeta: Record<string, AppRouteMeta> = {
   },
   "/app/acquisition": {
     title: "Captacion",
-    description: "Canales, formularios y fuentes que hoy alimentan el pipeline comercial.",
-    searchPlaceholder: "Buscar canal, landing o fuente...",
-    primaryAction: "Nuevo lead",
+    description: "Captura, valida y prepara leads para CRM o campanas WhatsApp con control comercial.",
+    searchPlaceholder: "Buscar lead, fuente o segmento...",
+    primaryAction: "Importar leads",
   },
   "/app/prospector": {
     title: "Prospeccion IA",

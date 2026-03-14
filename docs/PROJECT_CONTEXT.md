@@ -23,6 +23,7 @@
 
 - `/app`
 - `/app/acquisition`
+  - workspace interno de Captacion con overview, leads, detail, importacion, formularios, segmentos y campanas WhatsApp
 - `/app/prospector`
 - `/app/voice-ai`
 - `/app/conversations`
@@ -52,7 +53,8 @@
 
 ## Data stance
 
-- core demo data lives in `src/lib/mock-data.ts`
+- shared demo data lives in `src/lib/mock-data.ts`
+- acquisition-specific mock data lives in `src/lib/acquisition/`
 - frontend auth lives in `src/lib/demo-auth.tsx`
 - session is stored locally for demo use only
 - all app modules are static or mock-driven views
@@ -62,6 +64,7 @@
 - Cockpit de ventas
 - Adquisicion
   - Captacion
+    - experiencia interna tabbed dentro de `/app/acquisition`
   - Prospeccion IA
 - Nurturing
   - Chatbot WhatsApp

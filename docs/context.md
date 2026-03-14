@@ -28,6 +28,12 @@ El producto debe comunicar siempre este flujo:
 - Cockpit de ventas
 - Adquisicion
   - Captacion
+    - overview con metricas, distribuciones y segmentos activos
+    - listado de leads con filtros, bulk actions y detail view lateral
+    - importacion CSV mock con mapeo, warnings, errores y duplicados
+    - formularios y widgets inbound con preview, codigo embebible y performance
+    - segmentos guardados y builder de audiencias
+    - campanas WhatsApp con flujo controlado y plantillas aprobadas
   - Prospeccion IA
 - Nurturing
   - Chatbot WhatsApp
@@ -67,6 +73,7 @@ La app hoy comunica:
 - un onboarding basico de workspace
 - un cockpit privado de revenue
 - una navegacion lateral corta con solo tres grupos principales
+- un workspace profundo de Captacion dentro de `/app/acquisition` sin abrir rutas nuevas
 - un foco visual y verbal en captar, nutrir y cerrar
 
 La app no comunica:

@@ -4,6 +4,7 @@
 
 | Fecha | Cambio | Tipo | Impacto |
 | --- | --- | --- | --- |
+| 2026-03-14 | El modulo `/app/acquisition` ahora concentra un workspace interno completo de Captacion con overview, listado, detail view, importacion, formularios, segmentos y campanas WhatsApp mock. | non-breaking | No cambia rutas canonicas; la profundidad del modulo vive dentro de la misma ruta para mantener compatibilidad con el MVP. |
 | 2026-03-14 | Se simplifico la experiencia privada a un MVP de ventas con solo tres modulos visibles: Adquisicion, Nurturing y Marketing. | non-breaking | Las rutas legacy siguen respondiendo, pero varias ahora redirigen al flujo comercial enfocado. |
 | 2026-03-14 | Se reemplazo la base anterior del frontend por la nueva base oficial y se redujo el mapa de vistas a una sola arquitectura coherente. | breaking | Las rutas canonicas cambiaron; varias rutas legacy ahora redirigen a vistas consolidadas. |
 
@@ -66,7 +67,8 @@ No introducir otro framework base.
 - `src/components/app/`: sidebar y topbar del producto
 - `src/components/ui/`: primitives de shadcn/ui
 - `src/layouts/`: layout principal autenticado
-- `src/lib/mock-data.ts`: datasets mock unificados
+- `src/lib/mock-data.ts`: datasets mock compartidos del cockpit base
+- `src/lib/acquisition/`: tipos, config, helpers y datasets mock del workspace de Captacion
 - `src/lib/demo-auth.tsx`: sesion mock, usuario demo y registro local
 
 ## 5. Rutas principales
@@ -126,6 +128,12 @@ Ejemplos:
 - Cockpit de ventas
 - Adquisicion de clientes
   - Captacion
+    - overview operativo
+    - listado y detail view
+    - importacion CSV
+    - formularios y widgets
+    - segmentos
+    - campanas WhatsApp
   - Prospeccion IA
 - Nurturing
   - Chatbot WhatsApp
@@ -143,7 +151,7 @@ Ejemplos:
 - No se deben reintroducir modulos del frontend viejo como vistas paralelas.
 - No se deben crear menus utilitarios largos que compitan con el flujo comercial principal.
 - El shell privado debe seguir siendo una sola experiencia enfocada en revenue.
-- Los datos siguen siendo mock y centralizados en `src/lib/mock-data.ts`.
+- Los datos siguen siendo mock y pueden vivir en archivos de dominio mientras mantengan tipado y consistencia con el MVP.
 
 ## 8. Alcance real del frontend
 
