@@ -54,7 +54,7 @@ Caracteristicas:
 
 ### Sidebar
 
-- navegacion agrupada
+- navegacion agrupada por etapa o intencion comercial
 - active state con color de marca
 - branding arriba
 - cuenta y settings abajo
@@ -63,9 +63,16 @@ Caracteristicas:
 
 - titulo de pagina
 - search compacta
+- switch claro/oscuro visible y persistente
 - workspace switcher
 - CTA de accion rapida
 - notificaciones
+
+### Dark mode
+
+- usar los mismos tokens semanticos del modo claro
+- mantener contraste fuerte en sidebar, cards, tablas e inputs
+- evitar grises claros fijos dentro de charts o badges
 
 ## Interaction patterns
 

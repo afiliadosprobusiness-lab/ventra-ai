@@ -64,6 +64,8 @@ La app hoy comunica:
 - una landing comercial clara
 - un onboarding basico de workspace
 - una app privada con modulos resumidos pero coherentes
+- una navegacion privada agrupada por etapa comercial para reducir ruido visual
+- un switch de tema claro/oscuro persistente dentro del shell autenticado
 - un sistema visual listo para seguir iterando
 
 La app no comunica:

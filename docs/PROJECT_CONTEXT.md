@@ -64,8 +64,8 @@
 ## Visual stance
 
 - landing: high-clarity SaaS marketing page
-- app shell: light operational dashboard
-- navigation: grouped sidebar + compact topbar
+- app shell: operational dashboard with light and dark support
+- navigation: sidebar grouped by commercial stage + compact topbar with theme switch
 - brand accent: green / teal Ventra
 - typography: `Space Grotesk` + `Manrope`
 

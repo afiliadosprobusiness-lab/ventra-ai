@@ -35,7 +35,7 @@ export default function CampaignsPage() {
               </div>
             </div>
             <div className="grid grid-cols-5 gap-4">
-              {[["Enviados", c.sent], ["Abiertos", c.opened], ["Clicks", c.clicked], ["Convertidos", c.converted], ["Revenue", c.revenue]].map(([label, val]) => (
+              {[["Enviados", c.sent], ["Abiertos", c.opened], ["Clicks", c.clicked], ["Convertidos", c.converted], ["Ingresos", c.revenue]].map(([label, val]) => (
                 <div key={label as string}>
                   <p className="text-xs text-muted-foreground">{label}</p>
                   <p className="text-lg font-bold tabular-nums">{typeof val === 'number' ? val.toLocaleString() : val}</p>
