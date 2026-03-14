@@ -1,155 +1,77 @@
 # Ventra Frontend Project Context
 
 ## Snapshot
+
 - Product: `Ventra`
-- Repo role: active frontend implementation repo
+- Repo role: official frontend mockup repo
+- Current base: Lovable delivery integrated on 2026-03-14
 - Stack: React 18, TypeScript, Vite, React Router, Tailwind CSS, shadcn/ui, TanStack Query
-- State mode: mock-driven frontend with local session persistence
-- Visual mode: premium dual system with public dark narrative and private light operational dashboard
+- State mode: static mock data in frontend
 
-## Current architecture
+## Active route model
 
-### Public routes
+### Canonical public routes
+
 - `/`
-- `/pricing`
-- `/faq`
 - `/quiz`
 - `/login`
 - `/register`
 - `/forgot-password`
-
-### Bootstrap routes
 - `/onboarding`
-- `/workspaces/select`
-- `/workspaces/new`
 
-### Private routes
-- `/app/overview`
+### Canonical app routes
+
+- `/app`
 - `/app/acquisition`
-- `/app/acquisition/prospector-ai`
-- `/app/acquisition/widgets`
-- `/app/acquisition/forms`
-- `/app/acquisition/quiz`
-- `/app/acquisition/sources`
+- `/app/prospector`
 - `/app/widgets`
-- `/app/widgets/new`
-- `/app/widgets/:widgetId`
 - `/app/voice-ai`
-- `/app/voice-ai/inbound`
-- `/app/voice-ai/outbound`
-- `/app/voice-ai/calls/:callId`
 - `/app/creative-studio`
-- `/app/creative-studio/projects/new`
-- `/app/creative-studio/projects/:projectId`
-- `/app/creative-studio/assets`
-- `/app/creative-studio/templates`
 - `/app/conversations`
-- `/app/conversations/:threadId`
-- `/app/community`
-- `/app/community/setup`
-- `/app/community/home`
-- `/app/community/feed`
-- `/app/community/members`
-- `/app/community/events`
-- `/app/community/settings`
 - `/app/pipeline`
-- `/app/pipeline/:dealId`
-- `/app/campaigns`
-- `/app/campaigns/:campaignId`
 - `/app/contacts`
-- `/app/contacts/:contactId`
+- `/app/campaigns`
 - `/app/analytics`
 - `/app/automations`
+- `/app/community`
 - `/app/workspaces`
-- `/app/workspaces/:workspaceId`
 - `/app/settings`
-- `/app/settings/profile`
-- `/app/settings/team`
-- `/app/settings/branding`
-- `/app/settings/billing`
-- `/app/settings/integrations`
 
-## Guards and session behavior
-- Guest routes redirect authenticated users into the product.
-- Onboarding routes require auth and stop after onboarding is complete.
-- Private app routes require:
-  - authenticated user
-  - onboarding completed
-  - selected workspace
-- Session state is stored in local storage through `src/lib/session.tsx`.
+### Compatibility aliases
+
+- `/pricing`
+- `/faq`
+- `/workspaces/select`
+- `/workspaces/new`
+- old detail and nested routes redirected to canonical modules
 
 ## Main UI shells
-- `LandingPage`: premium public narrative
-- `AuthShell`: login/register/forgot
-- `OnboardingPage`, `WorkspaceSelectPage`, `WorkspaceCreatePage`
-- `AppShell`: sidebar + topbar + routed workspace views
 
-## Core frontend entities already mocked
-- User
-- Workspace
-- Metric
-- Lead
-- Contact
-- Thread
-- VoiceCall
-- Widget
-- CreativeProject
-- Campaign
-- CommunityProfile
-- CommunitySpace
-- CommunityPost
-- CommunityMember
-- CommunityEvent
-- Deal
-- Automation
-- Event
-- Insight
-- Notification
-- Prospect
-- ProspectAudit
-- ProspectorSavedSearch
+- `LandingPage`
+- `LoginPage`
+- `RegisterPage`
+- `ForgotPasswordPage`
+- `OnboardingPage`
+- `AppLayout`
 
-## Integration stance
-- Contacts are the commercial anchor.
-- Leads originate in acquisition surfaces.
-- Prospector AI discovers net-new businesses before they become leads or contacts.
-- Community turns contacts, customers or partners into members without leaving the workspace.
-- Calls, conversations, campaigns and deals reflect the same workspace data graph.
-- Creative Studio assets are represented as campaign-connected production objects.
+## Data stance
 
-## Visible Prospector AI integration
-- Overview and Analytics now expose prospecting metrics, funnel state and routed-account activity.
-- Contacts and Pipeline explicitly show prospecting origin, badges and timeline continuity.
-- Conversations and Voice AI include prospect-origin handoff queues as part of their normal operator flow.
-- Creative Studio and Campaigns can present pitch/proposal motions connected to prospecting accounts.
-- Community offers a private member hub with builder, feed, members, events and settings tied to the same workspace context.
-- The private shell includes cross-module quick actions so prospecting can jump into Contacts, Pipeline, Conversations, Voice AI and Campaigns without breaking context.
+- core demo data lives in `src/lib/mock-data.ts`
+- no auth/session persistence from the old frontend remains
+- no route guards remain in the current base
+- all app modules are present as static or mock-driven views
 
-## Visible Community integration
-- Community Members now exposes a richer member detail surface with role, status, join date, activity level, spaces, recent contributions, events, tags, notes and quick actions.
-- Member records visibly connect to Contacts when a CRM mock record exists, including badges, quick actions and contact timeline continuity.
-- Contacts now surface whether a contact is also a Community member and can jump back into the Community member workflow.
-- Analytics now includes community metrics such as total members, engagement rate, posts this week, event attendance, member growth, top spaces and high-engagement members.
-- Campaigns now includes lightweight community plays for invite, re-engagement, event reminder and new member nurture motions.
-- Workspaces now show the community posture of each workspace as part of the same product shell.
+## Visual stance
 
-## Documentation stance
-- The product must still be described as a frontend demo / mockup, not as a backend-connected production system.
-- Prospector AI should be documented as an integrated discovery layer inside Acquisition that already affects CRM mock, outreach, assets and analytics views.
+- landing: high-clarity SaaS marketing page
+- app shell: light operational dashboard
+- navigation: grouped sidebar + compact topbar
+- brand accent: green / teal Ventra
+- typography: `Space Grotesk` + `Manrope`
 
-## Branding and visual rules
-- Public shell: dark premium narrative
-- Private shell: clean light operational surfaces with dark sidebar
-- Base product accent: green / teal for core operational actions
-- Fonts: `Space Grotesk` + `Manrope`
-- Shared card treatment via `.ventra-card`
-- Private shell optimized for dense operational screens
-- Landing optimized for conversion and narrative
-- Public messaging now sells Ventra as an end-to-end revenue system: discover, diagnose, capture, contact, follow up, close and reactivate
+## Constraints
 
-## Constraints for future work
-- Do not rename modules away from the Ventra naming contract.
-- Do not reintroduce legacy product names.
-- Extend mock data coherently across modules.
-- Keep route aliases aligned with `docs/contract.md`.
-- Keep the quiz tied to module recommendations such as Prospector AI, Widgets, Conversations, Voice AI, Creative Studio and Community.
+- treat Lovable as the current structural source of truth
+- do not revive the removed frontend tree
+- keep legacy redirects aligned with `docs/contract.md`
+- keep the repo described as frontend/mockup, not backend product

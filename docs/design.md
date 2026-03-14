@@ -1,203 +1,84 @@
-# Ventra Design Direction
+# Ventra Design
 
-## Objetivo
-Ventra debe verse como una plataforma comercial premium y unificada.
+## Objetivo visual
 
-No debe sentirse como:
-- dashboard generico
-- CRM renombrado
-- collage de modulos aislados
-- mockup bonito pero sin continuidad operativa
+La version oficial actual debe verse como un SaaS comercial moderno, limpio y listo para demos. La referencia principal es la entrega de Lovable, no el frontend anterior.
 
-Si el usuario recorre Overview, Acquisition, Prospector AI, Contacts, Pipeline, Conversations, Voice AI, Campaigns, Creative Studio y Analytics, debe percibir un solo sistema operativo comercial.
+## Principios visuales
 
-## Estado visual actual del producto
-El frontend vigente usa:
-- shell oscuro premium
-- sidebar y topbar densos pero legibles
-- surfaces tipo glass controlado
-- badges de estado y origen
-- drawers, detail panels y quick actions
-- tipografia fuerte para titulos y UI compacta para operacion
+- claridad primero: cards legibles, KPIs visibles y jerarquia simple
+- marca Ventra: verde/teal como acento principal
+- contraste controlado: landing con mas energia, app privada con tono operativo claro
+- composicion compacta: dashboards directos, sin ruido ni exceso de bloques
+- motion discreta: aparicion suave, sin efectos innecesarios
 
-Esto sigue siendo un mockup de alta fidelidad. La calidad visual debe comunicar producto serio y listo para evolucionar, no producto incompleto.
+## Sistema de layout
 
-## Identidad madre
-Ventra usa una sola identidad.
+### Landing
 
-Base:
-- obsidian
-- midnight navy
-- cool slate
+- navbar sticky
+- hero central con CTA principal y CTA secundario
+- secciones apiladas por narrativa: beneficios, problema/solucion, modulos, pricing y FAQ
+- grid responsive con tarjetas uniformes
 
-Signals:
-- electric cyan
-- vivid violet
-- restrained amber
+### App privada
 
-Regla:
-- ningun modulo debe parecer otra marca
-- Prospector AI puede tener enfasis propio, pero siempre dentro del sistema visual Ventra
+- layout principal de dos zonas: sidebar + contenido
+- topbar fija en la parte superior del area de trabajo
+- contenido con padding estable y grids 2, 3 y 4 columnas segun modulo
+- maximos anchos moderados en pantallas de onboarding y auth
 
-## Tipografia
-- `Space Grotesk` para display y headings
-- `Manrope` para UI, tablas, forms y contenido operacional
-
-La jerarquia debe sentirse:
-- precisa
-- comercial
-- premium
-- densa sin ser agresiva
-
-## Shell privado
+## Sidebar y topbar
 
 ### Sidebar
-Debe comunicar:
-- jerarquia clara
-- agrupacion por areas
-- active state visible
-- workspace context arriba
-- user context abajo
 
-Estado actual:
-- `Prospector AI` ya tiene visibilidad propia
-- su presencia debe leerse como capa AI dentro del mismo operating system
+- contiene la marca Ventra
+- agrupa navegacion en `Principal` e `Inteligencia`
+- usa active state simple con acento verde
+- incluye acceso a Settings y estado de cuenta demo al final
 
 ### Topbar
-Debe contener:
-- command search
-- workspace switcher
-- quick actions
-- notifications
-- session actions
 
-Estado actual:
-- los quick actions ya funcionan como puente entre discovery, CRM mock, pipeline, campanas y assets
-- esta capa de navegacion debe reforzar integracion, no solo conveniencia
+- muestra el titulo de la vista activa
+- incluye buscador compacto
+- expone selector de workspace
+- mantiene CTA primaria para crear lead
+- conserva notificaciones y salida
 
-## Principios de composicion
+## Tipo de dashboard
 
-### Overview
-- combinacion de executive summary y launchpad operacional
-- espacio para metricas, timeline y quick actions
-- Prospector AI debe aparecer como contributor del sistema, no como extra
+El dashboard actual es un business dashboard ligero:
+- KPIs arriba
+- chart de revenue
+- insights de IA
+- tablas resumidas
+- actividad reciente
 
-### Acquisition
-- mezcla de control inbound y discovery net-new
-- Prospector AI debe ocupar un rol visible y aspiracional
-- la pagina debe hacer evidente que discovery puede terminar en CRM mock, conversations, voice, campaign o creative
+No busca profundidad operacional por entidad. Busca lectura rapida y coherencia de producto.
 
-### Prospector AI
-Debe sentirse como:
-- radar comercial premium
-- audit desk
-- launch surface para acciones cross-module
+## Reglas de consistencia visual
 
-No debe verse como:
-- tabla plana
-- CRM de leads
-- buscador sin narrativa comercial
+- usar siempre el mismo radio, sombras y espaciado de la base Lovable
+- no reintroducir glassmorphism, shells oscuros complejos ni paneles heredados del frontend viejo
+- mantener tipografia `Space Grotesk` para headings y `Manrope` para UI
+- conservar gradientes verdes de Ventra para CTAs y elementos de marca
+- mantener las vistas privadas dentro del mismo lenguaje de cards blancas y fondo neutro
+- cualquier nuevo modulo debe encajar en el mismo sidebar, topbar y sistema de cards
 
-Componentes visuales clave:
-- search composer
-- saved searches
-- results view densa
-- audit panel 360
-- action states
-- drawers para pitch o mockup
+## Decisiones tomadas a partir de Lovable
 
-### Contacts y Pipeline
-Deben actuar como backbone del sistema.
+- la arquitectura visual oficial ahora es la de Lovable
+- el mapa de paginas se simplifico a una sola version por modulo
+- el shell privado adopta un dashboard claro y mas directo
+- el onboarding y auth usan la misma direccion de UI que la app
+- se conservaron solo redirects para rutas legacy, no layouts ni pantallas antiguas
 
-Requisitos visuales:
-- origen visible
-- labels de discovery
-- continuidad con timeline
-- detail view con quick jumps a otras superficies
+## Que no debe romperse en futuras iteraciones
 
-### Conversations y Voice AI
-Deben verse como capas de ejecucion sobre el mismo account record.
-
-Se espera:
-- contexto lateral rico
-- handoff visible
-- origen del motion
-- links rapidos a pipeline y creative support
-
-### Campaigns y Creative Studio
-Deben expresar que assets y outreach forman parte del mismo flujo comercial.
-
-Creative Studio:
-- no solo produce mockups
-- tambien produce pitch kits, proposal support y sales proof
-
-Campaigns:
-- no solo muestra audiencia o spend
-- tambien debe dejar visible si el motion nace desde prospecting
-
-### Analytics
-Debe traducir operacion a lectura comercial.
-
-Con Prospector AI integrado:
-- la historia visual no puede empezar en lead capture solamente
-- debe existir lectura de discovery, activacion y revenue influence
-
-## Patrones visuales obligatorios
-- metric cards con numero fuerte y delta claro
-- status badges consistentes
-- origin badges para cuentas o deals cuando aplique
-- timeline feed para continuidad operativa
-- quick action tiles cross-module
-- cards de insight
-- tablas compactas con contexto
-- detail panels o drawers para no romper el flujo
-
-## Lenguaje visual de Prospector AI
-Prospector AI puede enfatizar:
-- amber y cyan para discovery y signal
-- paneles mas densos
-- lenguaje de audit, radar, account, signal y activation
-
-Pero siempre debe conservar:
-- radius
-- spacing
-- badges
-- tipografia
-- shell
-- card treatment
-
-## Consistencia de copy y naming
-Usar lenguaje coherente con la promesa comercial:
-- discovery
-- commercial audit
-- account activation
-- revenue motion
-- contact record
-- opportunity
-- partner motion
-- pitch kit
-
-Evitar:
-- nombres de CRM viejo
-- lenguaje demasiado tecnico de scraping o enrichment
-- copy que sugiera backend real o automatizacion productiva
-
-## Responsive y densidad
-- no romper jerarquia en mobile
-- evitar overflow horizontal
-- mantener cards y tablas legibles
-- conservar sensacion premium en desktop y mobile
-
-## Regla final
-Si una mejora visual hace que Prospector AI se vea mas llamativo pero menos integrado, es incorrecta.
-
-La calidad visual correcta es la que hace sentir que:
-- Ventra descubre
-- Ventra captura
-- Ventra activa
-- Ventra conversa
-- Ventra llama
-- Ventra produce assets
-- Ventra mide
-
-Todo dentro del mismo sistema.
+- la marca `Ventra`
+- el layout base de landing + auth/onboarding + app shell
+- la navegacion lateral agrupada
+- la topbar con acciones globales
+- la paleta principal verde/teal
+- la consistencia entre overview, acquisition, prospector, pipeline, campaigns y analytics
+- el principio de una sola base oficial, sin fusionar de nuevo con el frontend anterior
