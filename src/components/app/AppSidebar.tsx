@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SidebarNavGroup } from "@/components/app/SidebarNavGroup";
 import { VentraLogo } from "@/components/brand/ventra-logo";
-import { Accordion } from "@/components/ui/accordion";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar";
 import { useDemoAuth } from "@/lib/demo-auth";
 import { appNavigationGroups, appSettingsLink } from "@/lib/app-navigation";
@@ -16,18 +14,6 @@ export function AppSidebar() {
     if (exact) return location.pathname === url;
     return location.pathname.startsWith(url);
   };
-
-  const activeGroupId = appNavigationGroups.find((group) =>
-    group.children.some((item) => isItemActive(item.url, item.exact)),
-  )?.id;
-
-  const [expandedGroup, setExpandedGroup] = useState<string | undefined>(activeGroupId);
-
-  useEffect(() => {
-    if (activeGroupId) {
-      setExpandedGroup(activeGroupId);
-    }
-  }, [activeGroupId]);
 
   const initials = user?.name
     .split(" ")
@@ -70,24 +56,16 @@ export function AppSidebar() {
 
             <div className="space-y-1.5">
               <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/55">Modulos</p>
-
-              <Accordion
-                type="single"
-                collapsible
-                value={expandedGroup}
-                onValueChange={(value) => setExpandedGroup(value || undefined)}
-                className="space-y-1.5"
-              >
+              <div className="space-y-3">
                 {appNavigationGroups.map((group) => (
                   <SidebarNavGroup
                     key={group.id}
                     group={group}
-                    isExpanded={expandedGroup === group.id}
                     isGroupActive={group.children.some((item) => isItemActive(item.url, item.exact))}
                     isItemActive={isItemActive}
                   />
                 ))}
-              </Accordion>
+              </div>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
