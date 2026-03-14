@@ -85,4 +85,4 @@ Caracteristicas:
 
 - extender sobre el layout actual, no crear shells nuevos
 - si un modulo necesita mas profundidad, empezar por tabs o bloques internos antes de crear nuevas rutas
-- mantener una sola direccion visual basada en la entrega de Lovable
+- mantener una sola direccion visual basada en la base oficial actual

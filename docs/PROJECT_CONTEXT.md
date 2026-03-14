@@ -4,7 +4,7 @@
 
 - Product: `Ventra`
 - Repo role: official frontend mockup repo
-- Current base: Lovable delivery integrated on 2026-03-14
+- Current base: official frontend base integrated on 2026-03-14
 - Stack: React 18, TypeScript, Vite, React Router, Tailwind CSS, shadcn/ui, TanStack Query
 - State mode: static mock data in frontend
 
@@ -71,7 +71,7 @@
 
 ## Constraints
 
-- treat Lovable as the current structural source of truth
+- treat the current official base as the structural source of truth
 - do not revive the removed frontend tree
 - keep legacy redirects aligned with `docs/contract.md`
 - keep the repo described as frontend/mockup, not backend product

@@ -50,10 +50,10 @@ Eso significa:
 
 ## Base actual del producto
 
-La base oficial vigente proviene del frontend entregado por Lovable e incorporado a este repo el 2026-03-14.
+La base oficial vigente proviene de la nueva entrega integrada a este repo el 2026-03-14.
 
 Decisiones clave:
-- Lovable es la referencia principal de estructura, layout y composicion
+- la base oficial actual es la referencia principal de estructura, layout y composicion
 - se mantuvo la marca Ventra
 - se conservaron aliases de rutas antiguas solo como compatibilidad
 - no se mantuvieron modulos viejos en paralelo

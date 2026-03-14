@@ -4,11 +4,11 @@
 
 | Fecha | Cambio | Tipo | Impacto |
 | --- | --- | --- | --- |
-| 2026-03-14 | Se reemplazo la base anterior del frontend por la entrega de Lovable y se redujo el mapa de vistas a una sola arquitectura coherente. | breaking | Las rutas canonicas cambiaron; varias rutas legacy ahora redirigen a vistas consolidadas. |
+| 2026-03-14 | Se reemplazo la base anterior del frontend por la nueva base oficial y se redujo el mapa de vistas a una sola arquitectura coherente. | breaking | Las rutas canonicas cambiaron; varias rutas legacy ahora redirigen a vistas consolidadas. |
 
 ## 1. Alcance actual
 
-Este contrato describe la base oficial vigente del frontend de Ventra despues del reemplazo por la version de Lovable.
+Este contrato describe la base oficial vigente del frontend de Ventra despues del reemplazo por la nueva base del producto.
 
 Incluye:
 - estructura real del frontend
@@ -32,7 +32,7 @@ Reglas:
 - describir la app como demo navegable con datos mock
 - no prometer integraciones reales con CRM, WhatsApp, telefonia o billing
 - no documentar automatizaciones como si ejecutaran procesos productivos
-- usar la base Lovable como source of truth de estructura y experiencia
+- usar la base oficial actual como source of truth de estructura y experiencia
 - el acceso demo usa solo `localStorage` del navegador
 
 ## 3. Stack vigente
@@ -144,7 +144,7 @@ Ejemplos:
 - La marca visible debe seguir siendo `Ventra`.
 - No se deben reintroducir modulos del frontend viejo como vistas paralelas.
 - No se deben recrear detail pages antiguas salvo que la nueva base las necesite de verdad.
-- El shell privado debe seguir siendo una sola experiencia; no mezclar layouts viejos con el layout de Lovable.
+- El shell privado debe seguir siendo una sola experiencia; no mezclar layouts viejos con la base actual.
 - Los datos siguen siendo mock y centralizados en `src/lib/mock-data.ts`.
 
 ## 8. Alcance real del frontend

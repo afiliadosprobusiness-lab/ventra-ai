@@ -2,7 +2,7 @@
 
 ## Objetivo visual
 
-La version oficial actual debe verse como un SaaS comercial moderno, limpio y listo para demos. La referencia principal es la entrega de Lovable, no el frontend anterior.
+La version oficial actual debe verse como un SaaS comercial moderno, limpio y listo para demos. La referencia principal es la base oficial vigente, no el frontend anterior.
 
 ## Principios visuales
 
@@ -58,16 +58,16 @@ No busca profundidad operacional por entidad. Busca lectura rapida y coherencia 
 
 ## Reglas de consistencia visual
 
-- usar siempre el mismo radio, sombras y espaciado de la base Lovable
+- usar siempre el mismo radio, sombras y espaciado de la base oficial actual
 - no reintroducir glassmorphism, shells oscuros complejos ni paneles heredados del frontend viejo
 - mantener tipografia `Space Grotesk` para headings y `Manrope` para UI
 - conservar gradientes verdes de Ventra para CTAs y elementos de marca
 - mantener las vistas privadas dentro del mismo lenguaje de cards blancas y fondo neutro
 - cualquier nuevo modulo debe encajar en el mismo sidebar, topbar y sistema de cards
 
-## Decisiones tomadas a partir de Lovable
+## Decisiones tomadas en la base oficial actual
 
-- la arquitectura visual oficial ahora es la de Lovable
+- la arquitectura visual oficial ahora es la del producto actual
 - el mapa de paginas se simplifico a una sola version por modulo
 - el shell privado adopta un dashboard claro y mas directo
 - el onboarding y auth usan la misma direccion de UI que la app
