@@ -4,6 +4,7 @@
 
 | Fecha | Cambio | Tipo | Impacto |
 | --- | --- | --- | --- |
+| 2026-03-14 | La landing adopto un lenguaje visual premium inspirado en el proyecto de referencia interno, con nav glass, hero centrado y superficies mas refinadas. | non-breaking | No cambia rutas ni modulos publicos; mejora la percepcion visual y la jerarquia comercial del flujo publico. |
 | 2026-03-14 | La landing comercial fue refactorizada para vender la promesa de sistema comercial en 3 capas e incluir dark mode y un wizard consultivo reutilizable. | non-breaking | No cambia rutas canonicas; cambia la narrativa publica, el flujo visual y la reutilizacion del diagnostico entre `/` y `/quiz`. |
 | 2026-03-14 | La app privada se reorganizo oficialmente en tres capas visibles: `/app/acquisition`, `/app/automatic-attention` y `/app/closing`. | breaking | Las rutas canonicas del producto cambiaron para simplificar la experiencia; las rutas legacy se mantienen como redirects para no romper accesos previos. |
 | 2026-03-14 | Se preparo la experiencia para una escalera comercial con plan basico y plan completo. | non-breaking | No agrega backend ni billing real; cambia el posicionamiento visible del producto. |

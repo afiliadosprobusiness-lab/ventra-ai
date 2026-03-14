@@ -82,6 +82,7 @@ No debe convertirse en:
 - Landing comercial enfocada en la promesa de sistema comercial de 3 capas
 - Landing con hero, problema, solucion, beneficios, como funciona, quiz consultivo, planes, confianza y CTA final
 - Landing con soporte claro/oscuro visible
+- Landing con lenguaje visual premium tipo glass, cards suaves y jerarquia comercial mas directa
 - Quiz
 - Login / Register / Forgot password
 - Onboarding

@@ -76,7 +76,7 @@
 
 ## Visual stance
 
-- landing: narrativa comercial clara, hero fuerte, soporte light/dark y wizard consultivo reutilizable
+- landing: narrativa comercial clara con lenguaje visual premium, nav glass, hero centrado y wizard consultivo reutilizable
 - app shell: compacta, premium y sobria
 - navigation: solo tres capas principales y una entrada de configuracion
 - dashboard: centro de control corto y orientado a resultado
