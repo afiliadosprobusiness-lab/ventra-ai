@@ -1,61 +1,86 @@
-export type AppNavigationItem = {
+import type { LucideIcon } from "lucide-react";
+import {
+  BarChart3,
+  Building2,
+  GitBranch,
+  Globe,
+  LayoutDashboard,
+  LayoutGrid,
+  Megaphone,
+  MessageSquare,
+  Palette,
+  Phone,
+  Search,
+  Send,
+  Settings,
+  Users,
+  Zap,
+} from "lucide-react";
+
+export type AppNavigationLink = {
   title: string;
+  description?: string;
   url: string;
-  icon: string;
+  icon: LucideIcon;
+  exact?: boolean;
 };
 
-export type AppNavigationStage = {
+export type AppNavigationGroup = {
+  id: string;
   title: string;
   description: string;
-  url: string;
-  icon: string;
-  items: AppNavigationItem[];
+  icon: LucideIcon;
+  children: AppNavigationLink[];
 };
 
-export const appNavigationStages: AppNavigationStage[] = [
+export type AppSecondaryNavigationSection = {
+  title: string;
+  items: AppNavigationLink[];
+};
+
+export const appNavigationGroups: AppNavigationGroup[] = [
   {
+    id: "acquisition",
     title: "Adquisicion de clientes",
     description: "Trae leads nuevos desde anuncios, formularios y prospeccion.",
-    url: "/app/acquisition",
-    icon: "Megaphone",
-    items: [
-      { title: "Captacion", url: "/app/acquisition", icon: "Megaphone" },
-      { title: "Prospeccion IA", url: "/app/prospector", icon: "Search" },
-      { title: "Widgets", url: "/app/widgets", icon: "LayoutGrid" },
-      { title: "Campanas", url: "/app/campaigns", icon: "Send" },
+    icon: Megaphone,
+    children: [
+      { title: "Captacion", url: "/app/acquisition", icon: Megaphone },
+      { title: "Prospeccion IA", url: "/app/prospector", icon: Search },
+      { title: "Widgets", url: "/app/widgets", icon: LayoutGrid },
+      { title: "Campanas", url: "/app/campaigns", icon: Send },
     ],
   },
   {
+    id: "nurture",
     title: "Nutricion y respuesta",
-    description: "Mantiene la conversacion activa con mensajes, llamadas y creativos.",
-    url: "/app/conversations",
-    icon: "MessageSquare",
+    description: "Mantiene el contacto activo con mensajes, llamadas, seguimiento y creativos.",
+    icon: MessageSquare,
+    children: [
+      { title: "Conversaciones", url: "/app/conversations", icon: MessageSquare },
+      { title: "Llamadas IA", url: "/app/voice-ai", icon: Phone },
+      { title: "Seguimientos", url: "/app/pipeline", icon: GitBranch },
+      { title: "Creativos", url: "/app/creative-studio", icon: Palette },
+    ],
+  },
+];
+
+export const appSecondaryNavigationSections: AppSecondaryNavigationSection[] = [
+  {
+    title: "Vista general",
     items: [
-      { title: "Conversaciones", url: "/app/conversations", icon: "MessageSquare" },
-      { title: "Llamadas IA", url: "/app/voice-ai", icon: "Phone" },
-      { title: "Estudio creativo", url: "/app/creative-studio", icon: "Palette" },
+      { title: "Resumen", url: "/app", icon: LayoutDashboard, exact: true },
+      { title: "Contactos", url: "/app/contacts", icon: Users },
+      { title: "Automatizaciones", url: "/app/automations", icon: Zap },
+      { title: "Analitica", url: "/app/analytics", icon: BarChart3 },
+      { title: "Comunidad", url: "/app/community", icon: Globe },
     ],
   },
   {
-    title: "Cierre y seguimiento",
-    description: "Ordena oportunidades, tareas comerciales y seguimientos clave.",
-    url: "/app/pipeline",
-    icon: "GitBranch",
+    title: "Workspace",
     items: [
-      { title: "Pipeline", url: "/app/pipeline", icon: "GitBranch" },
-      { title: "Contactos", url: "/app/contacts", icon: "Users" },
-      { title: "Automatizaciones", url: "/app/automations", icon: "Zap" },
-    ],
-  },
-  {
-    title: "Vision del negocio",
-    description: "Revisa avances, metrica comercial y comunidad del equipo.",
-    url: "/app",
-    icon: "BarChart3",
-    items: [
-      { title: "Resumen", url: "/app", icon: "LayoutDashboard" },
-      { title: "Analitica", url: "/app/analytics", icon: "BarChart3" },
-      { title: "Comunidad", url: "/app/community", icon: "Globe" },
+      { title: "Espacios", url: "/app/workspaces", icon: Building2 },
+      { title: "Configuracion", url: "/app/settings", icon: Settings },
     ],
   },
 ];
@@ -66,9 +91,9 @@ export const appRouteTitles: Record<string, string> = {
   "/app/prospector": "Prospeccion IA",
   "/app/widgets": "Widgets",
   "/app/voice-ai": "Llamadas IA",
-  "/app/creative-studio": "Estudio creativo",
+  "/app/creative-studio": "Creativos",
   "/app/conversations": "Conversaciones",
-  "/app/pipeline": "Pipeline",
+  "/app/pipeline": "Seguimientos",
   "/app/contacts": "Contactos",
   "/app/campaigns": "Campanas",
   "/app/analytics": "Analitica",
