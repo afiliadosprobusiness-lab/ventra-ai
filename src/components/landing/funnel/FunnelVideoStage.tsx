@@ -25,7 +25,7 @@ export function FunnelVideoStage({ diagnosis, profile, onContinue }: FunnelVideo
   const progressLabel = useMemo(() => {
     if (isUnlocked) return "Siguiente paso desbloqueado";
     if (!isActivated) return "Activa el audio para empezar";
-    return `Mira el ${remaining}% restante para desbloquear la oferta`;
+    return `Mira el ${remaining}% restante para desbloquear la propuesta`;
   }, [isActivated, isUnlocked, remaining]);
 
   async function handleActivate() {
@@ -92,7 +92,7 @@ export function FunnelVideoStage({ diagnosis, profile, onContinue }: FunnelVideo
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{progressLabel}</p>
             <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
               <LockKeyhole className="h-3.5 w-3.5 text-primary" />
-              <span>El CTA con precio se muestra solo despues del {unlockThreshold}% de reproduccion.</span>
+              <span>La propuesta se muestra solo despues del {unlockThreshold}% de reproduccion.</span>
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@ export function FunnelVideoStage({ diagnosis, profile, onContinue }: FunnelVideo
               disabled={!isUnlocked}
               className="h-14 w-full rounded-2xl gradient-ventra text-base font-semibold text-primary-foreground shadow-ambient-lg disabled:pointer-events-none disabled:opacity-0"
             >
-              Quiero implementar mi sistema por {diagnosis.implementationPrice}
+              Quiero ver la propuesta de implementacion
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </motion.div>

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { ArrowLeft, Compass, LayoutDashboard, Search } from "lucide-react";
+import { ArrowLeft, Compass, LayoutDashboard, Megaphone } from "lucide-react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { VentraLogo } from "@/components/brand/ventra-logo";
@@ -7,7 +7,7 @@ import { useDemoAuth } from "@/lib/demo-auth";
 
 const suggestedLinks = [
   { label: "Overview", to: "/app", icon: LayoutDashboard },
-  { label: "Prospector AI", to: "/app/prospector", icon: Search },
+  { label: "Adquisicion", to: "/app/acquisition", icon: Megaphone },
   { label: "Landing", to: "/", icon: Compass },
 ];
 
@@ -27,7 +27,7 @@ const NotFound = () => {
             <div>
               <VentraLogo theme="light" markClassName="h-14 w-14" wordmarkClassName="text-4xl" />
               <p className="mt-10 text-xs font-semibold uppercase tracking-[0.24em] text-primary-foreground/80">Ruta no encontrada</p>
-              <h1 className="mt-4 text-4xl font-bold leading-tight">Esta vista no existe dentro de la base oficial de Ventra.</h1>
+              <h1 className="mt-4 text-4xl font-bold leading-tight">Esta vista no existe dentro del sistema comercial actual de Ventra.</h1>
               <p className="mt-4 max-w-md text-base leading-relaxed text-primary-foreground/80">
                 La URL <span className="font-semibold text-primary-foreground">{location.pathname}</span> no corresponde a una ruta valida del producto actual.
               </p>
@@ -43,7 +43,7 @@ const NotFound = () => {
             </span>
             <h2 className="mt-6 text-3xl font-bold text-foreground">Vuelve al flujo correcto</h2>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
-              La navegacion de Ventra fue consolidada para mantener una sola experiencia de producto. Usa alguno de estos accesos para retomar el contexto.
+              La navegacion de Ventra fue consolidada para mantener una sola experiencia enfocada en adquisicion, atencion automatica y cierre. Usa alguno de estos accesos para retomar el contexto.
             </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">

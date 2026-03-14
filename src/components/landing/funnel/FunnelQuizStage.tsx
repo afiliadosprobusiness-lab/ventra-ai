@@ -199,16 +199,16 @@ export function FunnelQuizStage({
       </div>
 
       <aside className="space-y-5 lg:sticky lg:top-28 lg:self-start">
-        <div className="glass-card rounded-[1.8rem] p-6">
+          <div className="glass-card rounded-[1.8rem] p-6">
           <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
             Lo que estas desbloqueando
           </div>
-          <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">No es un formulario. Es un filtro serio.</h2>
+          <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">No es un formulario. Es un filtro consultivo serio.</h2>
           <div className="mt-5 space-y-4">
             {[
               "Diagnostico real de tu cuello de botella principal.",
-              "Video corto antes de mostrar la oferta para filtrar curiosos.",
-              "Siguiente paso con precio explicito e implementacion clara.",
+              "Explicacion breve antes de mostrar la oferta para filtrar curiosos.",
+              "Siguiente paso con una implementacion clara y precio explicito.",
             ].map((item) => (
               <div key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
                 <BadgeCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
@@ -224,7 +224,7 @@ export function FunnelQuizStage({
             <p className="text-sm font-semibold">Pensado para negocios que quieren implementar, no solo explorar.</p>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Si encajas, al final veras el siguiente paso con una oferta de implementacion y rutas para checkout, comunidad base o evaluacion.
+            Si encajas, al final veras el siguiente paso con una oferta de implementacion y rutas para aplicar, seguir o evaluar encaje.
           </p>
         </div>
       </aside>

@@ -1,114 +1,158 @@
-import { ArrowUpRight, MessageCircle, Target, TrendingUp, Users } from "lucide-react";
-
-const kpis = [
-  { label: "Leads nuevos", value: "89", change: "+12%", icon: Users },
-  { label: "Conversaciones activas", value: "34", change: "+8%", icon: MessageCircle },
-  { label: "En seguimiento", value: "52", change: "+15%", icon: Target },
-  { label: "Tasa de cierre", value: "31%", change: "+5%", icon: TrendingUp },
-];
-
-const activity = [
-  { name: "Maria Lopez", action: "fue marcada como alta intencion por el asistente", time: "Hace 5 min" },
-  { name: "Carlos Ruiz", action: "respondio al mensaje de seguimiento", time: "Hace 12 min" },
-  { name: "Ana Torres", action: "inicio conversacion por WhatsApp", time: "Hace 25 min" },
-  { name: "Pedro Gomez", action: "cerrado como cliente", time: "Hace 1 hora" },
-];
-
-const chartData = [40, 55, 35, 60, 75, 50, 80, 65, 90, 70, 85, 95];
-const chartLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+import { ArrowUpRight, CircleDollarSign, Sparkles } from "lucide-react";
+import {
+  overviewFunnel,
+  overviewMetrics,
+  overviewOperationalSignals,
+  overviewPriorityBoard,
+  overviewRecentActivity,
+} from "@/lib/commercial-hub";
 
 export default function OverviewPage() {
   return (
-    <div className="w-full">
-      <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl font-bold text-foreground">Overview</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Resumen de tu sistema comercial</p>
-      </div>
+    <div className="space-y-6">
+      <section className="surface-panel overflow-hidden p-6 sm:p-8">
+        <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+          <div>
+            <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              Revenue command center
+            </div>
+            <h1 className="mt-5 max-w-3xl text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
+              Una vista corta para decidir donde mover el sistema comercial hoy.
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Ventra prioriza pocas senales, pero las correctas: oportunidades nuevas, conversaciones activas,
+              seguimiento vivo y conversion real.
+            </p>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:mb-8 xl:grid-cols-4">
-        {kpis.map((kpi) => (
-          <div key={kpi.label} className="rounded-2xl border border-border bg-card p-5 sm:p-6">
-            <div className="mb-3 flex items-center justify-between">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10">
-                <kpi.icon className="h-4 w-4 text-primary" />
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              {overviewOperationalSignals.map((item) => (
+                <div key={item.title} className="surface-subtle p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                    <item.icon className="h-4 w-4" />
+                  </div>
+                  <p className="mt-4 text-sm font-semibold">{item.title}</p>
+                  <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{item.value}</p>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{item.helper}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="surface-subtle p-5 sm:p-6">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Pulso semanal</p>
+                <p className="mt-2 text-xl font-semibold">Embudo operativo</p>
               </div>
-              <div className="flex items-center gap-0.5 text-xs font-medium text-primary tabular-nums">
-                {kpi.change}
+              <div className="rounded-full border border-primary/20 bg-primary/10 p-2 text-primary">
+                <CircleDollarSign className="h-4 w-4" />
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              {overviewFunnel.map((item, index) => (
+                <div key={item.label}>
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold">{item.label}</p>
+                      <p className="text-xs text-muted-foreground">{item.revenue}</p>
+                    </div>
+                    <p className="text-lg font-semibold tabular-nums">{item.value}</p>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400"
+                      style={{ width: `${Math.max(14, 100 - index * 14)}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
+        {overviewMetrics.map((metric) => (
+          <article key={metric.label} className="surface-panel p-5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <metric.icon className="h-4 w-4" />
+              </div>
+              <div className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+                {metric.delta}
                 <ArrowUpRight className="h-3 w-3" />
               </div>
             </div>
-            <div className="text-2xl font-bold tabular-nums">{kpi.value}</div>
-            <div className="mt-1 text-xs text-muted-foreground">{kpi.label}</div>
-          </div>
+            <p className="mt-5 text-3xl font-semibold tracking-[-0.05em] tabular-nums">{metric.value}</p>
+            <p className="mt-2 text-sm font-semibold">{metric.label}</p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{metric.detail}</p>
+          </article>
         ))}
-      </div>
+      </section>
 
-      <div className="mb-6 grid gap-4 xl:mb-8 xl:grid-cols-[minmax(0,1.7fr)_minmax(320px,1fr)]">
-        <div className="min-w-0 rounded-2xl border border-border bg-card p-5 sm:p-6">
-          <h3 className="mb-4 text-sm font-semibold">Oportunidades generadas vs. cerradas</h3>
-          <div className="flex h-44 items-end gap-1.5 overflow-hidden sm:h-52">
-            {chartData.map((height, index) => (
-              <div key={chartLabels[index]} className="flex flex-1 flex-col items-center gap-1">
-                <div className="relative w-full overflow-hidden rounded-t-sm bg-primary/15" style={{ height: `${height}%` }}>
-                  <div className="absolute bottom-0 left-0 right-0 rounded-t-sm bg-primary" style={{ height: `${height * 0.55}%` }} />
-                </div>
-                <span className="text-[10px] text-muted-foreground">{chartLabels[index]}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-3 flex items-center gap-4">
-            <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-              <div className="h-2.5 w-2.5 rounded-sm bg-primary/15" /> Generadas
+      <section id="overview-priorities" className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+        <div className="surface-panel p-6 sm:p-7">
+          <div className="flex items-center gap-3">
+            <div className="rounded-full border border-primary/20 bg-primary/10 p-2 text-primary">
+              <Sparkles className="h-4 w-4" />
             </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-              <div className="h-2.5 w-2.5 rounded-sm bg-primary" /> Cerradas
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Prioridades</p>
+              <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em]">Donde intervenir primero</h2>
             </div>
           </div>
-        </div>
 
-        <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
-          <h3 className="mb-4 text-sm font-semibold">Embudo</h3>
-          <div className="space-y-3">
-            {[
-              { label: "Nuevos", val: 89, pct: 100 },
-              { label: "En conversacion", val: 34, pct: 38 },
-              { label: "En seguimiento", val: 52, pct: 58 },
-              { label: "Cerrados", val: 28, pct: 31 },
-              { label: "Perdidos", val: 9, pct: 10 },
-            ].map((item) => (
-              <div key={item.label}>
-                <div className="mb-1 flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">{item.label}</span>
-                  <span className="font-mono text-foreground">{item.val}</span>
+          <div className="mt-6 space-y-4">
+            {overviewPriorityBoard.map((item) => (
+              <article key={item.title} className="surface-subtle p-5">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                    <item.icon className="h-4 w-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-semibold">{item.title}</p>
+                      <span className="rounded-full bg-background px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                        {item.layer}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.summary}</p>
+                    <div className="mt-3 flex flex-wrap gap-3 text-xs">
+                      <span className="rounded-full bg-primary/10 px-3 py-1 font-semibold text-primary">{item.impact}</span>
+                      <span className="rounded-full bg-background px-3 py-1 text-muted-foreground">{item.owner}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full rounded-full bg-primary" style={{ width: `${item.pct}%` }} />
-                </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
-      </div>
 
-      <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
-        <h3 className="mb-4 text-sm font-semibold">Actividad reciente</h3>
-        <div className="space-y-3">
-          {activity.map((item) => (
-            <div key={`${item.name}-${item.time}`} className="flex items-start gap-3">
-              <div className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-                {item.name[0]}
+        <div className="surface-panel p-6 sm:p-7">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Actividad reciente</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em]">Movimiento relevante</h2>
+          <div className="mt-6 space-y-4">
+            {overviewRecentActivity.map((item) => (
+              <div key={`${item.lead}-${item.time}`} className="flex gap-3 rounded-[1.25rem] border border-border/70 bg-background/70 p-4">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                  {item.lead[0]}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm font-semibold">{item.lead}</p>
+                    <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.action}</p>
+                  <p className="mt-2 text-xs text-muted-foreground">{item.time}</p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-foreground">
-                  <span className="font-medium">{item.name}</span>{" "}
-                  <span className="text-muted-foreground">{item.action}</span>
-                </p>
-                <p className="mt-0.5 text-[10px] text-muted-foreground">{item.time}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

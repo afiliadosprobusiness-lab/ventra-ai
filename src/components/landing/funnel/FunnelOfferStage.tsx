@@ -105,8 +105,8 @@ export function FunnelOfferStage({ diagnosis, profile, onRestart }: FunnelOfferS
             <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Siguiente paso</div>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.05em]">Elige como quieres continuar.</h2>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              La arquitectura queda lista para checkout, comunidad base o aplicacion. Hoy el frontend ya te permite
-              simular esas rutas sin depender de backend real.
+              La arquitectura queda lista para aplicar a implementacion, seguir con acompanamiento base o pedir una
+              evaluacion. Hoy el frontend ya te permite simular esas rutas sin depender de backend real.
             </p>
             <button
               type="button"

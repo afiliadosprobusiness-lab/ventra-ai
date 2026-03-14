@@ -1,158 +1,147 @@
-import { useState } from "react";
-import { Search, Send } from "lucide-react";
-
-type Lead = {
-  id: number;
-  name: string;
-  source: string;
-  score: number;
-  status: "nuevo" | "en_seguimiento" | "cerrado" | "perdido";
-  lastInteraction: string;
-  suggestedAction: string;
-};
-
-const leadsData: Lead[] = [
-  { id: 1, name: "Maria Lopez", source: "WhatsApp", score: 92, status: "en_seguimiento", lastInteraction: "Hace 5 min", suggestedAction: "Enviar propuesta final de cierre" },
-  { id: 2, name: "Carlos Ruiz", source: "Meta Ads", score: 78, status: "en_seguimiento", lastInteraction: "Hace 1 hora", suggestedAction: "Seguimiento con caso de exito similar" },
-  { id: 3, name: "Ana Torres", source: "Referido", score: 67, status: "nuevo", lastInteraction: "Hace 3 horas", suggestedAction: "Agendar llamada de descubrimiento" },
-  { id: 4, name: "Pedro Gomez", source: "WhatsApp", score: 95, status: "cerrado", lastInteraction: "Ayer", suggestedAction: "-" },
-  { id: 5, name: "Laura Martinez", source: "Web", score: 45, status: "en_seguimiento", lastInteraction: "Hace 2 dias", suggestedAction: "Reenviar informacion de beneficios" },
-  { id: 6, name: "Diego Hernandez", source: "Meta Ads", score: 12, status: "perdido", lastInteraction: "Hace 5 dias", suggestedAction: "-" },
-];
-
-const statusColor = {
-  nuevo: "bg-info/10 text-info",
-  en_seguimiento: "bg-warning/10 text-warning",
-  cerrado: "bg-primary/10 text-primary",
-  perdido: "bg-destructive/10 text-destructive",
-};
-
-const statusLabel = {
-  nuevo: "Nuevo",
-  en_seguimiento: "En seguimiento",
-  cerrado: "Cerrado",
-  perdido: "Perdido",
-};
+import { ArrowRight, Flame, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  closingFollowUpSuggestions,
+  closingMetrics,
+  closingPipeline,
+  closingSignals,
+  closingSpotlightLeads,
+} from "@/lib/commercial-hub";
 
 export default function ClosingPage() {
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<"all" | Lead["status"]>("all");
-
-  const filtered = leadsData.filter((lead) => {
-    const matchesSearch = lead.name.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter = filter === "all" || lead.status === filter;
-    return matchesSearch && matchesFilter;
-  });
-
-  const metrics = {
-    total: leadsData.length,
-    seguimiento: leadsData.filter((lead) => lead.status === "en_seguimiento").length,
-    cerrados: leadsData.filter((lead) => lead.status === "cerrado").length,
-    perdidos: leadsData.filter((lead) => lead.status === "perdido").length,
-    conversion: Math.round((leadsData.filter((lead) => lead.status === "cerrado").length / leadsData.length) * 100),
-  };
-
   return (
-    <div className="w-full">
-      <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl font-bold text-foreground">Cierre</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Prioriza leads, da seguimiento y empuja el cierre</p>
-      </div>
-
-      <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
-        {[
-          { label: "Total", value: metrics.total },
-          { label: "En seguimiento", value: metrics.seguimiento },
-          { label: "Cerrados", value: metrics.cerrados },
-          { label: "Perdidos", value: metrics.perdidos },
-          { label: "Conversion", value: `${metrics.conversion}%` },
-        ].map((metric) => (
-          <div key={metric.label} className="rounded-xl border border-border bg-card p-4 text-center">
-            <div className="text-xl font-bold tabular-nums text-foreground">{metric.value}</div>
-            <div className="mt-1 text-[10px] text-muted-foreground">{metric.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mb-4 flex flex-col gap-3 xl:flex-row">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Buscar lead..."
-            className="w-full rounded-xl border border-border bg-card py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-          />
-        </div>
-
-        <div className="flex flex-wrap gap-1 rounded-xl bg-secondary p-1">
-          {(["all", "nuevo", "en_seguimiento", "cerrado", "perdido"] as const).map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => setFilter(item)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                filter === item ? "bg-card text-foreground shadow-card" : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {item === "all" ? "Todos" : statusLabel[item]}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="overflow-hidden rounded-2xl border border-border bg-card">
-        <div className="hidden grid-cols-12 gap-4 border-b border-border px-5 py-3 text-[10px] uppercase tracking-wider text-muted-foreground sm:grid">
-          <div className="col-span-3">Lead</div>
-          <div className="col-span-1 text-center">Score</div>
-          <div className="col-span-2">Status</div>
-          <div className="col-span-2">Ultima interaccion</div>
-          <div className="col-span-4">Accion sugerida</div>
-        </div>
-
-        {filtered.map((lead) => (
-          <div key={lead.id} className="grid grid-cols-1 items-center gap-3 border-b border-border px-4 py-4 transition-colors hover:bg-secondary/50 last:border-0 sm:grid-cols-12 sm:gap-4 sm:px-5">
-            <div className="flex items-center gap-3 sm:col-span-3">
-              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-                {lead.name[0]}
-              </div>
-              <div className="min-w-0">
-                <div className="truncate text-sm font-medium text-foreground">{lead.name}</div>
-                <div className="text-[10px] text-muted-foreground">{lead.source}</div>
-              </div>
+    <div className="space-y-6">
+      <section className="surface-panel overflow-hidden p-6 sm:p-8">
+        <div className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+          <div>
+            <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              Capa 03
             </div>
+            <h1 className="mt-5 max-w-3xl text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
+              Seguimiento comercial simple para empujar cierre, no para montar otro CRM gigante.
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Aqui solo importa lo que ayuda a convertir: etapas claras, senales de intencion y mensajes de siguiente
+              paso para que las oportunidades no se enfrien.
+            </p>
+          </div>
 
-            <div className="flex items-center gap-2 sm:col-span-1 sm:justify-center">
-              <span className="text-[10px] text-muted-foreground sm:hidden">Score:</span>
-              <div className="flex items-center gap-1.5">
-                <div className="h-1.5 w-8 overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full rounded-full bg-primary" style={{ width: `${lead.score}%` }} />
+          <div className="surface-subtle p-5 sm:p-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Senales de intencion</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {closingSignals.map((signal) => (
+                <span key={signal} className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-semibold text-muted-foreground">
+                  {signal}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-7">
+        {closingMetrics.map((metric) => (
+          <article key={metric.label} className="surface-panel p-4 text-center">
+            <p className="text-2xl font-semibold tracking-[-0.04em] tabular-nums">{metric.value}</p>
+            <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">{metric.label}</p>
+          </article>
+        ))}
+      </section>
+
+      <section id="pipeline-board" className="surface-panel p-6 sm:p-7">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Pipeline</p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em]">Etapas canonicas del cierre</h2>
+          </div>
+          <Button className="rounded-2xl gradient-ventra text-primary-foreground shadow-ventra">
+            Preparar seguimiento
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="mt-6 overflow-x-auto">
+          <div className="grid min-w-[1180px] grid-cols-8 gap-4">
+            {closingPipeline.map((column) => (
+              <div key={column.stage} className="rounded-[1.5rem] border border-border/80 bg-background/70 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold">{column.stage}</p>
+                  <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
+                    {column.leads.length}
+                  </span>
                 </div>
-                <span className="text-xs font-mono text-foreground">{lead.score}</span>
+
+                <div className="mt-4 space-y-3">
+                  {column.leads.map((lead) => (
+                    <article key={`${column.stage}-${lead.name}`} className="rounded-[1.15rem] border border-border bg-card p-4 shadow-card">
+                      <p className="text-sm font-semibold">{lead.name}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">{lead.source}</p>
+                      <p className="mt-3 text-sm font-semibold text-primary">{lead.amount}</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {lead.tags.map((tag) => (
+                          <span key={tag} className="rounded-full bg-muted px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
+        <div id="follow-up-guides" className="surface-panel p-6 sm:p-7">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <Sparkles className="h-4 w-4" />
             </div>
-
-            <div className="sm:col-span-2">
-              <span className={`inline-flex items-center rounded-md px-2.5 py-1 text-[10px] font-medium ${statusColor[lead.status]}`}>
-                {statusLabel[lead.status]}
-              </span>
-            </div>
-
-            <div className="text-xs text-muted-foreground sm:col-span-2">{lead.lastInteraction}</div>
-
-            <div className="sm:col-span-4">
-              {lead.suggestedAction !== "-" ? (
-                <button type="button" className="flex items-center gap-1.5 text-xs text-primary hover:underline">
-                  <Send className="h-3 w-3" />
-                  {lead.suggestedAction}
-                </button>
-              ) : (
-                <span className="text-xs text-muted-foreground">-</span>
-              )}
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Sugerencias de seguimiento</p>
+              <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em]">Mensajes para mover la oportunidad</h2>
             </div>
           </div>
-        ))}
-      </div>
+
+          <div className="mt-6 space-y-4">
+            {closingFollowUpSuggestions.map((item) => (
+              <article key={item.title} className="surface-subtle p-5">
+                <p className="text-sm font-semibold">{item.title}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="surface-panel p-6 sm:p-7">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <Flame className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Focus leads</p>
+              <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em]">Oportunidades para empujar hoy</h2>
+            </div>
+          </div>
+
+          <div className="mt-6 space-y-4">
+            {closingSpotlightLeads.map((lead) => (
+              <article key={lead.name} className="surface-subtle p-5">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold">{lead.name}</p>
+                  <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
+                    {lead.status}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{lead.nextMove}</p>
+                <p className="mt-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{lead.signal}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -47,7 +47,7 @@ export default function LandingPage() {
                 className="mb-8 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                Sistema comercial para atraer, atender y cerrar
+                Implementacion comercial para negocios de servicios
               </motion.div>
 
               <motion.h1
@@ -65,8 +65,8 @@ export default function LandingPage() {
                 transition={{ type: "spring", duration: 0.55, bounce: 0, delay: 0.16 }}
                 className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground"
               >
-                Ventra ayuda a negocios que quieren vender mas sin depender tanto de operacion manual. Ordena la
-                adquisicion, automatiza la atencion y mejora el seguimiento comercial.
+                Ventra monta contigo un sistema comercial para atraer mejores oportunidades, responder con mas criterio
+                y hacer seguimiento hasta el cierre, con software incluido dentro de la implementacion.
               </motion.p>
 
               <motion.div
@@ -77,7 +77,7 @@ export default function LandingPage() {
               >
                 <Link to="/quiz">
                   <Button size="lg" className="h-12 rounded-xl px-8 gradient-ventra text-sm font-medium text-primary-foreground shadow-ambient-lg">
-                    Solicitar implementacion
+                    Aplicar al diagnostico
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
@@ -133,14 +133,14 @@ export default function LandingPage() {
                       </div>
 
                       <div className="grid gap-4 lg:grid-cols-3">
-                        {landingLayers.map((layer, index) => (
+                          {landingLayers.map((layer, index) => (
                           <div key={layer.id} className="rounded-2xl border border-border bg-muted/20 p-4 text-left">
                             <div className="mb-3 flex items-center justify-between gap-3">
                               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                                 {layer.icon ? <layer.icon className="h-5 w-5" /> : null}
                               </div>
                               <span className="rounded-full bg-background px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                                Paso {index + 1}
+                                Capa {index + 1}
                               </span>
                             </div>
                             <div className="text-sm font-semibold">{layer.title}</div>
@@ -158,7 +158,7 @@ export default function LandingPage() {
           <LandingSection
             eyebrow="Problemas reales"
             title="La mayoria de negocios no pierde ventas por falta de interes. Las pierde por desorden comercial."
-            description="Llegan consultas, se responden tarde, falta seguimiento y todo termina dependiendo de operacion manual."
+            description="El problema no suele ser solo el trafico. Suele ser la falta de un sistema claro para atraer, atender y cerrar."
             align="center"
           >
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -179,8 +179,8 @@ export default function LandingPage() {
           <LandingSection
             id="solution"
             eyebrow="La solucion"
-            title="Un sistema de 3 capas para vender mas"
-            description="Cada capa resuelve una parte del proceso comercial. Juntas forman un sistema simple, entendible y orientado a conversion."
+            title="Un sistema de 3 capas para vender mejor"
+            description="Cada capa responde una pregunta de negocio concreta. Juntas forman una implementacion clara, premium y orientada a conversion."
             className="bg-muted/30"
             align="center"
           >
@@ -260,8 +260,8 @@ export default function LandingPage() {
 
           <LandingSection
             eyebrow="Beneficios"
-            title="Resultados reales para tu negocio"
-            description="No se trata de tecnologia por si sola. Se trata de vender mas con menos friccion operativa."
+            title="Resultados comerciales, no mas herramientas"
+            description="La tecnologia importa solo cuando ayuda a vender mejor, responder mas rapido y descargar operacion."
             align="center"
           >
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -282,8 +282,8 @@ export default function LandingPage() {
           <LandingSection
             id="how-it-works"
             eyebrow="Como funciona"
-            title="Un flujo comercial facil de escanear, entender y activar"
-            description="Atraes mejor, atiendes mejor y cierras con mas consistencia."
+            title="Diagnostico, implementacion y continuidad"
+            description="Primero aclaramos el cuello de botella. Luego montamos la capa correcta y dejamos una ruta de crecimiento."
             align="center"
             className="bg-muted/30"
           >
@@ -303,8 +303,8 @@ export default function LandingPage() {
           <LandingSection
             id="quiz"
             eyebrow="CTA principal"
-            title="El siguiente paso ya no es un formulario. Es un embudo consultivo."
-            description="Primero diagnosticas tu negocio. Despues ves un video corto. Solo entonces se revela el CTA con precio y la oferta final."
+            title="El siguiente paso ya no es pedir una demo. Es filtrar si la implementacion encaja contigo."
+            description="Primero diagnosticamos tu negocio. Despues explicamos la logica de implementacion. Solo entonces se muestra la oferta final."
             align="center"
           >
             <div className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
@@ -314,8 +314,8 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-2xl font-semibold">Filtro premium para prospectos con intencion real</h3>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  El flujo clasifica el principal cuello de botella, captura datos clave, obliga a consumir el video y
-                  deja el siguiente paso con precio explicito.
+                  El flujo clasifica el principal cuello de botella, captura datos clave, obliga a consumir la
+                  explicacion y deja el siguiente paso con una oferta mucho mas seria.
                 </p>
                 <div className="mt-6 space-y-3">
                   {[
@@ -332,7 +332,7 @@ export default function LandingPage() {
                 </div>
                 <Link to="/quiz" className="mt-6 inline-flex">
                   <Button className="h-12 rounded-xl px-6 gradient-ventra text-primary-foreground shadow-ambient-lg">
-                    Empezar diagnostico
+                    Aplicar al diagnostico
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
@@ -380,7 +380,7 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Se muestra una mini sales page con beneficios, implementacion desde 1000 USD y rutas hacia comunidad o aplicacion.
+                    Se muestra una oferta seria con beneficios, implementacion desde 1000 USD y rutas para aplicar, seguir o evaluar encaje.
                   </p>
                 </div>
               </div>
@@ -389,9 +389,9 @@ export default function LandingPage() {
 
           <LandingSection
             id="pricing"
-            eyebrow="Precios"
-            title="Empieza simple y escala cuando tenga sentido"
-            description="La estructura acompana la logica del producto: primero respondes mejor, luego activas el sistema completo."
+            eyebrow="Modelo comercial"
+            title="Una entrada consultiva y una oferta principal de implementacion"
+            description="La landing deja claro que Ventra se vende como servicio premium con software incluido."
             align="center"
             className="bg-muted/30"
           >
@@ -402,7 +402,7 @@ export default function LandingPage() {
                   className={`rounded-2xl p-6 sm:p-8 hover-lift ${index === 1 ? "gradient-border border-2 border-primary shadow-ambient-lg bg-card" : "border border-border bg-card"}`}
                 >
                   {index === 1 ? (
-                    <div className="mb-4 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">Sistema completo</div>
+                    <div className="mb-4 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">Oferta principal</div>
                   ) : null}
                   <h3 className="text-xl font-semibold">{plan.name}</h3>
                   <div className="mb-2 mt-3 flex items-baseline gap-1">
@@ -434,8 +434,8 @@ export default function LandingPage() {
 
           <LandingSection
             eyebrow="Confianza"
-            title="Ventra sirve mejor cuando el negocio quiere vender con mas orden y mas velocidad"
-            description="Promesa clara, casos de uso claros y una propuesta facil de entender."
+            title="Ventra sirve mejor cuando el negocio quiere implementar un proceso comercial mas serio"
+            description="Promesa clara, capas claras y una propuesta facil de entender sin parecer software barato."
           >
             <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
               <div className="space-y-4">
@@ -463,15 +463,15 @@ export default function LandingPage() {
           <section className="bg-muted/30 px-6 py-24">
             <div className="container mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
-                Deja de perder clientes. Empieza a cerrar mas ventas.
+                Deja de vender con improvisacion. Empieza a operar con un sistema comercial.
               </h2>
               <p className="mx-auto mb-8 mt-4 max-w-xl text-lg text-muted-foreground">
-                Diagnostica tu situacion, entiende la implementacion y filtra el siguiente paso con una propuesta mas seria.
+                Diagnostica tu situacion, entiende la implementacion y filtra si el siguiente paso correcto es aplicar.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <Link to="/quiz">
                   <Button size="lg" className="h-12 rounded-xl px-8 gradient-ventra text-primary-foreground shadow-ambient-lg">
-                    Solicitar implementacion
+                    Aplicar al diagnostico
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>

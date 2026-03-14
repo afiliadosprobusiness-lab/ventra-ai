@@ -31,7 +31,7 @@ export function LandingNavBar({ isDarkMode, onToggleDarkMode }: LandingNavBarPro
             <nav className="hidden items-center gap-8 lg:flex">
               <a href="#solution" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Solucion</a>
               <a href="#how-it-works" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Como funciona</a>
-              <a href="#pricing" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Precios</a>
+              <a href="#pricing" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Modelo</a>
               <a href="#quiz" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Diagnostico</a>
             </nav>
 
@@ -42,7 +42,7 @@ export function LandingNavBar({ isDarkMode, onToggleDarkMode }: LandingNavBarPro
               </Link>
               <Link to="/quiz">
                 <Button className="rounded-xl gradient-ventra text-primary-foreground shadow-ambient-lg">
-                  Hacer diagnostico
+                  Aplicar
                 </Button>
               </Link>
             </div>
@@ -65,7 +65,7 @@ export function LandingNavBar({ isDarkMode, onToggleDarkMode }: LandingNavBarPro
               <div className="flex flex-col gap-3">
                 <a href="#solution" className="text-sm text-muted-foreground" onClick={() => setIsMenuOpen(false)}>Solucion</a>
                 <a href="#how-it-works" className="text-sm text-muted-foreground" onClick={() => setIsMenuOpen(false)}>Como funciona</a>
-                <a href="#pricing" className="text-sm text-muted-foreground" onClick={() => setIsMenuOpen(false)}>Precios</a>
+                <a href="#pricing" className="text-sm text-muted-foreground" onClick={() => setIsMenuOpen(false)}>Modelo</a>
                 <a href="#quiz" className="text-sm text-muted-foreground" onClick={() => setIsMenuOpen(false)}>Diagnostico</a>
                 <div className="flex flex-col gap-3 pt-2">
                   <Link to="/login" onClick={() => setIsMenuOpen(false)}>
@@ -73,7 +73,7 @@ export function LandingNavBar({ isDarkMode, onToggleDarkMode }: LandingNavBarPro
                   </Link>
                   <Link to="/quiz" onClick={() => setIsMenuOpen(false)}>
                     <Button className="w-full rounded-xl gradient-ventra text-primary-foreground shadow-ambient-lg">
-                      Hacer diagnostico
+                      Aplicar
                     </Button>
                   </Link>
                 </div>

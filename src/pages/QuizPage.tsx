@@ -46,14 +46,14 @@ export default function QuizPage() {
           <div className="container mx-auto">
             <div className="mx-auto mb-10 max-w-3xl text-center">
               <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-                Implementacion Ventra
+                Diagnostico consultivo Ventra
               </div>
               <h1 className="mt-5 text-4xl font-semibold tracking-[-0.06em] md:text-5xl">
-                Diagnostica tu proceso comercial y filtra si esta implementacion encaja contigo.
+                Diagnostica tu sistema comercial y valida si esta implementacion encaja contigo.
               </h1>
               <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                Primero entendemos tu situacion. Luego te mostramos la forma correcta de implementar el sistema y
-                desbloqueamos la oferta solo despues de consumir el video.
+                Primero entendemos tu cuello de botella. Luego te mostramos la logica de implementacion y desbloqueamos
+                la oferta solo despues de consumir la explicacion.
               </p>
             </div>
 

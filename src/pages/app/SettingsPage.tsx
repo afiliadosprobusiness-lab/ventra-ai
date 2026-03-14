@@ -1,121 +1,142 @@
 import { useState } from "react";
-import { Bell, CreditCard, Globe, Shield, User } from "lucide-react";
+import { Building2, ShieldCheck, Sparkles, UserCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useDemoAuth } from "@/lib/demo-auth";
 
-const tabs = [
-  { id: "general", label: "General", icon: User },
-  { id: "notifications", label: "Notificaciones", icon: Bell },
-  { id: "security", label: "Seguridad", icon: Shield },
-  { id: "billing", label: "Facturacion", icon: CreditCard },
-  { id: "integrations", label: "Integraciones", icon: Globe },
-];
-
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("general");
   const { user } = useDemoAuth();
-  const [firstName = "Demo", lastName = "Usuario"] = (user?.name ?? "Demo Usuario").split(" ");
-  const initials = user?.name
-    .split(" ")
-    .map((chunk) => chunk[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase() ?? "VD";
+  const [workspaceName, setWorkspaceName] = useState(user?.workspace ?? "Workspace principal");
+  const [positioning, setPositioning] = useState(
+    "Te implementamos un sistema comercial para atraer clientes, atender consultas y cerrar mas ventas.",
+  );
+  const [brandNote, setBrandNote] = useState(
+    "VENTRA se presenta como servicio premium con software incluido, no como una suite barata de herramientas.",
+  );
 
   return (
-    <div className="w-full animate-fade-in">
-      <h2 className="mb-6 text-lg font-semibold">Configuracion</h2>
-      <div className="flex flex-col gap-6 xl:flex-row">
-        <div className="flex gap-1 overflow-x-auto rounded-xl bg-secondary p-1 xl:w-52 xl:shrink-0 xl:flex-col xl:space-y-1 xl:bg-transparent xl:p-0">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex shrink-0 items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors xl:w-full ${
-                activeTab === tab.id ? "bg-primary/10 font-medium text-primary" : "text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              <tab.icon className="h-4 w-4" />
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        <div className="flex-1">
-          {activeTab === "general" ? (
-            <div className="space-y-6 rounded-xl border bg-card p-6 shadow-card">
-              <h3 className="font-semibold">Perfil</h3>
-              <div className="mb-4 flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-xl font-bold text-primary">
-                  {initials}
-                </div>
-                <Button variant="outline" size="sm">
-                  Cambiar foto
-                </Button>
-              </div>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <Label>Nombre</Label>
-                  <Input defaultValue={firstName} className="mt-1.5" />
-                </div>
-                <div>
-                  <Label>Apellido</Label>
-                  <Input defaultValue={lastName} className="mt-1.5" />
-                </div>
-                <div>
-                  <Label>Email</Label>
-                  <Input defaultValue={user?.email ?? "demo@ventra.io"} className="mt-1.5" />
-                </div>
-                <div>
-                  <Label>Telefono</Label>
-                  <Input defaultValue="+51 999 123 456" className="mt-1.5" />
-                </div>
-              </div>
-              <div>
-                <Label>Empresa</Label>
-                <Input defaultValue={user?.workspace ?? "Ventra Demo"} className="mt-1.5" />
-              </div>
-              <Button className="gradient-ventra text-primary-foreground shadow-ventra">Guardar cambios</Button>
+    <div className="space-y-6">
+      <section className="surface-panel overflow-hidden p-6 sm:p-8">
+        <div className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+          <div>
+            <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              Base del sistema
             </div>
-          ) : null}
+            <h1 className="mt-5 max-w-3xl text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
+              Configuracion alineada con la promesa comercial real de Ventra.
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Esta pantalla deja clara la narrativa del producto, la identidad del workspace y como se presenta la
+              implementacion dentro del demo.
+            </p>
+          </div>
 
-          {activeTab === "notifications" ? (
-            <div className="space-y-4 rounded-xl border bg-card p-6 shadow-card">
-              <h3 className="font-semibold">Notificaciones</h3>
+          <div className="surface-subtle p-5 sm:p-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Resumen</p>
+            <div className="mt-4 space-y-4">
               {[
-                "Nuevos leads",
-                "Mensajes entrantes",
-                "Negocios cerrados",
-                "Campanas completadas",
-                "Alertas de llamadas IA",
+                "Producto orientado a atraer, atender y cerrar.",
+                "Servicio premium con software incluido.",
+                "Dashboard corto, sobrio y pensado para conversion.",
               ].map((item) => (
-                <div key={item} className="flex items-center justify-between border-b py-3 last:border-0">
-                  <span className="text-sm">{item}</span>
-                  <div className="flex items-center gap-4">
-                    <label className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <input type="checkbox" defaultChecked className="rounded" />
-                      Email
-                    </label>
-                    <label className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <input type="checkbox" defaultChecked className="rounded" />
-                      Push
-                    </label>
-                  </div>
+                <div key={item} className="flex gap-3">
+                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
+                  <p className="text-sm leading-relaxed text-muted-foreground">{item}</p>
                 </div>
               ))}
             </div>
-          ) : null}
-
-          {activeTab !== "general" && activeTab !== "notifications" ? (
-            <div className="rounded-xl border bg-card py-16 text-center shadow-card">
-              <p className="text-sm text-muted-foreground">
-                Configuracion de {tabs.find((tab) => tab.id === activeTab)?.label} - proximamente
-              </p>
-            </div>
-          ) : null}
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+        <div id="workspace-profile" className="surface-panel p-6 sm:p-7">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <UserCircle2 className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Workspace</p>
+              <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em]">Perfil base</h2>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-sm font-medium">Nombre del owner</label>
+              <Input defaultValue={user?.name ?? "Carla Diaz"} className="h-12 rounded-2xl" />
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium">Email</label>
+              <Input defaultValue={user?.email ?? "demo@ventra.io"} className="h-12 rounded-2xl" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="mb-2 block text-sm font-medium">Nombre del workspace</label>
+              <Input value={workspaceName} onChange={(event) => setWorkspaceName(event.target.value)} className="h-12 rounded-2xl" />
+            </div>
+            <div className="md:col-span-2">
+              <label className="mb-2 block text-sm font-medium">Nota de marca</label>
+              <Textarea value={brandNote} onChange={(event) => setBrandNote(event.target.value)} className="min-h-[110px] rounded-2xl" />
+            </div>
+          </div>
+        </div>
+
+        <div id="commercial-model" className="space-y-6">
+          <div className="surface-panel p-6 sm:p-7">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <Sparkles className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Narrativa</p>
+                <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em]">Promesa central</h2>
+              </div>
+            </div>
+
+            <Textarea value={positioning} onChange={(event) => setPositioning(event.target.value)} className="mt-6 min-h-[130px] rounded-2xl" />
+          </div>
+
+          <div className="surface-panel p-6 sm:p-7">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <Building2 className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Capas activas</p>
+                <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em]">Modelo comercial</h2>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              {[
+                ["Adquisicion", "Atraer mejores oportunidades con una promesa y campana mas claras."],
+                ["Atencion automatica", "Responder, filtrar y derivar mejor sin depender del dueno."],
+                ["Cierre", "Seguir, insistir y convertir mas con un pipeline corto."],
+              ].map(([title, description]) => (
+                <div key={title} className="surface-subtle p-4">
+                  <p className="text-sm font-semibold">{title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[1.75rem] border border-primary/20 bg-primary/5 p-6">
+            <div className="flex items-center gap-3">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              <p className="text-sm font-semibold">Demo lista para siguiente integracion backend.</p>
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              La estructura ya separa experiencia, narrativa y mock data para luego conectar auth, CRM, mensajeria y
+              billing sin rehacer el frontend.
+            </p>
+            <Button className="mt-5 rounded-2xl gradient-ventra text-primary-foreground shadow-ventra">
+              Guardar configuracion
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -48,7 +48,7 @@ export function FunnelTransitionStage({ diagnosis, profile, onContinue }: Funnel
     <div className="mx-auto max-w-4xl rounded-[2rem] border border-border bg-card/90 p-6 shadow-card backdrop-blur-xl sm:p-10">
       <div className="mx-auto max-w-3xl text-center">
         <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
-          Diagnostico en proceso
+          Diagnostico en preparacion
         </div>
         <h1 className="mt-6 text-4xl font-semibold tracking-[-0.07em] sm:text-5xl">
           {firstName}, estamos terminando de preparar tu recomendacion.

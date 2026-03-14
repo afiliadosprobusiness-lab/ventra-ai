@@ -2,21 +2,25 @@
 
 ## Que es Ventra
 
-Ventra es una solucion comercial simple para ayudar a un negocio a:
+Ventra es una solucion comercial para negocios de servicios que necesitan:
 - atraer mejores oportunidades
-- atender prospectos automaticamente
+- atender prospectos automaticamente con criterio comercial
 - dar seguimiento y cerrar mas ventas
 
-La experiencia del producto ya no debe sentirse como una suite amplia de herramientas IA.
-Debe sentirse como un sistema claro, corto y facil de vender.
+La experiencia del producto no debe sentirse como una suite de herramientas.
+Debe sentirse como una implementacion premium con software incluido.
 
 ## Promesa oficial del producto
 
-Ventra comunica un flujo de tres capas:
+Ventra comunica una implementacion de tres capas:
 
 `Adquisicion -> Atencion automatica -> Cierre`
 
 Cada capa existe para empujar resultado comercial, no complejidad.
+
+Promesa central visible:
+
+`Te implementamos un sistema comercial para atraer clientes, atender consultas y cerrar mas ventas.`
 
 ## Flujo oficial del producto
 
@@ -24,35 +28,35 @@ Cada capa existe para empujar resultado comercial, no complejidad.
 
 Mensaje visible:
 
-`Te ayudamos a crear mejores campanas para atraer nuevos clientes.`
+`Te entregamos un diagnostico de captacion para salir con una campana mas clara y lista para ejecutar.`
 
 Enfoque:
-- wizard o quiz corto para definir campana
-- generador de ideas para anuncios
-- angulos sugeridos
-- hooks
-- copys
-- estructuras de anuncios
-- recomendaciones accionables para captar mejores leads
+- wizard consultivo por bloques
+- definicion de oferta, ticket, cliente ideal y problema comercial
+- lectura del proceso comercial actual y objeciones frecuentes
+- transicion premium de generacion del diagnostico
+- reporte estrategico dentro de la app
+- promesa principal, angulos, hooks y copys base
+- ideas de anuncios y recomendacion de campana
+- descarga de reporte PDF brandeado con Ventra AI
 
 No debe sentirse como:
+- un laboratorio de IA
 - un set de tools tecnicas
-- un studio inflado
 - un modulo centrado en scraping
 
 ### 2. Atencion automatica
 
 Mensaje visible:
 
-`Configura tu asistente para atender prospectos automaticamente.`
+`Configura un asistente para responder, filtrar y derivar prospectos con criterio comercial.`
 
 Enfoque:
-- objetivo principal del asistente
-- objetivos comunes
+- configuracion del asistente
+- objetivos claros
 - objeciones comunes
-- editor simple de instrucciones
-- prompt del asistente
 - preview conversacional
+- reglas de handoff
 - mejora iterativa de respuestas
 
 Regla:
@@ -62,30 +66,29 @@ Regla:
 
 Mensaje visible:
 
-`Te ayudamos a dar seguimiento a tus prospectos y empujar el cierre.`
+`Te ayudamos a seguir mejor las oportunidades reales y empujar el cierre.`
 
 Enfoque:
-- etiquetado por interes e intencion
-- clasificacion basica de leads
+- pipeline simple
+- etiquetas de intencion
 - seguimiento comercial
-- mensajes personalizados para uso manual
-- metricas simples de conversion
+- mensajes de siguiente paso
+- metricas cortas de conversion
 
 No debe convertirse en:
 - un CRM gigante
-- un panel saturado de widgets y etapas
+- un panel saturado de widgets
 
 ## Estructura visible oficial
 
 ### Publico
 
-- Landing comercial enfocada en la promesa de sistema comercial de 3 capas
-- Landing con hero, problema, solucion, beneficios, como funciona, quiz consultivo, planes, confianza y CTA final
+- Landing comercial enfocada en la promesa de implementacion comercial premium
+- Landing con hero, problema, solucion, beneficios, modelo comercial, confianza y CTA final
 - CTA principal de la landing conectado a un embudo consultivo en `/quiz`
-- Embudo publico en `/quiz` con flujo: quiz multistep -> transicion consultiva -> video gate vertical -> CTA con precio -> oferta final
+- Embudo publico en `/quiz` con flujo: quiz multistep -> transicion consultiva -> video gate -> oferta final
 - Landing con soporte claro/oscuro visible
-- Landing con lenguaje visual premium tipo glass, cards suaves y jerarquia comercial mas directa
-- Quiz
+- Landing con lenguaje visual premium y coherente con el dashboard
 - Login / Register / Forgot password
 - Onboarding
 
@@ -110,14 +113,17 @@ Eso significa:
 
 ## Posicionamiento comercial
 
-Ventra debe quedar preparado para dos escalones de producto:
+Ventra debe quedar preparado para esta escalera comercial:
 
-- Plan basico: 9.99 USD / mes, incluye solo Atencion automatica
-- Plan completo: 99 USD / mes, incluye Adquisicion + Atencion automatica + Cierre
+- entrada consultiva mediante diagnostico
+- recomendacion de la capa prioritaria
+- implementacion premium desde `1000 USD`
+- acompanamiento base y continuidad posterior
 
 La UI debe hacer evidente que:
-- un negocio puede empezar por la capa basica
-- luego crecer hacia la solucion completa
+- la oferta principal es una implementacion/servicio premium
+- el software viene incluido dentro del sistema
+- el negocio puede empezar por una capa y luego crecer hacia la solucion completa
 
 ## Regla de continuidad futura
 

@@ -77,22 +77,22 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
     id: "businessType",
     type: "single-choice",
     title: "Que tipo de negocio quieres hacer vender mejor?",
-    helper: "Necesitamos contexto para entender el tipo de conversacion y el ritmo comercial.",
+    helper: "Necesitamos contexto para entender el tipo de conversacion, ticket y criterio comercial que exige tu venta.",
     options: [
       {
         value: "services",
         label: "Servicios y ventas consultivas",
-        description: "Propuestas, reuniones, cierres por llamada o WhatsApp.",
-      },
-      {
-        value: "commerce",
-        label: "E-commerce o retail",
-        description: "Consultas frecuentes, tickets variados y volumen constante.",
+        description: "Propuestas, reuniones, WhatsApp y cierres por conversacion.",
       },
       {
         value: "high-trust",
         label: "Salud, educacion o inmobiliaria",
-        description: "Negocios donde confianza y seguimiento pesan mucho.",
+        description: "Negocios donde confianza, timing y seguimiento pesan mucho.",
+      },
+      {
+        value: "agency",
+        label: "Agencia, consultoria o implementacion",
+        description: "Ventas con objeciones, precio y decision compartida.",
       },
       {
         value: "other",
@@ -105,13 +105,13 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
     id: "leadSource",
     type: "single-choice",
     title: "Como te llegan hoy la mayoria de consultas o leads?",
-    helper: "Esto nos ayuda a detectar si el cuello de botella esta en captar o en gestionar mejor la demanda.",
+    helper: "Esto nos ayuda a detectar si el cuello de botella esta en captar mejor o en operar mejor la demanda actual.",
     layout: "grid",
     options: [
       {
         value: "ads",
         label: "Anuncios y campanas",
-        description: "Ya inviertes en adquisicion y necesitas que convierta mejor.",
+        description: "Ya inviertes en captacion y quieres que convierta mejor.",
       },
       {
         value: "messaging",
@@ -126,7 +126,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
       {
         value: "low-demand",
         label: "Me llegan muy pocas consultas",
-        description: "Primero hay que fortalecer captacion y propuesta.",
+        description: "Primero hay que fortalecer adquisicion y oferta.",
       },
     ],
   },
@@ -140,13 +140,13 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
       {
         value: "lead-generation",
         label: "No estoy generando suficientes oportunidades",
-        description: "Necesitas mejorar mensaje, captacion y campanas.",
+        description: "Necesitas mejor mensaje, promesa y campanas.",
         badge: "Adquisicion",
       },
       {
         value: "slow-response",
         label: "Respondo tarde y se enfria el interes",
-        description: "La atencion manual ya no da velocidad suficiente.",
+        description: "La operacion manual ya no te da velocidad suficiente.",
         badge: "Atencion automatica",
       },
       {
@@ -167,12 +167,12 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
     id: "currentResponder",
     type: "single-choice",
     title: "Quien responde hoy a tus prospectos?",
-    helper: "Queremos medir cuanto depende el negocio de operacion manual.",
+    helper: "Queremos medir cuanto depende el negocio de operacion manual o del tiempo del dueno.",
     options: [
       {
         value: "owner",
         label: "Yo respondo casi todo",
-        description: "La venta depende demasiado del dueno o fundador.",
+        description: "La venta depende demasiado del fundador.",
       },
       {
         value: "small-team",
@@ -200,7 +200,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
       {
         value: "medium",
         label: "Entre 30 y 150",
-        description: "Ya hay suficiente traccion para montar un sistema util.",
+        description: "Ya hay traccion suficiente para montar un sistema util.",
       },
       {
         value: "high",
@@ -219,7 +219,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
       {
         value: "more-leads",
         label: "Conseguir mas leads",
-        description: "Quiero atraer mas oportunidades calificadas.",
+        description: "Quiero atraer oportunidades mas calificadas.",
       },
       {
         value: "faster-replies",
@@ -270,7 +270,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
       {
         value: "solo",
         label: "Vendo casi solo",
-        description: "Necesito liberar tiempo operativo y no perseguir todo manualmente.",
+        description: "Necesito liberar tiempo operativo y dejar de perseguir todo manualmente.",
       },
       {
         value: "small-team",
@@ -287,7 +287,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
   {
     id: "startingLayer",
     type: "single-choice",
-    title: "Que solucion te interesaria implementar primero si encaja contigo?",
+    title: "Que te interesaria implementar primero si encaja contigo?",
     helper: "Tomamos en cuenta preferencia, pero la recomendacion final sigue siendo consultiva.",
     layout: "grid",
     options: [
@@ -299,7 +299,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
       {
         value: "automaticAttention",
         label: "Automatizar la atencion",
-        description: "Responder prospectos y filtrar mejor sin hacerlo todo manual.",
+        description: "Responder y filtrar mejor sin depender de cada mensaje manual.",
       },
       {
         value: "closing",
@@ -308,7 +308,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
       },
       {
         value: "complete",
-        label: "Quiero una solucion completa",
+        label: "Quiero la solucion completa",
         description: "Atraer, atender y cerrar con un mismo sistema comercial.",
       },
     ],
@@ -317,7 +317,7 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
     id: "contact",
     type: "contact",
     title: "Ultimo paso: danos tus datos para dejar lista tu recomendacion",
-    helper: "Esto nos ayuda a personalizar la propuesta y filtrar curiosos sin interes real.",
+    helper: "Esto nos permite personalizar la propuesta y filtrar curiosos sin interes real.",
     fields: [
       { id: "name", label: "Nombre", placeholder: "Tu nombre", required: true },
       { id: "company", label: "Empresa", placeholder: "Nombre de tu negocio", required: true },
@@ -329,19 +329,19 @@ export const funnelQuizSteps: FunnelQuizStep[] = [
 ];
 
 export const funnelTransitionChecklist = [
-  "Cruzando tus respuestas con la estructura comercial recomendada.",
-  "Definiendo por que capa conviene empezar en tu caso.",
-  "Preparando el siguiente paso para implementar el sistema sin friccion.",
-  "Dejando lista la explicacion corta antes de la oferta final.",
+  "Cruzando tus respuestas con las tres capas del sistema comercial.",
+  "Detectando si conviene empezar por una capa o por la implementacion completa.",
+  "Preparando el siguiente paso con una recomendacion seria, no generica.",
+  "Dejando lista la explicacion breve antes de mostrar la oferta.",
 ];
 
 export const funnelVideoConfig = {
-  title: "Tu diagnostico esta listo. Mira este video corto antes de avanzar.",
+  title: "Tu diagnostico esta listo. Mira esta explicacion corta antes de avanzar.",
   subtitle:
-    "Primero entiende la logica de implementacion. El siguiente paso se desbloquea solo cuando consumas la explicacion completa.",
+    "Primero entiende la logica de implementacion. El siguiente paso se desbloquea solo cuando consumes la explicacion completa.",
   eyebrow: "Paso clave",
-  overlayTitle: "Tu video ya ha comenzado",
-  overlayBody: "Haz clic para escuchar y desbloquear el siguiente paso.",
+  overlayTitle: "Explicacion privada",
+  overlayBody: "Activa el audio para entender si esta implementacion encaja contigo.",
   source: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
   unlockThreshold: 85,
 };
@@ -352,19 +352,19 @@ export const funnelOfferContent = {
   summary:
     "La implementacion esta pensada para negocios que quieren mas orden comercial, menos dependencia operativa y un proceso claro para atraer, atender y cerrar.",
   benefits: [
-    "Sistema para atraer clientes con una propuesta y campanas mas claras.",
-    "Atencion automatica para responder consultas sin depender de operacion manual.",
-    "Seguimiento comercial con mas criterio, prioridad y empuje al cierre.",
-    "Menos trabajo repetitivo y mas foco del equipo en vender.",
-    "Mejor organizacion comercial para que el interes no se enfrie.",
-    "Implementacion guiada para salir rapido de la improvisacion.",
+    "Sistema para atraer clientes con una promesa y campana mas claras.",
+    "Atencion automatica para responder consultas con criterio comercial.",
+    "Seguimiento y cierre con pipeline corto, senales de intencion y mensajes utiles.",
+    "Menos trabajo repetitivo y mas foco del equipo en avanzar oportunidades reales.",
+    "Software incluido dentro de una implementacion guiada, no como herramienta suelta.",
+    "Ruta de continuidad para crecer por capas segun el momento del negocio.",
   ],
   includes: [
     "Diagnostico inicial y recomendacion de capa prioritaria.",
     "Configuracion base del sistema comercial de Ventra.",
     "Estructura inicial de captacion, atencion y seguimiento.",
-    "Automatizacion inicial lista para ser adaptada al negocio.",
-    "Acceso a comunidad base y recursos de arranque.",
+    "Asistente comercial y flujo mock listos para adaptar al negocio.",
+    "Acceso a acompanamiento base y recursos de arranque.",
     "Ruta preparada para upgrades o implementacion avanzada.",
   ],
   fitBullets: [
@@ -381,21 +381,21 @@ export const funnelNextSteps: FunnelNextStep[] = [
     label: "Aplicar a la implementacion",
     href: "/register?intent=implementation",
     kind: "primary",
-    description: "Continua hacia el siguiente paso formal para activar la implementacion.",
+    description: "Continua hacia el siguiente paso formal para validar encaje y activar la implementacion.",
   },
   {
     id: "community",
-    label: "Conocer la comunidad base",
+    label: "Conocer el acompanamiento base",
     href: "/register?intent=community",
     kind: "secondary",
-    description: "Entra primero a la comunidad gratuita y luego escala con modulos avanzados.",
+    description: "Entra primero al entorno base y deja abierta la ruta para escalar a modulos avanzados.",
   },
   {
     id: "call",
     label: "Solicitar llamada de evaluacion",
-    href: "mailto:hola@ventra.ai?subject=Evaluacion%20Ventra%20AI",
+    href: "mailto:hola@ventra.ai?subject=Evaluacion%20Ventra",
     kind: "tertiary",
-    description: "Si prefieres validar encaje antes, puedes pedir una llamada de evaluacion.",
+    description: "Si prefieres validar encaje antes, pide una llamada corta de evaluacion.",
   },
 ];
 
@@ -512,7 +512,7 @@ export function diagnoseVentraLead(answers: Record<string, string>, profile: Fun
       focusLabel: layerLabelMap[primaryLayer],
       supportingLayers,
       recommendedPlan,
-      recommendedPlanLabel: "Solucion completa recomendada",
+      recommendedPlanLabel: "Implementacion premium recomendada",
       implementationLabel: "Implementacion completa Ventra",
       implementationPrice: "1000 USD",
       idealFitLabel: "Buen encaje si quieres una maquina comercial mas ordenada, no una herramienta suelta.",
@@ -535,7 +535,7 @@ export function diagnoseVentraLead(answers: Record<string, string>, profile: Fun
       focusLabel: layerLabelMap[primaryLayer],
       supportingLayers,
       recommendedPlan,
-      recommendedPlanLabel: "Solucion completa recomendada",
+      recommendedPlanLabel: "Implementacion premium recomendada",
       implementationLabel: "Implementacion comercial Ventra",
       implementationPrice: "1000 USD",
       idealFitLabel: "Tiene sentido si ya quieres dejar de depender de mensajes dispersos o captacion inestable.",
@@ -558,7 +558,7 @@ export function diagnoseVentraLead(answers: Record<string, string>, profile: Fun
       focusLabel: layerLabelMap[primaryLayer],
       supportingLayers,
       recommendedPlan: "complete",
-      recommendedPlanLabel: "Solucion completa recomendada",
+      recommendedPlanLabel: "Implementacion premium recomendada",
       implementationLabel: "Implementacion de cierre Ventra",
       implementationPrice: "1000 USD",
       idealFitLabel: "Encaja si tu negocio ya habla con prospectos, pero no convierte todo lo que podria.",
@@ -580,7 +580,7 @@ export function diagnoseVentraLead(answers: Record<string, string>, profile: Fun
     focusLabel: layerLabelMap[primaryLayer],
     supportingLayers,
     recommendedPlan,
-    recommendedPlanLabel: recommendedPlan === "basic" ? "Plan basico recomendado" : "Solucion completa recomendada",
+    recommendedPlanLabel: recommendedPlan === "basic" ? "Diagnostico consultivo recomendado" : "Implementacion premium recomendada",
     implementationLabel: "Implementacion de atencion Ventra",
     implementationPrice: "1000 USD",
     idealFitLabel: "Ideal si WhatsApp pesa mucho en tu venta y hoy todo depende de responder a mano.",

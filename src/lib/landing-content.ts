@@ -50,18 +50,18 @@ export type LandingQuizResult = {
 
 export const landingPainPoints: LandingContentItem[] = [
   {
-    title: "Llegan consultas y se responden tarde",
-    description: "El interes existe, pero el negocio pierde velocidad justo cuando el prospecto esta listo para hablar.",
+    title: "Llegan consultas, pero no siempre llegan las correctas",
+    description: "Sin una promesa comercial clara, entra ruido y el equipo termina ocupando tiempo en prospectos flojos.",
     icon: Clock3,
   },
   {
-    title: "Se pierden oportunidades por falta de seguimiento",
-    description: "Muchos leads no se enfrian por precio, sino porque nadie los movio con un siguiente paso claro.",
+    title: "Las respuestas dependen demasiado del dueno o del equipo",
+    description: "Cuando nadie responde rapido o con criterio, el interes se enfria justo antes del avance real.",
     icon: Target,
   },
   {
-    title: "Todo depende de operacion manual",
-    description: "Responder, recordar, insistir y ordenar conversaciones consume tiempo que deberia ir a vender.",
+    title: "El seguimiento no empuja el cierre",
+    description: "Muchos negocios hablan con prospectos, pero no tienen un sistema corto para priorizar, insistir y cerrar.",
     icon: Users,
   },
 ];
@@ -70,206 +70,206 @@ export const landingLayers: Array<LandingContentItem & { id: string; outcome: st
   {
     id: "acquisition",
     title: "Adquisicion",
-    description: "Te ayudamos a crear mejores campanas, hooks y mensajes para atraer nuevas oportunidades.",
-    outcome: "Mas oportunidades de mejor calidad.",
+    description: "Definimos mejor tu mensaje, la promesa principal y el tipo de campana que atrae oportunidades con mejor encaje.",
+    outcome: "Mas oportunidades relevantes, menos consultas vacias.",
     icon: Megaphone,
-    plan: "Plan completo",
+    plan: "Entrada recomendada cuando falta demanda clara",
   },
   {
     id: "automatic-attention",
     title: "Atencion automatica",
-    description: "Tu asistente responde prospectos, resuelve dudas y mueve la conversacion sin depender de cada respuesta manual.",
-    outcome: "Respuestas mas rapidas y menos fugas por demora.",
+    description: "Configuramos un asistente que responde, filtra, detecta intencion y deja mejor encaminado el siguiente paso.",
+    outcome: "Mas velocidad, menos fuga por demora y menos carga manual.",
     icon: Bot,
-    plan: "Plan basico",
+    plan: "Capa mas urgente cuando las ventas viven en WhatsApp",
   },
   {
     id: "closing",
     title: "Cierre",
-    description: "Ordena seguimiento, prioriza leads y empuja conversiones con mensajes y acciones mas claras.",
-    outcome: "Mejor seguimiento y mas cierres.",
+    description: "Ordenamos un pipeline corto, etiquetas de intencion y mensajes de seguimiento para empujar conversion con criterio.",
+    outcome: "Mas seguimiento util y mas cierres con foco.",
     icon: TrendingUp,
-    plan: "Plan completo",
+    plan: "Capa critica cuando hay interes pero no conversion",
   },
 ];
 
 export const landingBenefits: LandingContentItem[] = [
   {
-    title: "Respondes mas rapido",
-    description: "Cada consulta recibe atencion sin esperar a que alguien este libre para contestar.",
+    title: "Mas claridad comercial",
+    description: "Tu negocio deja de improvisar el mensaje y empieza a vender con una narrativa mas ordenada.",
     icon: MessageSquareMore,
   },
   {
-    title: "Dejas de perder oportunidades por demora",
-    description: "El sistema evita que el interes se enfrie por falta de seguimiento o desorden comercial.",
+    title: "Menos carga operativa",
+    description: "Responder y filtrar mejor ya no depende tanto del tiempo del dueno o del equipo.",
     icon: CheckCircle2,
   },
   {
-    title: "Tu equipo se enfoca en vender",
-    description: "Menos carga repetitiva, mas tiempo para avanzar oportunidades con intencion real.",
+    title: "Mejor seguimiento",
+    description: "Las oportunidades dejan de quedarse abiertas sin contexto, sin insistencia y sin siguiente paso.",
     icon: Users,
   },
   {
-    title: "Conviertes mas consultas en clientes",
-    description: "El negocio atrae mejor, responde mejor y hace un seguimiento mas consistente hasta el cierre.",
+    title: "Mas conversion real",
+    description: "No porque haya mas herramientas, sino porque el proceso completo vende mejor.",
     icon: ArrowUpRight,
   },
 ];
 
 export const landingSteps: LandingContentItem[] = [
   {
-    title: "Atrae oportunidades",
-    description: "Define mejor tu mensaje y lanza campanas con una promesa comercial mas clara.",
+    title: "Diagnostico consultivo",
+    description: "Entendemos si tu cuello de botella principal esta en adquisicion, atencion automatica, cierre o en el sistema completo.",
   },
   {
-    title: "Atiende prospectos automaticamente",
-    description: "Tu asistente responde dudas, guia la conversacion y reduce la carga operativa.",
+    title: "Implementacion guiada",
+    description: "Montamos la capa correcta para tu negocio y dejamos el software alineado a esa operacion.",
   },
   {
-    title: "Da seguimiento y empuja el cierre",
-    description: "Prioriza leads, mueve cada oportunidad y convierte mas consultas en clientes.",
+    title: "Seguimiento y continuidad",
+    description: "Tu negocio queda listo para crecer por capas sin rehacer la experiencia comercial.",
   },
 ];
 
 export const landingPlans: LandingPlan[] = [
   {
-    name: "Plan basico",
-    price: "9.99 USD",
-    period: "/ mes",
-    description: "Empieza por la capa que mas reduce fuga y carga operativa.",
-    highlight: "Ideal para negocios que necesitan responder mejor sin montar todo el sistema desde el dia uno.",
-    includedLayers: ["Atencion automatica"],
-    outcomes: ["Respuestas mas rapidas", "Menos consultas sin atender", "Inicio simple y facil de activar"],
-    ctaLabel: "Empezar con el basico",
+    name: "Diagnostico consultivo",
+    price: "Aplicacion",
+    period: "",
+    description: "Entrada recomendada para negocios que primero necesitan claridad sobre por donde empezar.",
+    highlight: "No compras una licencia. Validamos encaje, prioridad y siguiente paso antes de implementar.",
+    includedLayers: ["Diagnostico", "Hoja de ruta inicial", "Recomendacion de capa"],
+    outcomes: ["Prioridad comercial clara", "Filtro serio de encaje", "Siguiente paso recomendado"],
+    ctaLabel: "Quiero mi diagnostico",
   },
   {
-    name: "Plan completo",
-    price: "99 USD",
-    period: "/ mes",
-    description: "Activa el sistema comercial completo para atraer, atender y cerrar.",
-    highlight: "Para negocios que quieren una maquina comercial mas ordenada y orientada a conversion.",
+    name: "Implementacion premium",
+    price: "Desde 1000 USD",
+    period: "",
+    description: "Oferta principal para negocios que quieren montar un sistema comercial completo o por capas.",
+    highlight: "Incluye servicio de implementacion, software alineado al proceso y ruta de continuidad.",
     includedLayers: ["Adquisicion", "Atencion automatica", "Cierre"],
-    outcomes: ["Mas oportunidades", "Mejor seguimiento", "Mas cierres con menos friccion operativa"],
-    ctaLabel: "Ir por la solucion completa",
+    outcomes: ["Sistema comercial claro", "Software incluido", "Menos carga manual y mas conversion"],
+    ctaLabel: "Evaluar implementacion",
   },
 ];
 
 export const landingTrustNotes: LandingContentItem[] = [
   {
-    title: "Ideal para negocios que venden por WhatsApp o consulta directa",
-    description: "Servicios, retail, salud, educacion, inmobiliaria y equipos que dependen de responder rapido para vender.",
+    title: "Pensado para negocios de servicios y ventas consultivas",
+    description: "Funciona mejor cuando el negocio vende por consulta, llamada o conversacion directa, no por compra impulsiva.",
   },
   {
-    title: "Promesa realista",
-    description: "Ventra no sustituye estrategia comercial. Ordena adquisicion, respuesta y seguimiento para que el proceso venda mejor.",
+    title: "Servicio primero, software incluido",
+    description: "Ventra no se presenta como una navaja suiza. Se presenta como una implementacion comercial con soporte de software.",
   },
   {
-    title: "Implementacion simple",
-    description: "Puedes empezar con la capa basica y crecer al sistema completo cuando el negocio necesite mas empuje comercial.",
+    title: "Escalable por capas",
+    description: "Puedes empezar por la prioridad mas urgente y luego crecer hacia el sistema completo sin rehacer todo.",
   },
 ];
 
 export const landingFaqs: LandingContentItem[] = [
   {
-    title: "Que hace exactamente Ventra AI?",
-    description: "Implementa un sistema comercial para atraer clientes, atender consultas y dar mejor seguimiento hasta el cierre.",
+    title: "Ventra vende software o servicio?",
+    description: "La oferta principal es una implementacion comercial premium. El software viene incluido como parte del sistema.",
   },
   {
-    title: "Necesito usar todo desde el inicio?",
-    description: "No. Puedes empezar con Atencion automatica y luego sumar Adquisicion y Cierre cuando quieras crecer.",
+    title: "Necesito activar las tres capas desde el inicio?",
+    description: "No necesariamente. Primero detectamos tu cuello de botella y definimos si conviene empezar por una capa o por la solucion completa.",
   },
   {
-    title: "Sirve si hoy vendo por WhatsApp y casi todo es manual?",
-    description: "Si. Esa es una de las situaciones donde Ventra aporta mas claridad y mas velocidad de respuesta.",
+    title: "Sirve si hoy vendo por WhatsApp y hago casi todo manual?",
+    description: "Si. Ese es uno de los escenarios donde mas valor aporta ordenar atencion automatica y seguimiento.",
   },
   {
-    title: "Esto reemplaza por completo a un CRM complejo?",
-    description: "Ventra no busca ser un CRM inflado. Busca darte un seguimiento simple y enfocado en conversion.",
+    title: "Es un CRM grande o una suite de herramientas?",
+    description: "No. La experiencia busca ser corta, clara y orientada a conversion. Menos modulos, mas criterio comercial.",
   },
 ];
 
 export const landingQuizQuestions: LandingQuizQuestion[] = [
   {
     id: "businessType",
-    title: "Que tipo de negocio tienes?",
-    helper: "Esto nos ayuda a entender como vendes y que tan consultiva es la conversacion.",
+    title: "Que tipo de negocio quieres hacer vender mejor?",
+    helper: "Esto nos ayuda a entender si el proceso comercial es mas consultivo y cuanto pesa la conversacion.",
     options: [
-      { label: "Servicios profesionales", description: "Ventas consultivas, reuniones o propuestas." },
-      { label: "E-commerce o retail", description: "Mucho volumen y consultas frecuentes." },
-      { label: "Salud, educacion o inmobiliaria", description: "Prospectos que necesitan mas confianza y seguimiento." },
-      { label: "Otro negocio que vende por mensajes", description: "Conversaciones directas como parte central del cierre." },
+      { label: "Servicios profesionales", description: "Llamadas, propuestas y cierre por seguimiento." },
+      { label: "Salud, educacion o inmobiliaria", description: "Negocios donde confianza y timing importan mucho." },
+      { label: "Agencia, consultoria o implementacion", description: "Ventas con objeciones, precio y evaluacion." },
+      { label: "Otro negocio que vende por mensajes", description: "WhatsApp, Instagram o DM como parte central del cierre." },
     ],
   },
   {
     id: "leadSource",
-    title: "Como te llegan la mayoria de consultas hoy?",
-    helper: "Queremos detectar si el cuello de botella esta en conseguir demanda o en gestionarla.",
+    title: "Como te llegan hoy la mayoria de consultas?",
+    helper: "Queremos detectar si el cuello de botella esta en generar demanda o en operarla mejor.",
     options: [
-      { label: "Anuncios y campanas", description: "Ya haces adquisicion y quieres que convierta mejor." },
-      { label: "WhatsApp, Instagram o redes", description: "La demanda llega por mensajes y conversaciones directas." },
-      { label: "Referidos o contactos organicos", description: "Hay ventas, pero no un sistema comercial claro." },
-      { label: "Me llegan pocas consultas", description: "Primero necesitas mejorar captacion." },
+      { label: "Anuncios y campanas", description: "Ya existe captacion y quieres que convierta mejor." },
+      { label: "WhatsApp, Instagram o redes", description: "La demanda entra por mensajes directos." },
+      { label: "Referidos o contactos organicos", description: "Hay interes, pero sin sistema comercial claro." },
+      { label: "Me llegan pocas consultas", description: "Primero hay que trabajar mejor adquisicion." },
     ],
   },
   {
     id: "usesWhatsapp",
-    title: "Tu proceso comercial pasa por WhatsApp?",
-    helper: "La atencion automatica tiene mas impacto cuando las conversaciones viven ahi.",
+    title: "Que tan importante es WhatsApp para vender?",
+    helper: "La atencion automatica pesa mas cuando la conversacion real vive ahi.",
     options: [
-      { label: "Si, casi todo pasa por WhatsApp", description: "WhatsApp es el canal principal para responder y vender." },
-      { label: "Si, pero tambien uso otros canales", description: "WhatsApp es importante, aunque no es el unico." },
-      { label: "No mucho", description: "El problema puede estar mas en captacion o seguimiento." },
+      { label: "Es el canal principal", description: "La mayoria de oportunidades se mueven por WhatsApp." },
+      { label: "Es importante, pero no el unico", description: "Tambien usas formularios, Instagram o llamadas." },
+      { label: "No es tan relevante", description: "El problema puede estar mas en captacion o cierre." },
     ],
   },
   {
     id: "salesTeam",
     title: "Quien responde y hace seguimiento hoy?",
-    helper: "Esto nos muestra cuanto pesa la operacion manual en el negocio.",
+    helper: "Esto nos muestra cuanto depende la venta de operacion manual.",
     options: [
-      { label: "Yo vendo casi todo", description: "La operacion depende mucho del dueno." },
-      { label: "Tengo una persona o equipo pequeno", description: "Hay soporte comercial, pero con recursos limitados." },
-      { label: "Ya tengo un equipo comercial", description: "El reto suele estar en orden y consistencia." },
+      { label: "Yo respondo casi todo", description: "La venta depende mucho del dueno o fundador." },
+      { label: "Tengo una persona o equipo pequeno", description: "Hay soporte, pero con capacidad limitada." },
+      { label: "Ya tengo equipo comercial", description: "El reto suele ser consistencia y criterio." },
     ],
   },
   {
     id: "slowResponse",
-    title: "Pierdes leads por responder tarde?",
-    helper: "Esta es una de las senales mas claras para recomendar Atencion automatica.",
+    title: "Pierdes oportunidades por responder tarde?",
+    helper: "Es una de las senales mas fuertes para recomendar atencion automatica.",
     options: [
       { label: "Si, con frecuencia", description: "Hay consultas que se enfrian antes de responder." },
-      { label: "A veces", description: "Sucede cuando hay volumen o el equipo esta ocupado." },
-      { label: "No es mi principal problema", description: "Probablemente el cuello de botella esta en otra capa." },
+      { label: "A veces", description: "Sucede cuando el equipo se satura." },
+      { label: "No es el problema principal", description: "La fuga puede estar en otra parte del sistema." },
     ],
   },
   {
     id: "followUp",
-    title: "Hoy haces seguimiento comercial de forma ordenada?",
-    helper: "Queremos saber si tus oportunidades siguen avanzando o se quedan en conversaciones abiertas.",
+    title: "Tienes un seguimiento comercial realmente ordenado?",
+    helper: "Queremos saber si las oportunidades avanzan o quedan abiertas sin direccion.",
     options: [
-      { label: "Si, tengo un proceso claro", description: "Ya hay algo de orden comercial." },
-      { label: "Lo hago de forma irregular", description: "Existe seguimiento, pero no es consistente." },
+      { label: "Si, hay un proceso claro", description: "Ya existe cierta disciplina comercial." },
+      { label: "Lo hago de forma irregular", description: "Hay seguimiento, pero no siempre se sostiene." },
       { label: "Casi nunca", description: "Muchos prospectos se quedan sin siguiente paso." },
     ],
   },
   {
     id: "leadVolume",
-    title: "Cuantas consultas o leads recibes al mes?",
-    helper: "El volumen cambia la urgencia entre automatizar respuesta o mejorar captacion.",
+    title: "Cuantas consultas recibes al mes?",
+    helper: "El volumen cambia si conviene captar mas o responder mejor lo que ya llega.",
     options: [
-      { label: "Menos de 30", description: "Necesitas que cada oportunidad cuente." },
-      { label: "Entre 30 y 150", description: "Ya hay volumen suficiente para ordenar el proceso." },
-      { label: "Mas de 150", description: "La operacion se rompe rapido si no hay sistema." },
+      { label: "Menos de 30", description: "Cada oportunidad cuenta demasiado." },
+      { label: "Entre 30 y 150", description: "Ya hay traccion para ordenar el proceso." },
+      { label: "Mas de 150", description: "Sin sistema, la operacion se rompe rapido." },
     ],
   },
   {
     id: "goal",
-    title: "Que te urge mas resolver ahora?",
-    helper: "Con esta respuesta definimos por donde deberias empezar.",
+    title: "Que te urge resolver primero?",
+    helper: "Esta respuesta nos ayuda a elegir la capa que puede mover mas el negocio.",
     options: [
       { label: "Conseguir mas oportunidades", description: "Prioridad en adquisicion." },
       { label: "Responder mas rapido", description: "Prioridad en atencion automatica." },
       { label: "Cerrar mas clientes", description: "Prioridad en seguimiento y cierre." },
-      { label: "Recuperar oportunidades perdidas", description: "Necesitas mejor atencion y cierre." },
+      { label: "Ordenar todo el proceso comercial", description: "Necesitas una solucion completa." },
     ],
   },
 ];
@@ -295,10 +295,10 @@ function scoreQuizAnswers(answers: Record<string, string>) {
   if (answers.leadSource === "Anuncios y campanas") score.acquisition += 1;
   if (answers.leadSource === "WhatsApp, Instagram o redes") score.automaticAttention += 1;
 
-  if (answers.usesWhatsapp === "Si, casi todo pasa por WhatsApp") score.automaticAttention += 3;
-  if (answers.usesWhatsapp === "Si, pero tambien uso otros canales") score.automaticAttention += 2;
+  if (answers.usesWhatsapp === "Es el canal principal") score.automaticAttention += 3;
+  if (answers.usesWhatsapp === "Es importante, pero no el unico") score.automaticAttention += 2;
 
-  if (answers.salesTeam === "Yo vendo casi todo") {
+  if (answers.salesTeam === "Yo respondo casi todo") {
     score.automaticAttention += 2;
     score.closing += 1;
   }
@@ -306,7 +306,7 @@ function scoreQuizAnswers(answers: Record<string, string>) {
     score.automaticAttention += 1;
     score.closing += 1;
   }
-  if (answers.salesTeam === "Ya tengo un equipo comercial") score.closing += 1;
+  if (answers.salesTeam === "Ya tengo equipo comercial") score.closing += 1;
 
   if (answers.slowResponse === "Si, con frecuencia") score.automaticAttention += 4;
   if (answers.slowResponse === "A veces") score.automaticAttention += 2;
@@ -327,9 +327,10 @@ function scoreQuizAnswers(answers: Record<string, string>) {
   if (answers.goal === "Conseguir mas oportunidades") score.acquisition += 4;
   if (answers.goal === "Responder mas rapido") score.automaticAttention += 4;
   if (answers.goal === "Cerrar mas clientes") score.closing += 4;
-  if (answers.goal === "Recuperar oportunidades perdidas") {
+  if (answers.goal === "Ordenar todo el proceso comercial") {
+    score.acquisition += 2;
     score.automaticAttention += 2;
-    score.closing += 3;
+    score.closing += 2;
   }
 
   return score;
@@ -353,30 +354,30 @@ export function getLandingRecommendation(answers: Record<string, string>): Landi
   if (primaryLayer === "automaticAttention" && secondaryLayer === "closing" && secondaryScore >= primaryScore - 1) {
     return {
       headline: "Tu negocio necesita ordenar atencion y cierre.",
-      summary: "Hay interes real, pero se pierde velocidad entre responder y mover cada oportunidad al siguiente paso.",
+      summary: "Hay interes real, pero se pierde velocidad entre responder mejor y mover cada oportunidad al siguiente paso correcto.",
       priorityLayers,
       plan: landingPlans[1],
-      note: "La mejor ganancia vendra de responder mejor y dar seguimiento con mas disciplina.",
+      note: "La mayor ganancia vendra de implementar un sistema corto para responder, filtrar y seguir con criterio.",
     };
   }
 
   if (primaryLayer === "acquisition" && secondaryLayer === "automaticAttention" && secondaryScore >= primaryScore - 1) {
     return {
       headline: "Tu mejor oportunidad esta en mejorar captacion y respuesta.",
-      summary: "Necesitas atraer mas consultas utiles y asegurarte de que no se enfrien cuando llegan.",
+      summary: "Necesitas atraer consultas mas utiles y asegurarte de que no se enfrien cuando llegan.",
       priorityLayers,
       plan: landingPlans[1],
-      note: "Conviene empezar con una promesa comercial mas clara y una respuesta mas rapida.",
+      note: "Conviene empezar por una promesa comercial mas clara y una respuesta mas rapida.",
     };
   }
 
   if (primaryLayer === "automaticAttention") {
     return {
       headline: "Tu mayor cuello de botella esta en atencion automatica.",
-      summary: "El negocio ya genera interes, pero la demora y la carga manual estan frenando conversiones.",
+      summary: "El negocio ya genera interes, pero la demora y la carga manual frenan conversiones y saturan al equipo.",
       priorityLayers,
       plan: recommendedPlan,
-      note: "Puedes empezar con el plan basico y crecer cuando quieras sumar captacion o cierre.",
+      note: "El diagnostico consultivo ayuda a validar si basta con empezar por esta capa o si ya conviene implementar el sistema completo.",
     };
   }
 
@@ -386,15 +387,15 @@ export function getLandingRecommendation(answers: Record<string, string>): Landi
       summary: "Hay oportunidades activas, pero falta un sistema simple para priorizar, insistir y convertir mejor.",
       priorityLayers,
       plan: landingPlans[1],
-      note: "La prioridad es mover cada prospecto con siguiente paso, contexto y mejor timing comercial.",
+      note: "La prioridad es mover cada prospecto con mejor timing, contexto y siguiente paso.",
     };
   }
 
   return {
     headline: "Tu mayor oportunidad esta en fortalecer adquisicion.",
-    summary: "Antes de complicar la operacion, necesitas mejorar como atraes oportunidades y con que mensaje llegas al mercado.",
+    summary: "Antes de sumar mas operacion, necesitas mejorar como atraes oportunidades y con que mensaje llegas al mercado.",
     priorityLayers,
     plan: landingPlans[1],
-    note: "Cuando captas mejor y respondes a tiempo, el resto del sistema empieza a escalar con mas claridad.",
+    note: "Cuando captas mejor y respondes a tiempo, el resto del sistema escala con mucha mas claridad.",
   };
 }
