@@ -1,217 +1,194 @@
-import { useMemo, useState } from "react";
-import { Bot, CheckCircle2, MessageSquare, Play, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { MessageCircle, Send, Settings } from "lucide-react";
 
-const assistantGoals = [
-  "Agendar una llamada",
-  "Calificar interesados",
-  "Responder dudas frecuentes",
-  "Recuperar interes",
-  "Empujar el cierre",
+const defaultObjections = [
+  "Es muy caro",
+  "Lo tengo que pensar",
+  "Ya tengo otro proveedor",
+  "No tengo tiempo ahora",
 ];
 
-const commonObjections = [
-  "Es muy caro",
-  "Necesito pensarlo",
-  "No estoy listo todavia",
-  "Ya estoy viendo otra opcion",
-  "No entiendo bien como funciona",
+const initialMessages = [
+  { role: "user" as const, text: "Hola, me interesa el servicio" },
+  { role: "bot" as const, text: "Hola. Gracias por escribir. Te ayudo a resolver dudas y a ver si esto encaja con tu negocio." },
 ];
 
 export default function AutomaticAttentionPage() {
-  const [selectedGoal, setSelectedGoal] = useState(assistantGoals[0]);
-  const [selectedObjection, setSelectedObjection] = useState(commonObjections[0]);
+  const [tab, setTab] = useState<"config" | "test">("config");
+  const [name, setName] = useState("Ventra Assistant");
+  const [objective, setObjective] = useState("Agendar una llamada de demostracion");
+  const [instructions, setInstructions] = useState(
+    "Se amable y profesional. Resuelve dudas del prospecto y guia la conversacion hacia agendar una llamada o avanzar al siguiente paso.",
+  );
+  const [objections, setObjections] = useState(defaultObjections);
+  const [newObjection, setNewObjection] = useState("");
+  const [messages, setMessages] = useState(initialMessages);
+  const [input, setInput] = useState("");
 
-  const previewReply = useMemo(() => {
-    if (selectedGoal === "Agendar una llamada") {
-      return "Perfecto. Si te parece, te propongo una llamada corta para mostrarte como funcionaria en tu negocio y resolver dudas concretas.";
-    }
+  function addObjection() {
+    if (!newObjection.trim()) return;
+    setObjections((current) => [...current, newObjection.trim()]);
+    setNewObjection("");
+  }
 
-    if (selectedGoal === "Recuperar interes") {
-      return "Retomo tu mensaje porque vi interes real. Si quieres, te resumo en 30 segundos como esto te ayuda a responder mas rapido y no perder consultas.";
-    }
-
-    if (selectedGoal === "Empujar el cierre") {
-      return "Si ya estas evaluandolo, te recomiendo avanzar con el siguiente paso hoy para que no se enfrie la oportunidad. Te acompano en lo que falta.";
-    }
-
-    return "Te ayudo a resolver eso de forma clara y, si encaja contigo, te llevo al siguiente paso sin perder tiempo.";
-  }, [selectedGoal]);
+  function handleSend() {
+    if (!input.trim()) return;
+    setMessages((current) => [
+      ...current,
+      { role: "user", text: input },
+      {
+        role: "bot",
+        text: "Perfecto. Entiendo tu punto. Te explico como esto puede ayudarte y si quieres avanzamos con una llamada breve.",
+      },
+    ]);
+    setInput("");
+  }
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <section className="overflow-hidden rounded-[1.75rem] border bg-card p-6 shadow-card md:p-8">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-5">
-            <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-              Atencion automatica
+    <div className="max-w-5xl">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-foreground">Atencion automatica</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Configura y prueba tu asistente comercial</p>
+      </div>
+
+      <div className="mb-6 flex w-fit gap-1 rounded-xl bg-secondary p-1">
+        <button
+          type="button"
+          onClick={() => setTab("config")}
+          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            tab === "config" ? "bg-card text-foreground shadow-card" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          <Settings className="h-4 w-4" /> Configuracion
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab("test")}
+          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+            tab === "test" ? "bg-card text-foreground shadow-card" : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          <MessageCircle className="h-4 w-4" /> Probar asistente
+        </button>
+      </div>
+
+      {tab === "config" ? (
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-border bg-card p-5">
+              <label className="mb-2 block text-sm font-medium text-foreground">Nombre del asistente</label>
+              <input
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                className="w-full rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
             </div>
-            <div className="space-y-3">
-              <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.05em] md:text-4xl">
-                Configura tu asistente para atender prospectos automaticamente.
-              </h2>
-              <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
-                Esta capa concentra lo importante: objetivo, objeciones, instrucciones y una vista previa para probar
-                respuestas antes de usar el asistente en conversaciones reales.
-              </p>
+
+            <div className="rounded-2xl border border-border bg-card p-5">
+              <label className="mb-2 block text-sm font-medium text-foreground">Objetivo principal</label>
+              <input
+                value={objective}
+                onChange={(event) => setObjective(event.target.value)}
+                className="w-full rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
             </div>
-            <div className="flex flex-wrap gap-3">
-              <Button className="gradient-ventra rounded-xl text-primary-foreground shadow-ventra">
-                <Play className="h-4 w-4" />
-                Probar asistente
-              </Button>
-              <Button variant="outline" className="rounded-xl">Guardar configuracion</Button>
+
+            <div className="rounded-2xl border border-border bg-card p-5">
+              <label className="mb-2 block text-sm font-medium text-foreground">Instrucciones</label>
+              <textarea
+                value={instructions}
+                onChange={(event) => setInstructions(event.target.value)}
+                rows={4}
+                className="w-full resize-none rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-            {[
-              ["Plan de entrada", "Basico", "Incluye solo esta capa desde 9.99 USD/mes"],
-              ["Conversaciones activas", "127", "Prospectos atendidos con seguimiento inicial"],
-              ["Respuesta promedio", "< 1 min", "Mas velocidad, menos fugas por demora"],
-            ].map(([label, value, detail]) => (
-              <div key={label} className="rounded-[1.25rem] border bg-background/70 p-4">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
-                <p className="mt-3 text-3xl font-semibold tracking-[-0.04em]">{value}</p>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{detail}</p>
+          <div className="rounded-2xl border border-border bg-card p-5">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Biblioteca de objeciones</h3>
+            <p className="mb-4 text-xs text-muted-foreground">Agrega objeciones comunes y entrena respuestas mas claras.</p>
+            <div className="mb-4 space-y-2">
+              {objections.map((item, index) => (
+                <div key={`${item}-${index}`} className="flex items-center gap-2 rounded-xl border border-border bg-secondary px-4 py-2.5">
+                  <span className="flex-1 text-sm text-foreground">"{item}"</span>
+                  <button
+                    type="button"
+                    onClick={() => setObjections((current) => current.filter((_, currentIndex) => currentIndex !== index))}
+                    className="text-xs text-muted-foreground transition-colors hover:text-destructive"
+                  >
+                    x
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <input
+                value={newObjection}
+                onChange={(event) => setNewObjection(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") addObjection();
+                }}
+                placeholder="Agregar objecion..."
+                className="flex-1 rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
+              <button
+                type="button"
+                onClick={addObjection}
+                className="rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="max-w-lg overflow-hidden rounded-2xl border border-border bg-card">
+          <div className="flex items-center gap-3 border-b border-border bg-secondary px-5 py-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+              <MessageCircle className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <div className="text-sm font-medium text-foreground">{name}</div>
+              <div className="text-[10px] text-primary">En linea</div>
+            </div>
+          </div>
+
+          <div className="h-80 space-y-3 overflow-auto p-4">
+            {messages.map((message, index) => (
+              <div key={`${message.role}-${index}`} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                <div
+                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                    message.role === "user"
+                      ? "rounded-br-md bg-primary text-primary-foreground"
+                      : "rounded-bl-md border border-border bg-secondary text-foreground"
+                  }`}
+                >
+                  {message.text}
+                </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
-        <div className="space-y-6">
-          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
-            <div className="flex items-center gap-2">
-              <Bot className="h-4 w-4 text-primary" />
-              <h3 className="text-lg font-semibold">Configuracion del asistente</h3>
-            </div>
-            <div className="mt-5 grid gap-4">
-              <div>
-                <label className="text-sm font-medium">Nombre del asistente</label>
-                <Input defaultValue="Asistente comercial Ventra" className="mt-2 h-11 rounded-xl" />
-              </div>
-              <div>
-                <label className="text-sm font-medium">Objetivo principal</label>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {assistantGoals.map((goal) => (
-                    <button
-                      key={goal}
-                      type="button"
-                      onClick={() => setSelectedGoal(goal)}
-                      className={`rounded-full px-3 py-2 text-sm transition-colors ${
-                        selectedGoal === goal ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      {goal}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium">Instrucciones clave</label>
-                <Textarea
-                  className="mt-2 min-h-[160px]"
-                  defaultValue={`- Hablar claro y sin tecnicismos
-- Responder con empatia y llevar a un siguiente paso
-- No saturar de informacion
-- Detectar si conviene agendar, calificar o cerrar
-- Escalar a humano cuando haya bloqueo real`}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
-            <div className="flex items-center gap-2">
-              <MessageSquare className="h-4 w-4 text-primary" />
-              <h3 className="text-lg font-semibold">Objeciones comunes</h3>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {commonObjections.map((objection) => (
-                <button
-                  key={objection}
-                  type="button"
-                  onClick={() => setSelectedObjection(objection)}
-                  className={`rounded-full px-3 py-2 text-sm transition-colors ${
-                    selectedObjection === objection ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {objection}
-                </button>
-              ))}
-            </div>
-            <div className="mt-5 rounded-2xl border bg-muted/20 p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Objecion seleccionada</p>
-              <p className="mt-2 text-sm font-semibold">{selectedObjection}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                El asistente debe responder con contexto, aliviar la friccion y llevar al prospecto a una decision o
-                al siguiente paso adecuado.
-              </p>
-            </div>
+          <div className="flex gap-2 border-t border-border p-3">
+            <input
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") handleSend();
+              }}
+              placeholder="Escribe un mensaje..."
+              className="flex-1 rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            />
+            <button
+              type="button"
+              onClick={handleSend}
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              <Send className="h-4 w-4" />
+            </button>
           </div>
         </div>
-
-        <div className="space-y-6">
-          <div className="overflow-hidden rounded-[1.5rem] border bg-card shadow-card">
-            <div className="flex items-center justify-between border-b bg-sidebar px-5 py-4 text-sidebar-foreground">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">Preview conversacional</p>
-                <h3 className="mt-1 text-base font-semibold">Prueba el asistente antes de publicarlo</h3>
-              </div>
-              <Button variant="outline" size="sm" className="border-white/10 bg-white/5 text-sidebar-foreground hover:bg-white/10">
-                Simular
-              </Button>
-            </div>
-
-            <div className="space-y-4 bg-background p-5">
-              <div className="flex justify-end">
-                <div className="max-w-sm rounded-2xl rounded-br-md bg-primary px-4 py-3 text-sm text-primary-foreground">
-                  Hola. Tengo interes, pero no entiendo bien como me ayudaria.
-                </div>
-              </div>
-              <div className="max-w-sm rounded-2xl rounded-bl-md border bg-card px-4 py-3 shadow-sm">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">Asistente</p>
-                <p className="mt-2 text-sm leading-relaxed">{previewReply}</p>
-              </div>
-              <div className="flex justify-end">
-                <div className="max-w-sm rounded-2xl rounded-br-md bg-primary px-4 py-3 text-sm text-primary-foreground">
-                  {selectedObjection}
-                </div>
-              </div>
-              <div className="max-w-sm rounded-2xl rounded-bl-md border bg-card px-4 py-3 shadow-sm">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">Asistente</p>
-                <p className="mt-2 text-sm leading-relaxed">
-                  Entiendo esa duda. En vez de darte una respuesta generica, te explico rapido el resultado: menos
-                  prospectos frios, mejores respuestas y un siguiente paso claro para cerrar o agendar.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[1.5rem] border bg-card p-6 shadow-card">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <h3 className="text-lg font-semibold">Como mejorar respuestas</h3>
-            </div>
-            <div className="mt-5 space-y-3">
-              {[
-                "Hablar en terminos de resultado, no de tecnologia.",
-                "Responder una objecion por mensaje para no saturar.",
-                "Cerrar cada respuesta con un siguiente paso claro.",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-2xl border bg-muted/20 px-4 py-3">
-                  <CheckCircle2 className="h-4 w-4 text-primary" />
-                  <span className="text-sm">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      )}
     </div>
   );
 }

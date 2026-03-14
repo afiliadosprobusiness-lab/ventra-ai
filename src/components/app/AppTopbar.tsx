@@ -1,10 +1,7 @@
-import { ArrowRight, LogOut, MoonStar, Search, SunMedium } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Switch } from "@/components/ui/switch";
+import { LogOut, Moon, Sun } from "lucide-react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { useDemoAuth } from "@/lib/demo-auth";
-import { appRouteMeta } from "@/lib/app-navigation";
 
 type AppTopbarProps = {
   isDarkMode: boolean;
@@ -12,80 +9,39 @@ type AppTopbarProps = {
 };
 
 export function AppTopbar({ isDarkMode, onToggleDarkMode }: AppTopbarProps) {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { logout, user } = useDemoAuth();
-  const routeMeta = appRouteMeta[location.pathname] ?? appRouteMeta["/app"];
-  const initials = user?.name
-    .split(" ")
-    .map((chunk) => chunk[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase() ?? "VD";
-  const primaryActionTarget =
-    location.pathname === "/app"
-      ? "/app/acquisition"
-      : location.pathname === "/app/acquisition"
-        ? "/app/acquisition"
-        : location.pathname === "/app/automatic-attention"
-          ? "/app/automatic-attention"
-          : location.pathname === "/app/closing"
-            ? "/app/closing"
-            : location.pathname;
+  const { logout } = useDemoAuth();
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between border-b border-border/70 bg-background/85 px-4 backdrop-blur-xl">
-      <div className="flex items-center gap-3">
-        <SidebarTrigger className="text-muted-foreground" />
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/70">Ventra AI</p>
-          <h1 className="text-lg font-semibold">{routeMeta.title}</h1>
-        </div>
-        <p className="hidden max-w-xl text-sm text-muted-foreground xl:block">{routeMeta.description}</p>
-      </div>
+    <header className="flex h-14 flex-shrink-0 items-center justify-between border-b border-border bg-background px-6">
+      <div />
 
       <div className="flex items-center gap-3">
-        <div className="hidden lg:flex items-center gap-2 rounded-xl border border-border/70 bg-muted/80 px-3 py-2 shadow-sm">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder={routeMeta.searchPlaceholder}
-            className="w-64 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-          />
-        </div>
-
-        <div className="flex items-center gap-2 rounded-xl border border-border/70 bg-background/80 px-3 py-2 shadow-sm">
-          {isDarkMode ? <MoonStar className="h-4 w-4 text-primary" /> : <SunMedium className="h-4 w-4 text-warning" />}
-          <div className="hidden xl:block">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70">Modo</p>
-            <p className="text-xs font-medium">{isDarkMode ? "Oscuro" : "Claro"}</p>
-          </div>
-          <Switch checked={isDarkMode} onCheckedChange={onToggleDarkMode} aria-label="Cambiar modo oscuro" />
-        </div>
-
-        <Button
-          size="sm"
-          className="gradient-ventra rounded-xl text-primary-foreground shadow-ventra"
-          onClick={() => navigate(primaryActionTarget)}
+        <button
+          type="button"
+          onClick={() => onToggleDarkMode(!isDarkMode)}
+          className="relative flex h-7 w-14 items-center rounded-full border border-border bg-secondary px-1 transition-colors duration-300"
+          aria-label="Cambiar modo"
         >
-          {routeMeta.primaryAction}
-          <ArrowRight className="h-4 w-4" />
-        </Button>
+          <motion.div
+            className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground"
+            animate={{ x: isDarkMode ? 24 : 0 }}
+            transition={{ type: "spring", duration: 0.35, bounce: 0 }}
+          >
+            {isDarkMode ? <Moon className="h-3 w-3" /> : <Sun className="h-3 w-3" />}
+          </motion.div>
+        </button>
 
         <button
           type="button"
-          className="rounded-xl p-2.5 transition-colors hover:bg-muted"
           onClick={() => {
             logout();
             navigate("/login");
           }}
+          className="rounded-xl border border-border bg-secondary px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          <LogOut className="h-4 w-4 text-muted-foreground" />
+          <LogOut className="h-4 w-4" />
         </button>
-
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-          {initials}
-        </div>
       </div>
     </header>
   );
