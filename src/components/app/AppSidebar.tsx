@@ -8,7 +8,7 @@ export function AppSidebar() {
   const location = useLocation();
 
   return (
-    <Sidebar className="h-screen w-[240px] border-r border-border bg-sidebar">
+    <Sidebar collapsible="offcanvas" className="h-svh w-[240px] border-r border-border bg-sidebar">
       <div className="flex h-14 items-center border-b border-sidebar-border px-5">
         <Link to="/app" className="inline-flex">
           <VentraLogo markClassName="h-7 w-7" wordmarkClassName="text-sm text-sidebar-foreground" />

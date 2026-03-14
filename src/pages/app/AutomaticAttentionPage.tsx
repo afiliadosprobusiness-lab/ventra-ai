@@ -45,13 +45,13 @@ export default function AutomaticAttentionPage() {
   }
 
   return (
-    <div className="max-w-5xl">
-      <div className="mb-8">
+    <div className="w-full">
+      <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl font-bold text-foreground">Atencion automatica</h1>
         <p className="mt-1 text-sm text-muted-foreground">Configura y prueba tu asistente comercial</p>
       </div>
 
-      <div className="mb-6 flex w-fit gap-1 rounded-xl bg-secondary p-1">
+      <div className="mb-6 flex w-full flex-wrap gap-1 rounded-xl bg-secondary p-1 sm:w-fit">
         <button
           type="button"
           onClick={() => setTab("config")}
@@ -75,7 +75,7 @@ export default function AutomaticAttentionPage() {
       {tab === "config" ? (
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="space-y-4">
-            <div className="rounded-2xl border border-border bg-card p-5">
+            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
               <label className="mb-2 block text-sm font-medium text-foreground">Nombre del asistente</label>
               <input
                 value={name}
@@ -84,7 +84,7 @@ export default function AutomaticAttentionPage() {
               />
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-5">
+            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
               <label className="mb-2 block text-sm font-medium text-foreground">Objetivo principal</label>
               <input
                 value={objective}
@@ -93,7 +93,7 @@ export default function AutomaticAttentionPage() {
               />
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-5">
+            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
               <label className="mb-2 block text-sm font-medium text-foreground">Instrucciones</label>
               <textarea
                 value={instructions}
@@ -104,7 +104,7 @@ export default function AutomaticAttentionPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border bg-card p-5">
+          <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
             <h3 className="mb-4 text-sm font-semibold text-foreground">Biblioteca de objeciones</h3>
             <p className="mb-4 text-xs text-muted-foreground">Agrega objeciones comunes y entrena respuestas mas claras.</p>
             <div className="mb-4 space-y-2">
@@ -121,7 +121,7 @@ export default function AutomaticAttentionPage() {
                 </div>
               ))}
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 value={newObjection}
                 onChange={(event) => setNewObjection(event.target.value)}
@@ -142,7 +142,7 @@ export default function AutomaticAttentionPage() {
           </div>
         </div>
       ) : (
-        <div className="max-w-lg overflow-hidden rounded-2xl border border-border bg-card">
+        <div className="max-w-3xl overflow-hidden rounded-2xl border border-border bg-card">
           <div className="flex items-center gap-3 border-b border-border bg-secondary px-5 py-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
               <MessageCircle className="h-4 w-4 text-primary" />
@@ -153,7 +153,7 @@ export default function AutomaticAttentionPage() {
             </div>
           </div>
 
-          <div className="h-80 space-y-3 overflow-auto p-4">
+          <div className="h-[26rem] space-y-3 overflow-auto p-4 sm:h-[30rem]">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div

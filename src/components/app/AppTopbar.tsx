@@ -1,7 +1,9 @@
 import { LogOut, Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useDemoAuth } from "@/lib/demo-auth";
+import { appRouteMeta } from "@/lib/app-navigation";
 
 type AppTopbarProps = {
   isDarkMode: boolean;
@@ -9,12 +11,20 @@ type AppTopbarProps = {
 };
 
 export function AppTopbar({ isDarkMode, onToggleDarkMode }: AppTopbarProps) {
+  const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useDemoAuth();
+  const currentMeta = appRouteMeta[location.pathname] ?? appRouteMeta["/app"];
 
   return (
-    <header className="flex h-14 flex-shrink-0 items-center justify-between border-b border-border bg-background px-6">
-      <div />
+    <header className="sticky top-0 z-30 flex min-h-14 flex-shrink-0 items-center justify-between border-b border-border bg-background/90 px-4 backdrop-blur-xl sm:px-6">
+      <div className="flex min-w-0 items-center gap-3">
+        <SidebarTrigger className="md:hidden" />
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold text-foreground">{currentMeta.title}</p>
+          <p className="hidden truncate text-xs text-muted-foreground sm:block">{currentMeta.description}</p>
+        </div>
+      </div>
 
       <div className="flex items-center gap-3">
         <button

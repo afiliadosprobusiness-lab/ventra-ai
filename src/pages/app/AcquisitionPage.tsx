@@ -35,15 +35,15 @@ export default function AcquisitionPage() {
   }
 
   return (
-    <div className="max-w-4xl">
-      <div className="mb-8">
+    <div className="w-full">
+      <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl font-bold text-foreground">Adquisicion</h1>
         <p className="mt-1 text-sm text-muted-foreground">Crea campanas mas claras para atraer mas clientes</p>
       </div>
 
-      <div className="mb-6 rounded-2xl border border-border bg-card p-6">
+      <div className="mb-6 rounded-2xl border border-border bg-card p-5 sm:p-6">
         <label className="mb-3 block text-sm font-medium text-foreground">Que quieres promocionar hoy?</label>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <input
             value={prompt}
             onChange={(event) => setPrompt(event.target.value)}
@@ -62,9 +62,10 @@ export default function AcquisitionPage() {
       </div>
 
       {generated ? (
-        <div className="space-y-4">
+        <div>
           <h3 className="text-sm font-semibold text-foreground">3 angulos de venta sugeridos</h3>
-          {angles.map((angle, index) => (
+          <div className="mt-4 grid gap-4 xl:grid-cols-3">
+            {angles.map((angle, index) => (
             <div key={angle.name} className="rounded-2xl border border-border bg-card p-5">
               <div className="mb-3 flex items-start justify-between">
                 <div>
@@ -89,10 +90,11 @@ export default function AcquisitionPage() {
                 <p className="text-sm leading-relaxed text-foreground">{angle.copy}</p>
               </div>
             </div>
-          ))}
+            ))}
+          </div>
         </div>
       ) : (
-        <div className="rounded-2xl border border-border bg-card p-12 text-center">
+        <div className="rounded-2xl border border-border bg-card p-8 text-center sm:p-12">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10">
             <Sparkles className="h-6 w-6 text-primary" />
           </div>

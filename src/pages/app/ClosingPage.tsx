@@ -53,13 +53,13 @@ export default function ClosingPage() {
   };
 
   return (
-    <div className="max-w-5xl">
-      <div className="mb-8">
+    <div className="w-full">
+      <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl font-bold text-foreground">Cierre</h1>
         <p className="mt-1 text-sm text-muted-foreground">Prioriza leads, da seguimiento y empuja el cierre</p>
       </div>
 
-      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
         {[
           { label: "Total", value: metrics.total },
           { label: "En seguimiento", value: metrics.seguimiento },
@@ -74,7 +74,7 @@ export default function ClosingPage() {
         ))}
       </div>
 
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row">
+      <div className="mb-4 flex flex-col gap-3 xl:flex-row">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
@@ -85,7 +85,7 @@ export default function ClosingPage() {
           />
         </div>
 
-        <div className="flex gap-1 rounded-xl bg-secondary p-1">
+        <div className="flex flex-wrap gap-1 rounded-xl bg-secondary p-1">
           {(["all", "nuevo", "en_seguimiento", "cerrado", "perdido"] as const).map((item) => (
             <button
               key={item}
@@ -111,7 +111,7 @@ export default function ClosingPage() {
         </div>
 
         {filtered.map((lead) => (
-          <div key={lead.id} className="grid grid-cols-1 items-center gap-2 border-b border-border px-5 py-4 transition-colors hover:bg-secondary/50 last:border-0 sm:grid-cols-12 sm:gap-4">
+          <div key={lead.id} className="grid grid-cols-1 items-center gap-3 border-b border-border px-4 py-4 transition-colors hover:bg-secondary/50 last:border-0 sm:grid-cols-12 sm:gap-4 sm:px-5">
             <div className="flex items-center gap-3 sm:col-span-3">
               <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
                 {lead.name[0]}

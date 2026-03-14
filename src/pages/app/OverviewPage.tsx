@@ -19,15 +19,15 @@ const chartLabels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Se
 
 export default function OverviewPage() {
   return (
-    <div className="max-w-5xl">
-      <div className="mb-8">
+    <div className="w-full">
+      <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl font-bold text-foreground">Overview</h1>
         <p className="mt-1 text-sm text-muted-foreground">Resumen de tu sistema comercial</p>
       </div>
 
-      <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:mb-8 xl:grid-cols-4">
         {kpis.map((kpi) => (
-          <div key={kpi.label} className="rounded-2xl border border-border bg-card p-5">
+          <div key={kpi.label} className="rounded-2xl border border-border bg-card p-5 sm:p-6">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10">
                 <kpi.icon className="h-4 w-4 text-primary" />
@@ -43,10 +43,10 @@ export default function OverviewPage() {
         ))}
       </div>
 
-      <div className="mb-8 grid gap-4 lg:grid-cols-5">
-        <div className="rounded-2xl border border-border bg-card p-5 lg:col-span-3">
+      <div className="mb-6 grid gap-4 xl:mb-8 xl:grid-cols-[minmax(0,1.7fr)_minmax(320px,1fr)]">
+        <div className="min-w-0 rounded-2xl border border-border bg-card p-5 sm:p-6">
           <h3 className="mb-4 text-sm font-semibold">Oportunidades generadas vs. cerradas</h3>
-          <div className="flex h-40 items-end gap-1.5">
+          <div className="flex h-44 items-end gap-1.5 overflow-hidden sm:h-52">
             {chartData.map((height, index) => (
               <div key={chartLabels[index]} className="flex flex-1 flex-col items-center gap-1">
                 <div className="relative w-full overflow-hidden rounded-t-sm bg-primary/15" style={{ height: `${height}%` }}>
@@ -66,7 +66,7 @@ export default function OverviewPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-5 lg:col-span-2">
+        <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
           <h3 className="mb-4 text-sm font-semibold">Embudo</h3>
           <div className="space-y-3">
             {[
@@ -90,7 +90,7 @@ export default function OverviewPage() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card p-5">
+      <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
         <h3 className="mb-4 text-sm font-semibold">Actividad reciente</h3>
         <div className="space-y-3">
           {activity.map((item) => (

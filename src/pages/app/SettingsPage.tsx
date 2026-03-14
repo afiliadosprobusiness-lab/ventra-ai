@@ -25,15 +25,15 @@ export default function SettingsPage() {
     .toUpperCase() ?? "VD";
 
   return (
-    <div className="max-w-4xl animate-fade-in">
+    <div className="w-full animate-fade-in">
       <h2 className="mb-6 text-lg font-semibold">Configuracion</h2>
-      <div className="flex gap-6">
-        <div className="w-48 shrink-0 space-y-1">
+      <div className="flex flex-col gap-6 xl:flex-row">
+        <div className="flex gap-1 overflow-x-auto rounded-xl bg-secondary p-1 xl:w-52 xl:shrink-0 xl:flex-col xl:space-y-1 xl:bg-transparent xl:p-0">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+              className={`flex shrink-0 items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors xl:w-full ${
                 activeTab === tab.id ? "bg-primary/10 font-medium text-primary" : "text-muted-foreground hover:bg-muted"
               }`}
             >
@@ -54,7 +54,7 @@ export default function SettingsPage() {
                   Cambiar foto
                 </Button>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <Label>Nombre</Label>
                   <Input defaultValue={firstName} className="mt-1.5" />

@@ -26,13 +26,13 @@ export default function AppLayout() {
   return (
     <div className={isDarkMode ? "dark" : undefined}>
       <SidebarProvider>
-        <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
+        <div className="app-shell-background flex min-h-svh w-full overflow-hidden text-foreground">
           <AppSidebar />
           <div className="flex min-w-0 flex-1 flex-col">
             <AppTopbar isDarkMode={isDarkMode} onToggleDarkMode={setIsDarkMode} />
             <main className="flex-1 overflow-auto">
-              <div className="p-6 sm:p-8">
-              <Outlet />
+              <div className="w-full px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+                <Outlet />
               </div>
             </main>
           </div>
