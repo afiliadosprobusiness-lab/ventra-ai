@@ -40,9 +40,9 @@ export function LandingNavBar({ isDarkMode, onToggleDarkMode }: LandingNavBarPro
               <Link to="/login" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                 Iniciar sesion
               </Link>
-              <Link to="/register">
+              <Link to="/quiz">
                 <Button className="rounded-xl gradient-ventra text-primary-foreground shadow-ambient-lg">
-                  Solicitar implementacion
+                  Hacer diagnostico
                 </Button>
               </Link>
             </div>
@@ -71,9 +71,9 @@ export function LandingNavBar({ isDarkMode, onToggleDarkMode }: LandingNavBarPro
                   <Link to="/login" onClick={() => setIsMenuOpen(false)}>
                     <Button variant="outline" className="w-full rounded-xl">Iniciar sesion</Button>
                   </Link>
-                  <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                  <Link to="/quiz" onClick={() => setIsMenuOpen(false)}>
                     <Button className="w-full rounded-xl gradient-ventra text-primary-foreground shadow-ambient-lg">
-                      Solicitar implementacion
+                      Hacer diagnostico
                     </Button>
                   </Link>
                 </div>

@@ -20,7 +20,7 @@ const stepMotion = {
 };
 
 export function LandingQuizWizard({
-  ctaHref = "/register",
+  ctaHref = "/quiz",
   ctaLabel = "Ver recomendacion completa",
   className,
   standalone = false,

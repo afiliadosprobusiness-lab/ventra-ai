@@ -39,6 +39,7 @@
 ## Main UI shells
 
 - `LandingPage`
+- `QuizPage` con funnel consultivo multietapa
 - `LoginPage`
 - `RegisterPage`
 - `ForgotPasswordPage`
@@ -76,7 +77,8 @@
 
 ## Visual stance
 
-- landing: narrativa comercial clara con lenguaje visual premium, nav glass, hero centrado y wizard consultivo reutilizable
+- landing: narrativa comercial clara con lenguaje visual premium, nav glass, hero centrado y CTA principal conectado a un embudo consultivo
+- quiz funnel: experiencia dark-first, multistep, con transicion premium, video gate vertical y oferta final con precio explicito
 - app shell: compacta, premium y sobria
 - navigation: solo tres capas principales y una entrada de configuracion
 - dashboard: centro de control corto y orientado a resultado

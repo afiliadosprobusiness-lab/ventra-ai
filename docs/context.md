@@ -81,6 +81,8 @@ No debe convertirse en:
 
 - Landing comercial enfocada en la promesa de sistema comercial de 3 capas
 - Landing con hero, problema, solucion, beneficios, como funciona, quiz consultivo, planes, confianza y CTA final
+- CTA principal de la landing conectado a un embudo consultivo en `/quiz`
+- Embudo publico en `/quiz` con flujo: quiz multistep -> transicion consultiva -> video gate vertical -> CTA con precio -> oferta final
 - Landing con soporte claro/oscuro visible
 - Landing con lenguaje visual premium tipo glass, cards suaves y jerarquia comercial mas directa
 - Quiz

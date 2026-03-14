@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Play } from "lucide-react";
+import { ArrowRight, CheckCircle2, Play, ShieldCheck, Video } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { VentraLogo } from "@/components/brand/ventra-logo";
 import { LandingNavBar } from "@/components/landing/LandingNavBar";
-import { LandingQuizWizard } from "@/components/landing/LandingQuizWizard";
 import { LandingSection } from "@/components/landing/LandingSection";
 import {
   landingBenefits,
@@ -76,7 +75,7 @@ export default function LandingPage() {
                 transition={{ type: "spring", duration: 0.55, bounce: 0, delay: 0.24 }}
                 className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
               >
-                <Link to="/register">
+                <Link to="/quiz">
                   <Button size="lg" className="h-12 rounded-xl px-8 gradient-ventra text-sm font-medium text-primary-foreground shadow-ambient-lg">
                     Solicitar implementacion
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -303,25 +302,27 @@ export default function LandingPage() {
 
           <LandingSection
             id="quiz"
-            eyebrow="Diagnostico"
-            title="Responde unas preguntas rapidas y descubre que necesita tu negocio para vender mas"
-            description="El wizard detecta si hoy el mayor cuello de botella esta en adquisicion, atencion automatica o cierre."
+            eyebrow="CTA principal"
+            title="El siguiente paso ya no es un formulario. Es un embudo consultivo."
+            description="Primero diagnosticas tu negocio. Despues ves un video corto. Solo entonces se revela el CTA con precio y la oferta final."
             align="center"
           >
-            <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+            <div className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
               <div className="glass-card p-6 sm:p-8">
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <CheckCircle2 className="h-8 w-8" />
+                  <ShieldCheck className="h-8 w-8" />
                 </div>
-                <h3 className="text-2xl font-semibold">Diagnostico consultivo, no formulario generico</h3>
+                <h3 className="text-2xl font-semibold">Filtro premium para prospectos con intencion real</h3>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Evalua como llegan tus consultas, que tan manual es el proceso comercial y si hoy pierdes oportunidades por demora o por falta de seguimiento.
+                  El flujo clasifica el principal cuello de botella, captura datos clave, obliga a consumir el video y
+                  deja el siguiente paso con precio explicito.
                 </p>
                 <div className="mt-6 space-y-3">
                   {[
-                    "Detecta la capa con mayor impacto para tu negocio.",
-                    "Sugiere si conviene empezar con el plan basico o el completo.",
-                    "Convierte la venta en una recomendacion clara y consultiva.",
+                    "Quiz multistep con diagnostico y data capture.",
+                    "Transicion consultiva antes del pitch.",
+                    "Video vertical con gating al 85% antes del CTA.",
+                    "Pantalla final con beneficios, precio y siguientes pasos.",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 rounded-xl border border-border bg-background/80 px-4 py-3">
                       <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
@@ -329,9 +330,60 @@ export default function LandingPage() {
                     </div>
                   ))}
                 </div>
+                <Link to="/quiz" className="mt-6 inline-flex">
+                  <Button className="h-12 rounded-xl px-6 gradient-ventra text-primary-foreground shadow-ambient-lg">
+                    Empezar diagnostico
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </div>
 
-              <LandingQuizWizard ctaLabel="Solicitar implementacion" className="glass-card p-6 sm:p-8" />
+              <div className="grid gap-4">
+                <div className="glass-card p-6">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <CheckCircle2 className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Fase 1</div>
+                      <h3 className="text-xl font-semibold">Quiz y diagnostico</h3>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Detecta si el negocio necesita empezar por Adquisicion, Atencion automatica, Cierre o una solucion completa.
+                  </p>
+                </div>
+
+                <div className="glass-card p-6">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <Video className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Fase 2</div>
+                      <h3 className="text-xl font-semibold">Video gate con consumo real</h3>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    El CTA con precio se desbloquea solo al ver al menos el 85% del video. Menos curiosos, mas seriedad comercial.
+                  </p>
+                </div>
+
+                <div className="glass-card p-6">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">Fase 3</div>
+                      <h3 className="text-xl font-semibold">Oferta y siguiente paso</h3>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Se muestra una mini sales page con beneficios, implementacion desde 1000 USD y rutas hacia comunidad o aplicacion.
+                  </p>
+                </div>
+              </div>
             </div>
           </LandingSection>
 
@@ -359,7 +411,7 @@ export default function LandingPage() {
                   </div>
                   <p className="text-sm text-muted-foreground">{plan.description}</p>
                   <p className="mt-3 text-sm leading-relaxed">{plan.highlight}</p>
-                  <Link to="/register" className="mt-6 block">
+                  <Link to="/quiz" className="mt-6 block">
                     <Button
                       className={`h-12 w-full rounded-xl ${index === 1 ? "gradient-ventra text-primary-foreground shadow-ambient-lg" : ""}`}
                       variant={index === 1 ? "default" : "outline"}
@@ -414,17 +466,17 @@ export default function LandingPage() {
                 Deja de perder clientes. Empieza a cerrar mas ventas.
               </h2>
               <p className="mx-auto mb-8 mt-4 max-w-xl text-lg text-muted-foreground">
-                Implementa un sistema comercial para atraer clientes, responder mejor y convertir mas consultas en ventas reales.
+                Diagnostica tu situacion, entiende la implementacion y filtra el siguiente paso con una propuesta mas seria.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <Link to="/register">
+                <Link to="/quiz">
                   <Button size="lg" className="h-12 rounded-xl px-8 gradient-ventra text-primary-foreground shadow-ambient-lg">
                     Solicitar implementacion
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
                 <a href="#quiz">
-                  <Button size="lg" variant="outline" className="h-12 rounded-xl px-8">Hacer diagnostico</Button>
+                  <Button size="lg" variant="outline" className="h-12 rounded-xl px-8">Ver el nuevo flujo</Button>
                 </a>
               </div>
             </div>

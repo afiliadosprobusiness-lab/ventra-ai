@@ -4,6 +4,7 @@
 
 | Fecha | Cambio | Tipo | Impacto |
 | --- | --- | --- | --- |
+| 2026-03-14 | El CTA principal de la landing ahora dirige a un embudo consultivo en `/quiz` con diagnostico, video gate y oferta final con precio explicito. | non-breaking | No cambia rutas publicas; cambia el flujo comercial del CTA principal para filtrar mejor prospectos y preparar checkout/comunidad mas adelante. |
 | 2026-03-14 | La landing adopto un lenguaje visual premium inspirado en el proyecto de referencia interno, con nav glass, hero centrado y superficies mas refinadas. | non-breaking | No cambia rutas ni modulos publicos; mejora la percepcion visual y la jerarquia comercial del flujo publico. |
 | 2026-03-14 | La landing comercial fue refactorizada para vender la promesa de sistema comercial en 3 capas e incluir dark mode y un wizard consultivo reutilizable. | non-breaking | No cambia rutas canonicas; cambia la narrativa publica, el flujo visual y la reutilizacion del diagnostico entre `/` y `/quiz`. |
 | 2026-03-14 | La app privada se reorganizo oficialmente en tres capas visibles: `/app/acquisition`, `/app/automatic-attention` y `/app/closing`. | breaking | Las rutas canonicas del producto cambiaron para simplificar la experiencia; las rutas legacy se mantienen como redirects para no romper accesos previos. |
@@ -116,8 +117,14 @@ Ejemplos:
 ### 6.1 Publicos
 
 - Landing comercial con narrativa de sistema comercial en 3 capas
-- Diagnostico consultivo embebido dentro de la landing
-- Quiz de recomendacion
+- CTA principal conectado a un embudo consultivo completo
+- Embudo consultivo en `/quiz`
+  - quiz multistep
+  - diagnostico y data capture
+  - transicion consultiva
+  - video gate vertical
+  - CTA con precio explicito tras consumir al menos el 85 por ciento del video
+  - pantalla final de oferta y siguientes pasos
 - Login
 - Register
 - Forgot password
