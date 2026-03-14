@@ -9,13 +9,13 @@ export function AppShell() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="ventra-private-ui min-h-screen bg-background text-foreground">
-      <div className="flex min-h-screen">
-        <div className="hidden lg:block">
+    <div className="ventra-private-ui min-h-dvh bg-background text-foreground">
+      <div className="flex min-h-dvh items-start">
+        <div className="hidden shrink-0 lg:block">
           <SidebarNav collapsed={collapsed} onToggle={() => setCollapsed((value) => !value)} />
         </div>
 
-        <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+        <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
           <div className="border-b border-border bg-card px-4 py-3 lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -31,8 +31,8 @@ export function AppShell() {
 
           <Topbar />
 
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background px-4 py-4 sm:px-6 lg:px-6 lg:py-6">
-            <div className="flex w-full flex-col gap-5 lg:gap-6">
+          <main className="flex-1 overflow-x-clip bg-background px-4 py-4 sm:px-6 lg:px-6 lg:py-6">
+            <div className="mx-auto flex w-full max-w-[1680px] flex-col gap-5 pb-8 lg:gap-6 lg:pb-10">
               <Outlet />
             </div>
           </main>

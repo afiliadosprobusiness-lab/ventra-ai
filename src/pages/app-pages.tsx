@@ -399,9 +399,34 @@ export function OverviewPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="font-display text-[1.95rem] font-semibold text-foreground">Overview</h2>
-      </div>
+      <GlassBlock className="overflow-hidden p-0">
+        <div className="bg-[linear-gradient(135deg,#f7faf7_0%,#edf6f2_45%,#e6f3ef_100%)] px-6 py-6 lg:px-7">
+          <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">Workspace overview</p>
+              <h2 className="mt-3 font-display text-[2.15rem] font-semibold tracking-tight text-foreground">
+                {data.workspace.name} keeps demand, follow-up and revenue in one operating surface
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                This overview should feel like an operator cockpit, not a loose grid of cards. The goal is immediate clarity on demand, pipeline, motions and next actions.
+              </p>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                <MiniStat label="Workspace" value={data.workspace.plan} detail={`${data.workspace.industry} · ${data.workspace.region}`} />
+                <MiniStat label="Active contacts" value={`${data.workspace.activeContacts}`} detail="Commercial backbone in motion" />
+                <MiniStat label="Monthly pipeline" value={data.workspace.monthlyPipeline} detail="Visible across connected surfaces" />
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <QuickActionTile to="/app/contacts" icon={Users} label="Open contact backbone" detail="Inspect the records driving pipeline, campaigns and Community." />
+              <QuickActionTile to="/app/acquisition/prospector-ai" icon={ScanSearch} label="Review discovery layer" detail="Check the accounts feeding the workspace right now." />
+              <QuickActionTile to="/app/campaigns" icon={ChartColumnIncreasing} label="Check campaign motion" detail="See which motions are influencing active revenue." />
+              <QuickActionTile to="/app/community" icon={MessageSquareMore} label="Open Community" detail="Track member activity, retention and CRM-linked profiles." />
+            </div>
+          </div>
+        </div>
+      </GlassBlock>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {overviewMetrics.map((metric) => (
@@ -416,54 +441,71 @@ export function OverviewPage() {
         ))}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-        <GlassBlock className="p-6">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <h3 className="font-display text-xl font-semibold text-foreground">Rendimiento comercial</h3>
-            </div>
-            <div className="flex gap-2">
-              <FilterPill>7d</FilterPill>
-              <FilterPill active>30d</FilterPill>
-              <FilterPill>90d</FilterPill>
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <GlassBlock className="overflow-hidden p-0">
+          <div className="border-b border-border bg-muted/30 px-6 py-5">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Performance</p>
+                <h3 className="mt-2 font-display text-2xl font-semibold text-foreground">Rendimiento comercial</h3>
+              </div>
+              <div className="flex gap-2">
+                <FilterPill>7d</FilterPill>
+                <FilterPill active>30d</FilterPill>
+                <FilterPill>90d</FilterPill>
+              </div>
             </div>
           </div>
 
-          <div className="mt-6 flex h-64 items-end gap-2">
-            {chartBars.map((value, index) => (
-              <div
-                key={`bar-${value}-${index}`}
-                className="flex-1 rounded-t-sm transition-opacity hover:opacity-80"
-                style={{
-                  height: `${(value / 110) * 100}%`,
-                  background: value > 78 ? "hsl(var(--primary))" : "hsl(var(--accent))",
-                }}
-              />
-            ))}
-          </div>
+          <div className="px-6 py-6">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <MiniStat label="Momentum" value="Stable upward" detail="Signals stay aligned between acquisition and revenue." />
+              <MiniStat label="Best window" value="Mid-month" detail="Campaign lift and faster response cadence." />
+              <MiniStat label="Primary driver" value="Connected motions" detail="Discovery, contact and follow-up are not leaking." />
+            </div>
 
-          <div className="mt-3 flex justify-between text-[10px] text-muted-foreground">
-            <span>1 Mar</span>
-            <span>15 Mar</span>
-            <span>30 Mar</span>
+            <div className="mt-6 rounded-[22px] border border-border bg-background px-5 pb-5 pt-6">
+              <div className="flex h-[320px] items-end gap-2 sm:gap-2.5">
+                {chartBars.map((value, index) => (
+                  <div key={`bar-${value}-${index}`} className="group flex flex-1 items-end">
+                    <div
+                      className="w-full rounded-t-[10px] transition-all duration-200 group-hover:-translate-y-1"
+                      style={{
+                        height: `${(value / 110) * 100}%`,
+                        background: value > 78 ? "linear-gradient(180deg, rgba(22,163,74,0.92), rgba(20,143,101,0.96))" : "linear-gradient(180deg, rgba(179,225,210,0.78), rgba(209,239,230,0.9))",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 flex justify-between text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                <span>1 Mar</span>
+                <span>15 Mar</span>
+                <span>30 Mar</span>
+              </div>
+            </div>
           </div>
         </GlassBlock>
 
         <div className="space-y-4">
           <div>
-            <h3 className="font-display text-xl font-semibold text-foreground">Insights inteligentes</h3>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Insights</p>
+            <h3 className="mt-2 font-display text-2xl font-semibold text-foreground">Insights inteligentes</h3>
           </div>
           {data.insights.slice(0, 3).map((insight) => {
             const tone = insightToneMap[insight.tone];
             const Icon = insight.tone === "warning" ? Target : insight.tone === "info" ? Sparkles : Activity;
 
             return (
-              <GlassBlock key={insight.id} className={`border-l-2 p-4 ${tone.border}`}>
+              <GlassBlock key={insight.id} className={`border-l-2 p-5 ${tone.border}`}>
                 <div className="flex items-start gap-3">
-                  <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${tone.icon}`} />
+                  <div className="flex h-9 w-9 items-center justify-center rounded-[14px] bg-muted/50">
+                    <Icon className={`h-4 w-4 shrink-0 ${tone.icon}`} />
+                  </div>
                   <div>
-                    <p className="text-sm font-medium text-foreground">{insight.title}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{insight.detail}</p>
+                    <p className="text-base font-semibold text-foreground">{insight.title}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{insight.detail}</p>
                   </div>
                 </div>
               </GlassBlock>
@@ -472,10 +514,16 @@ export function OverviewPage() {
         </div>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
         <GlassBlock className="p-6">
-          <h3 className="font-display text-xl font-semibold text-foreground">Leads más calientes</h3>
-          <div className="mt-4 overflow-x-auto">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Pipeline-ready demand</p>
+              <h3 className="mt-2 font-display text-2xl font-semibold text-foreground">Leads más calientes</h3>
+            </div>
+            <StatusBadge value={`${hottestLeads.length} high-fit records`} tone="success" />
+          </div>
+          <div className="mt-5 overflow-x-auto rounded-[22px] border border-border bg-muted/20">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-muted-foreground">
@@ -509,17 +557,67 @@ export function OverviewPage() {
         </GlassBlock>
 
         <GlassBlock className="p-6">
-          <h3 className="font-display text-xl font-semibold text-foreground">Actividad reciente</h3>
-          <div className="mt-4 space-y-3">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Operating flow</p>
+              <h3 className="mt-2 font-display text-2xl font-semibold text-foreground">Actividad reciente</h3>
+            </div>
+            <StatusBadge value={`${data.events.length} live signals`} tone="info" />
+          </div>
+          <div className="mt-5 space-y-3">
             {data.events.slice(0, 6).map((event) => (
-              <div key={event.id} className="flex items-start gap-3 border-b border-border py-2 last:border-0">
-                <div className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${activityToneMap[event.type] ?? "bg-muted-foreground"}`} />
-                <div className="min-w-0">
-                  <p className="text-sm text-foreground">{event.title}</p>
-                  <p className="mt-0.5 text-[10px] text-muted-foreground">{event.time}</p>
+              <div key={event.id} className="rounded-[18px] border border-border bg-muted/30 px-4 py-4">
+                <div className="flex items-start gap-3">
+                  <div className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${activityToneMap[event.type] ?? "bg-muted-foreground"}`} />
+                  <div className="min-w-0">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-sm font-medium text-foreground">{event.title}</p>
+                      <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground">{event.time}</p>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{event.detail}</p>
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+        </GlassBlock>
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+        <GlassBlock className="p-6">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Cross-module health</p>
+              <h3 className="mt-2 font-display text-2xl font-semibold text-foreground">Qué está sosteniendo la operación</h3>
+            </div>
+            <StatusBadge value="Operator-ready" tone="success" />
+          </div>
+          <div className="mt-5 grid gap-3">
+            {[
+              `Prospector AI already surfaced ${prospectorBridge.prospector.prospects.length} high-intent accounts for this workspace.`,
+              `${data.campaigns.filter((item) => item.status === "Active").length} campaign motions are still visible in the same operating spine.`,
+              `${data.tasks.filter((item) => item.status === "Now").length} urgent follow-ups remain clearly exposed instead of being buried in side tools.`,
+            ].map((item) => (
+              <div key={item} className="rounded-[18px] border border-border bg-muted/30 px-4 py-4 text-sm leading-relaxed text-muted-foreground">
+                {item}
+              </div>
+            ))}
+          </div>
+        </GlassBlock>
+
+        <GlassBlock className="p-6">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Next actions</p>
+              <h3 className="mt-2 font-display text-2xl font-semibold text-foreground">Saltos rápidos con contexto</h3>
+            </div>
+            <StatusBadge value="Same shell" tone="neutral" />
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <QuickActionTile to="/app/pipeline" icon={BriefcaseBusiness} label="Open pipeline" detail="Review open opportunities without losing contact context." />
+            <QuickActionTile to="/app/conversations" icon={MessageSquareMore} label="Open conversations" detail="Handle live follow-up and recover momentum faster." />
+            <QuickActionTile to="/app/campaigns" icon={ChartColumnIncreasing} label="Review campaigns" detail="Check which assets and motions are influencing current revenue." />
+            <QuickActionTile to="/app/analytics" icon={Activity} label="Open analytics" detail="Read the same signals in an executive view." />
           </div>
         </GlassBlock>
       </div>

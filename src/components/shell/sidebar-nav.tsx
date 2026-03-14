@@ -69,15 +69,15 @@ export function SidebarNav({ collapsed, onToggle, mobile = false }: SidebarNavPr
   return (
     <aside
       className={cn(
-        "flex h-screen flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground",
-        collapsed ? "w-[84px]" : "w-60",
+        "sticky top-0 flex h-dvh shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar text-sidebar-foreground",
+        collapsed ? "w-[84px]" : "w-[248px]",
       )}
     >
-      <div className="flex h-14 items-center border-b border-sidebar-border px-4">
+      <div className="flex h-14 shrink-0 items-center border-b border-sidebar-border px-4">
         <VentraLogo compact={collapsed} />
       </div>
 
-      <div className="flex-1 overflow-y-auto px-3 py-5">
+      <div className="sidebar-scroll flex-1 overflow-y-auto px-3 py-5 pr-2">
         <div className="space-y-6">
           {groups.map((group) => (
             <div key={group.label}>
@@ -132,7 +132,7 @@ export function SidebarNav({ collapsed, onToggle, mobile = false }: SidebarNavPr
         </div>
       </div>
 
-      <div className="border-t border-sidebar-border px-3 py-3">
+      <div className="shrink-0 border-t border-sidebar-border px-3 py-3">
         <NavLink
           to="/app/settings"
           className={({ isActive }) =>
