@@ -9,7 +9,7 @@
 ## Que es Ventra
 Ventra es un `Growth OS` comercial para equipos en LATAM que necesitan descubrir, captar, activar y cerrar mas oportunidades desde un mismo sistema.
 
-Ventra no se posiciona como un conjunto de herramientas sueltas. Su valor esta en mantener discovery, acquisition, conversaciones, voz, pipeline, assets y campanas dentro del mismo contexto operativo.
+Ventra no se posiciona como un conjunto de herramientas sueltas. Su valor esta en mantener discovery, acquisition, conversaciones, voz, comunidad, pipeline, assets y campanas dentro del mismo contexto operativo.
 
 ## Promesa comercial actual
 Ventra ayuda a:
@@ -63,7 +63,37 @@ La secuencia visible en el frontend es:
 6. Puede activar una llamada o cola en Voice AI.
 7. Puede conectarse a Campaigns.
 8. Puede detonar un pitch o mockup en Creative Studio.
-9. Overview y Analytics reflejan actividad y contribucion de ese motion.
+9. Puede activar una experiencia de miembros, contenido o sesiones dentro de Community.
+10. Overview y Analytics reflejan actividad y contribucion de ese motion.
+
+## Rol de Community dentro del sistema
+Community agrega una capa de audiencia propia dentro del mockup actual.
+
+En el frontend vigente cumple cinco funciones:
+
+1. Hub privado de marca
+- permite crear una comunidad con branding, visibilidad, dominio mock y espacios tematicos
+
+2. Capa de activacion y retencion
+- convierte contactos, clientes o partners en miembros visibles dentro del workspace
+- permite centralizar contenido, eventos y conversaciones repetibles
+
+3. Operacion de contenido
+- agrupa feed, publicaciones fijadas, comentarios, reacciones y destacados como demo de alta fidelidad
+
+4. Capa de sesiones
+- expone eventos, office hours y replay-ready sessions ligados a motions comerciales
+
+5. Integracion del ecosistema
+- se conecta visualmente con Workspaces, Contacts, Campaigns, Analytics y Settings
+- debe sentirse como una capacidad nativa de Ventra, no como producto separado
+
+6. Capa de continuidad comercial
+- `Members` expone relacion visible con `Contacts` cuando un miembro ya existe en el CRM mock
+- el detalle de miembro funciona como panel premium con perfil, actividad, eventos, notas, tags, quick actions y referencia al contacto relacionado
+- `Analytics` incorpora metrica de comunidad como members, engagement, growth, top spaces y high-engagement members
+- `Campaigns` muestra plays de comunidad para invite, re-engagement, event reminder y new member nurture
+- `Workspaces` hace visible la postura de la comunidad por workspace como parte del mismo sistema operativo
 
 ## Shells implementados
 
@@ -92,6 +122,7 @@ La secuencia visible en el frontend es:
 - voice AI
 - creative studio
 - conversations
+- community
 - pipeline
 - campaigns
 - contacts
@@ -140,11 +171,19 @@ La secuencia visible en el frontend es:
 ### Analytics
 - agrega KPIs de prospecting
 - muestra el funnel discovery -> CRM -> opportunity -> outreach
+- agrega tambien lectura de Community con member growth, engagement, top spaces y member activity conectada al mismo scoreboard
+
+### Community
+- introduce community overview, builder, home, feed, members, events y settings dentro del mismo shell privado
+- usa datos mock coherentes por workspace para contenido, miembros, espacios y sesiones
+- conecta quick actions hacia Contacts, Campaigns, Analytics, Workspaces y Settings
+- `Members` ahora funciona como directorio conectado al CRM mock con panel de detalle y continuidad hacia Contacts, Campaigns y Analytics
 
 ## Ajustes actuales de navegacion y UX
 - `Prospector AI` tiene visibilidad propia dentro del shell privado.
+- `Community` tiene navegacion propia dentro del shell privado con overview, builder, home, feed, members, events y settings.
 - El topbar incluye command search y quick actions cross-module.
-- Los quick actions pueden saltar entre Prospector AI, Contacts, Pipeline, Campaigns y Creative Studio.
+- Los quick actions pueden saltar entre Prospector AI, Community, Contacts, Pipeline, Campaigns y Creative Studio.
 - El sidebar y el topbar refuerzan la idea de una sola plataforma operativa.
 - La UI usa badges de origen, status y timeline para mantener continuidad narrativa.
 
@@ -158,19 +197,20 @@ El estado actual expone:
 - contexto de usuario separado del de workspace
 
 ## Branding y direccion del producto
-La direccion visual sigue basada en:
-- obsidian y midnight navy como base
-- electric cyan como primary signal
-- violet como secondary accent
-- amber como highlight controlado
+La direccion visual actual es dual:
+- shell publico y narrativa comercial: premium, dramatico y de alto contraste
+- shell privado y modulos operativos: claro, limpio, sobrio y tipo business dashboard
+- sidebar privado: oscuro y mate para mantener anclaje de marca
+- primary del producto: verde / teal de operacion SaaS
 
-Prospector AI se integra a esa misma identidad. No debe sentirse como producto paralelo.
+Prospector AI y Community se integran a esa misma identidad. Ninguno debe sentirse como producto paralelo.
 
 ## Supuestos explicitos
 - No existe backend real todavia.
 - No existe sincronizacion real con CRM externo.
 - No existe telefonia real detras de Voice AI.
 - No existe persistencia productiva para Prospector AI.
+- No existe backend real para Community ni persistencia productiva de miembros, posts o eventos.
 - Todo el valor actual esta en la narrativa, arquitectura visual y coherencia del mockup.
 
 ## Guidance para el siguiente agente
@@ -178,5 +218,6 @@ Hacer cambios futuros manteniendo estas reglas:
 - no tratar Prospector AI como modulo separado del resto
 - no convertir Ventra en CRM generico
 - no romper la continuidad entre discovery, capture, follow-up y close
+- usar Community como capa de relacion y retencion, no como app aparte
 - no documentar capacidades como si ya fueran backend productivo
-- mantener datasets mock consistentes entre Overview, Acquisition, Contacts, Pipeline, Conversations, Voice AI, Campaigns, Creative Studio y Analytics
+- mantener datasets mock consistentes entre Overview, Acquisition, Contacts, Pipeline, Conversations, Voice AI, Campaigns, Creative Studio, Community y Analytics

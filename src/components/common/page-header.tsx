@@ -19,21 +19,21 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   return (
-    <div className={cn("border-b border-white/10 pb-5", className)}>
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div className={cn("pb-1", className)}>
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          {eyebrow ? <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-cyan-300">{eyebrow}</p> : null}
+          {eyebrow ? <p className="mb-2 text-[11px] font-medium text-muted-foreground">{eyebrow}</p> : null}
           <div className="flex items-start gap-3">
             {Icon ? (
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[16px] border border-white/10 bg-white/[0.04]">
-                <Icon className="h-4.5 w-4.5 text-sky-200" />
+              <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
+                <Icon className="h-4 w-4" />
               </div>
             ) : null}
             <div>
-              <h1 className="font-display text-[1.8rem] font-semibold tracking-tight text-white md:text-[2rem]">
+              <h1 className="font-display text-[1.8rem] font-semibold tracking-tight text-foreground md:text-[2rem]">
                 {title}
               </h1>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-400">{description}</p>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{description}</p>
             </div>
           </div>
         </div>

@@ -191,7 +191,7 @@ export type ContactTimelineEntry = {
   id: string;
   workspaceId: string;
   contactId: string;
-  module: "Prospector AI" | "Acquisition" | "Widgets" | "Conversations" | "Voice AI" | "Pipeline" | "Campaigns" | "Creative Studio";
+  module: "Prospector AI" | "Acquisition" | "Widgets" | "Conversations" | "Voice AI" | "Pipeline" | "Campaigns" | "Creative Studio" | "Community";
   title: string;
   detail: string;
   time: string;
@@ -923,6 +923,17 @@ export const contactTimelineEntries: ContactTimelineEntry[] = [
     tone: "neutral",
   },
   {
+    id: "timeline-5b",
+    workspaceId: "ws-ventra-estate",
+    contactId: "con-1",
+    module: "Community",
+    title: "Joined Altavista Inner Circle",
+    detail: "Andrea entered the community onboarding flow, engaged with the launch checklist and now appears as a CRM-linked ambassador member.",
+    time: "Today, 09:52",
+    outcome: "Member profile synced to contact record",
+    tone: "success",
+  },
+  {
     id: "timeline-6",
     workspaceId: "ws-ventra-estate",
     contactId: "con-2",
@@ -943,6 +954,17 @@ export const contactTimelineEntries: ContactTimelineEntry[] = [
     time: "Yesterday, 16:42",
     outcome: "Proposal discussion active again",
     tone: "success",
+  },
+  {
+    id: "timeline-7b",
+    workspaceId: "ws-ventra-estate",
+    contactId: "con-2",
+    module: "Community",
+    title: "Referral playbook comment increased intent",
+    detail: "Martin engaged inside Community, shared referral interest and created clearer context for the active proposal motion.",
+    time: "Yesterday, 18:10",
+    outcome: "Community activity added to contact context",
+    tone: "info",
   },
   {
     id: "timeline-8",
@@ -1053,6 +1075,17 @@ export const contactTimelineEntries: ContactTimelineEntry[] = [
     time: "Today, 10:28",
     outcome: "Proposal review pending",
     tone: "warning",
+  },
+  {
+    id: "timeline-18",
+    workspaceId: "ws-ventra-estate",
+    contactId: "con-4",
+    module: "Community",
+    title: "Partner invite routed into Community",
+    detail: "Skyline now has a member-facing partner lane with office hours, playbooks and onboarding copy tied to the same strategic account.",
+    time: "Today, 10:34",
+    outcome: "Community invite linked to account",
+    tone: "info",
   },
 ];
 

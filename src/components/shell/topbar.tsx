@@ -27,6 +27,11 @@ const commandItems = [
   { label: "Prospector AI", to: "/app/acquisition/prospector-ai" },
   { label: "Widgets", to: "/app/widgets" },
   { label: "Conversations", to: "/app/conversations" },
+  { label: "Community overview", to: "/app/community" },
+  { label: "Community builder", to: "/app/community/setup" },
+  { label: "Community feed", to: "/app/community/feed" },
+  { label: "Community members", to: "/app/community/members" },
+  { label: "Community events", to: "/app/community/events" },
   { label: "Voice AI", to: "/app/voice-ai" },
   { label: "Creative Studio", to: "/app/creative-studio" },
   { label: "Contacts", to: "/app/contacts" },
@@ -39,6 +44,9 @@ const commandItems = [
 
 const quickActions = [
   { label: "Run Prospector scan", detail: "Review net-new accounts and audits", to: "/app/acquisition/prospector-ai" },
+  { label: "Review community members", detail: "Inspect CRM-linked members and campaign-ready profiles", to: "/app/community/members" },
+  { label: "Build community", detail: "Open branding, spaces and member setup", to: "/app/community/setup" },
+  { label: "Check community analytics", detail: "See member growth, top spaces and event engagement", to: "/app/analytics" },
   { label: "Create widget", detail: "Open a new acquisition surface", to: "/app/widgets/new" },
   { label: "Open partner opportunity", detail: "Inspect the prospect-origin deal", to: "/app/pipeline/deal-4" },
   { label: "Generate partner pitch", detail: "Jump into Creative Studio with the active prospect motion", to: "/app/creative-studio/projects/cp-3" },
@@ -52,6 +60,7 @@ const topbarRoutes = [
   { match: /^\/app\/voice-ai/, title: "Voice AI" },
   { match: /^\/app\/creative-studio/, title: "Creative Studio" },
   { match: /^\/app\/conversations/, title: "Conversations" },
+  { match: /^\/app\/community/, title: "Community" },
   { match: /^\/app\/pipeline/, title: "Pipeline" },
   { match: /^\/app\/campaigns/, title: "Campaigns" },
   { match: /^\/app\/contacts/, title: "Contacts" },
@@ -64,8 +73,14 @@ const topbarRoutes = [
 export function Topbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentWorkspace, workspaces, selectWorkspace, logout } = useSession();
+  const { currentWorkspace, user, workspaces, selectWorkspace, logout } = useSession();
   const [commandOpen, setCommandOpen] = useState(false);
+  const userInitials =
+    user?.name
+      ?.split(" ")
+      .map((chunk) => chunk[0])
+      .join("")
+      .slice(0, 2) ?? "VE";
 
   const workspaceOptions = useMemo(
     () =>
@@ -80,50 +95,40 @@ export function Topbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#08111d]/88 backdrop-blur-xl">
-        <div className="flex min-h-14 items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-6">
+      <header className="sticky top-0 z-30 border-b border-border bg-card/95 backdrop-blur-sm">
+        <div className="flex h-14 items-center justify-between gap-4 px-4 sm:px-6 lg:px-6">
           <div className="min-w-0">
-            <h1 className="truncate font-display text-lg font-semibold text-white">{currentTitle}</h1>
+            <h1 className="truncate font-display text-lg font-semibold text-foreground">{currentTitle}</h1>
           </div>
 
           <div className="flex flex-1 items-center justify-end gap-2.5">
-          <button
-            type="button"
-            onClick={() => setCommandOpen(true)}
-            className="hidden min-w-[320px] items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-left text-sm text-slate-400 transition hover:border-cyan-300/20 hover:text-white xl:flex"
-          >
-            <Search className="h-4 w-4" />
-            Search pages, actions, contacts
-            <span className="ml-auto rounded-lg border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-slate-500">
-              Ctrl K
-            </span>
-          </button>
-
-            <div className="hidden rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 xl:block">
-              <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Commercial spine</p>
-              <p className="mt-1 text-[13px] font-medium text-white">
-                {currentWorkspace?.activeContacts ?? 0} contacts under one record
-              </p>
-            </div>
+            <button
+              type="button"
+              onClick={() => setCommandOpen(true)}
+              className="hidden h-8 min-w-[256px] items-center gap-3 rounded-xl border border-input bg-background px-4 text-left text-xs text-muted-foreground transition-colors hover:bg-muted/40 xl:flex"
+            >
+              <Search className="h-3.5 w-3.5" />
+              Buscar páginas, acciones o contactos...
+            </button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-left transition hover:border-cyan-300/20"
+                  className="flex h-8 items-center gap-1.5 rounded-xl bg-secondary px-3 text-xs text-secondary-foreground transition-colors hover:bg-secondary/80"
                 >
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Workspace</p>
-                  <p className="mt-1 text-sm font-medium text-white">{currentWorkspace?.name ?? "Select"}</p>
+                  <span>{currentWorkspace?.name ?? "Workspace"}</span>
+                  <span className="text-muted-foreground">▾</span>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-72 border-white/10 bg-[#071121] text-slate-100">
-                <DropdownMenuLabel className="text-slate-400">Switch workspace</DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuContent align="end" className="w-72 rounded-xl border border-slate-200 bg-white text-slate-900 shadow-lg">
+                <DropdownMenuLabel className="text-slate-500">Cambiar workspace</DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-slate-100" />
                 {workspaceOptions.map((workspace) => (
                   <DropdownMenuItem
                     key={workspace.id}
                     onClick={() => selectWorkspace(workspace.id)}
-                    className="flex cursor-pointer flex-col items-start gap-1 py-3 focus:bg-white/[0.05] focus:text-white"
+                    className="flex cursor-pointer flex-col items-start gap-1 py-3 focus:bg-slate-50 focus:text-slate-900"
                   >
                     <span>{workspace.label}</span>
                     <span className="text-xs text-slate-500">{workspace.caption}</span>
@@ -134,19 +139,19 @@ export function Topbar() {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="h-10 rounded-xl bg-white text-slate-950 hover:bg-slate-100">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Quick action
+                <Button className="h-8 rounded-xl px-4 text-xs">
+                  <Plus className="mr-1.5 h-3.5 w-3.5" />
+                  Nueva acción
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80 border-white/10 bg-[#071121] text-slate-100">
-                <DropdownMenuLabel className="text-slate-400">Cross-module actions</DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuContent align="end" className="w-80 rounded-xl border border-slate-200 bg-white text-slate-900 shadow-lg">
+                <DropdownMenuLabel className="text-slate-500">Accesos rápidos</DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-slate-100" />
                 {quickActions.map((action) => (
                   <DropdownMenuItem
                     key={action.to}
                     onClick={() => navigate(action.to)}
-                    className="flex cursor-pointer flex-col items-start gap-1 py-3 focus:bg-white/[0.05]"
+                    className="flex cursor-pointer flex-col items-start gap-1 py-3 focus:bg-slate-50"
                   >
                     <span>{action.label}</span>
                     <span className="text-xs text-slate-500">{action.detail}</span>
@@ -159,22 +164,22 @@ export function Topbar() {
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="relative rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-slate-200 transition hover:text-white"
+                  className="relative flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted"
                 >
                   <Bell className="h-4 w-4" />
-                  <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-cyan-300" />
+                  <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-primary" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-96 border-white/10 bg-[#071121] text-slate-100">
-                <DropdownMenuLabel className="text-slate-400">Signal center</DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuContent align="end" className="w-96 rounded-xl border border-slate-200 bg-white text-slate-900 shadow-lg">
+                <DropdownMenuLabel className="text-slate-500">Notificaciones</DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-slate-100" />
                 {notifications.map((notification) => (
                   <DropdownMenuItem
                     key={notification.id}
-                    className="flex cursor-pointer flex-col items-start gap-1 whitespace-normal py-3 focus:bg-white/[0.05]"
+                    className="flex cursor-pointer flex-col items-start gap-1 whitespace-normal py-3 focus:bg-slate-50"
                   >
                     <span className="font-medium">{notification.title}</span>
-                    <span className="text-xs text-slate-400">{notification.detail}</span>
+                    <span className="text-xs text-slate-500">{notification.detail}</span>
                     <span className="text-[10px] uppercase tracking-[0.14em] text-slate-500">{notification.time}</span>
                   </DropdownMenuItem>
                 ))}
@@ -184,7 +189,7 @@ export function Topbar() {
             <button
               type="button"
               onClick={() => setCommandOpen(true)}
-              className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-slate-200 transition hover:text-white lg:hidden"
+              className="rounded-lg border border-input bg-background p-2 text-foreground transition-colors hover:bg-muted lg:hidden"
             >
               <CommandIcon className="h-4 w-4" />
             </button>
@@ -192,22 +197,26 @@ export function Topbar() {
             <Button
               variant="outline"
               onClick={logout}
-              className="hidden h-10 rounded-xl border-white/10 bg-transparent text-slate-300 hover:bg-white/[0.04] hover:text-white lg:inline-flex"
+              className="hidden h-8 rounded-xl border-input bg-background px-3 text-xs text-muted-foreground hover:bg-muted hover:text-foreground lg:inline-flex"
             >
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
+              <LogOut className="mr-1.5 h-3.5 w-3.5" />
+              Salir
             </Button>
+
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+              {userInitials}
+            </div>
           </div>
         </div>
       </header>
 
       <Dialog open={commandOpen} onOpenChange={setCommandOpen}>
-        <DialogContent className="overflow-hidden border-white/10 bg-[#071121] p-0 text-slate-100 sm:max-w-2xl">
+        <DialogContent className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 text-slate-900 shadow-lg sm:max-w-2xl">
           <Command className="bg-transparent">
-            <CommandInput placeholder="Type a page or quick action" className="border-white/10" />
+            <CommandInput placeholder="Escribe una página o acción rápida" className="border-slate-200" />
             <CommandList>
-              <CommandEmpty>No result found.</CommandEmpty>
-              <CommandGroup heading="Jump to">
+              <CommandEmpty>Sin resultados.</CommandEmpty>
+              <CommandGroup heading="Ir a">
                 {commandItems.map((item) => (
                   <CommandItem
                     key={item.to}
@@ -217,7 +226,7 @@ export function Topbar() {
                       setCommandOpen(false);
                     }}
                   >
-                    <Sparkles className="mr-2 h-4 w-4" />
+                    <Sparkles className="mr-2 h-4 w-4 text-primary" />
                     {item.label}
                   </CommandItem>
                 ))}

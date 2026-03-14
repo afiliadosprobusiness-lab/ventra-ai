@@ -6,8 +6,6 @@ import {
   ChartColumnIncreasing,
   LayoutDashboard,
   MessageSquareMore,
-  PanelLeftClose,
-  PanelLeftOpen,
   PanelsTopLeft,
   ScanSearch,
   Settings,
@@ -46,6 +44,7 @@ const groups = [
       { to: "/app/contacts", label: "Contacts", icon: Users },
       { to: "/app/pipeline", label: "Pipeline", icon: BriefcaseBusiness },
       { to: "/app/campaigns", label: "Campaigns", icon: ChartColumnIncreasing },
+      { to: "/app/community", label: "Community", icon: MessageSquareMore },
       { to: "/app/analytics", label: "Analytics", icon: Activity },
       { to: "/app/automations", label: "Automations", icon: Workflow },
     ],
@@ -54,13 +53,12 @@ const groups = [
     label: "Workspace",
     items: [
       { to: "/app/workspaces", label: "Workspaces", icon: Building2 },
-      { to: "/app/settings", label: "Settings", icon: Settings },
     ],
   },
 ];
 
 export function SidebarNav({ collapsed, onToggle, mobile = false }: SidebarNavProps) {
-  const { currentWorkspace, user } = useSession();
+  const { user } = useSession();
   const initials =
     user?.name
       ?.split(" ")
@@ -71,68 +69,20 @@ export function SidebarNav({ collapsed, onToggle, mobile = false }: SidebarNavPr
   return (
     <aside
       className={cn(
-        "flex h-screen flex-col border-r border-white/10 bg-[#08111d]/96 backdrop-blur-2xl",
-        collapsed ? "w-[84px]" : "w-[248px]",
+        "flex h-screen flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground",
+        collapsed ? "w-[84px]" : "w-60",
       )}
     >
-      <div className="flex h-14 items-center justify-between border-b border-white/10 px-3.5">
+      <div className="flex h-14 items-center border-b border-sidebar-border px-4">
         <VentraLogo compact={collapsed} />
-        <button
-          type="button"
-          onClick={onToggle}
-          className="hidden rounded-xl border border-white/10 bg-white/[0.04] p-2 text-slate-300 transition hover:border-white/15 hover:text-white lg:inline-flex"
-          aria-label="Toggle sidebar"
-        >
-          {collapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
-        </button>
       </div>
 
-      {!collapsed ? (
-        <div className="border-b border-white/10 px-3.5 py-3.5">
-          <div className="overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.035] p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-cyan-200/80">Active workspace</p>
-                <p className="mt-2 truncate font-display text-[15px] font-semibold text-white">
-                  {currentWorkspace?.name ?? "Select workspace"}
-                </p>
-                <p className="mt-1 text-[11px] text-slate-400">
-                  {currentWorkspace?.industry ?? "Workspace"} | {currentWorkspace?.region ?? "LATAM"}
-                </p>
-              </div>
-              <span className="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-cyan-100">
-                Unified
-              </span>
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              <div className="rounded-[16px] border border-white/10 bg-[#0b1626] px-3 py-3">
-                <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Contacts</p>
-                <p className="mt-1 text-sm font-semibold text-white">{currentWorkspace?.activeContacts ?? 0}</p>
-              </div>
-              <div className="rounded-[16px] border border-white/10 bg-[#0b1626] px-3 py-3">
-                <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Pipeline</p>
-                <p className="mt-1 text-sm font-semibold text-white">{currentWorkspace?.monthlyPipeline ?? "$0"}</p>
-              </div>
-            </div>
-            <p className="mt-4 text-[11px] leading-relaxed text-slate-400">
-              Prospector AI, contacts, pipeline, conversations and Voice AI stay tied to one commercial record.
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div className="border-b border-white/10 px-3.5 py-3.5">
-          <div className="rounded-[16px] border border-white/10 bg-white/[0.03] p-3 text-center text-[10px] uppercase tracking-[0.2em] text-cyan-200/80">
-            OS
-          </div>
-        </div>
-      )}
-
-      <div className="flex-1 overflow-y-auto px-3 py-4">
+      <div className="flex-1 overflow-y-auto px-3 py-5">
         <div className="space-y-6">
           {groups.map((group) => (
             <div key={group.label}>
               {!collapsed ? (
-                <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+                <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/55">
                   {group.label}
                 </p>
               ) : null}
@@ -143,10 +93,10 @@ export function SidebarNav({ collapsed, onToggle, mobile = false }: SidebarNavPr
                     to={item.to}
                     className={({ isActive }) =>
                       cn(
-                        "flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition-all duration-200",
+                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
                         isActive
-                          ? "border-white/10 bg-white/[0.05] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
-                          : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/[0.03] hover:text-white",
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                          : "text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
                         collapsed && "justify-center px-0",
                       )
                     }
@@ -159,14 +109,14 @@ export function SidebarNav({ collapsed, onToggle, mobile = false }: SidebarNavPr
                             <span className="truncate">{item.label}</span>
                             <span className="ml-auto flex items-center gap-2">
                               {item.badge ? (
-                                <span className="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-cyan-100">
+                                <span className="rounded-full bg-sidebar-primary/15 px-2 py-1 text-[10px] font-medium text-sidebar-primary">
                                   {item.badge}
                                 </span>
                               ) : null}
                               <span
                                 className={cn(
                                   "h-1.5 w-1.5 rounded-full transition-opacity",
-                                  isActive ? "bg-cyan-300 opacity-100" : "opacity-0",
+                                  isActive ? "bg-sidebar-primary opacity-100" : "opacity-0",
                                 )}
                               />
                             </span>
@@ -182,21 +132,37 @@ export function SidebarNav({ collapsed, onToggle, mobile = false }: SidebarNavPr
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-3.5 py-3.5">
-        <div className={cn("flex items-center gap-3 rounded-[18px] border border-white/10 bg-white/[0.03] p-3", collapsed && "justify-center")}>
-          <div className="flex h-9 w-9 items-center justify-center rounded-[14px] bg-gradient-to-br from-sky-400 to-violet-400 text-xs font-semibold text-white">
+      <div className="border-t border-sidebar-border px-3 py-3">
+        <NavLink
+          to="/app/settings"
+          className={({ isActive }) =>
+            cn(
+              "mb-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
+              isActive
+                ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                : "text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+              collapsed && "justify-center px-0",
+            )
+          }
+        >
+          <Settings className="h-4 w-4 shrink-0" />
+          {!collapsed ? <span>Settings</span> : null}
+        </NavLink>
+
+        <div className={cn("flex items-center gap-3 px-3 py-2", collapsed && "justify-center px-0")}>
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sidebar-primary/20 text-xs font-semibold text-sidebar-primary">
             {initials}
           </div>
           {!collapsed ? (
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-white">{user?.name ?? "Ventra Demo"}</p>
-              <p className="truncate text-[11px] text-slate-400">{user?.title ?? "Growth Operator"}</p>
+              <p className="truncate text-xs font-medium text-sidebar-accent-foreground">{user?.name ?? "Ventra Demo"}</p>
+              <p className="truncate text-[10px] text-sidebar-foreground">{user?.email ?? "demo@ventra.app"}</p>
             </div>
           ) : null}
         </div>
       </div>
 
-      {mobile ? <div className="px-4 pb-4 text-xs text-slate-500">Powered by Ventra</div> : null}
+      {mobile ? <div className="px-4 pb-4 text-xs text-sidebar-foreground/60">Ventra</div> : null}
     </aside>
   );
 }

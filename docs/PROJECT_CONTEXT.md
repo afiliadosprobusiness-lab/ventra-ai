@@ -5,7 +5,7 @@
 - Repo role: active frontend implementation repo
 - Stack: React 18, TypeScript, Vite, React Router, Tailwind CSS, shadcn/ui, TanStack Query
 - State mode: mock-driven frontend with local session persistence
-- Visual mode: dark premium SaaS with Ventra logo palette
+- Visual mode: premium dual system with public dark narrative and private light operational dashboard
 
 ## Current architecture
 
@@ -45,6 +45,13 @@
 - `/app/creative-studio/templates`
 - `/app/conversations`
 - `/app/conversations/:threadId`
+- `/app/community`
+- `/app/community/setup`
+- `/app/community/home`
+- `/app/community/feed`
+- `/app/community/members`
+- `/app/community/events`
+- `/app/community/settings`
 - `/app/pipeline`
 - `/app/pipeline/:dealId`
 - `/app/campaigns`
@@ -88,6 +95,11 @@
 - Widget
 - CreativeProject
 - Campaign
+- CommunityProfile
+- CommunitySpace
+- CommunityPost
+- CommunityMember
+- CommunityEvent
 - Deal
 - Automation
 - Event
@@ -101,6 +113,7 @@
 - Contacts are the commercial anchor.
 - Leads originate in acquisition surfaces.
 - Prospector AI discovers net-new businesses before they become leads or contacts.
+- Community turns contacts, customers or partners into members without leaving the workspace.
 - Calls, conversations, campaigns and deals reflect the same workspace data graph.
 - Creative Studio assets are represented as campaign-connected production objects.
 
@@ -109,14 +122,25 @@
 - Contacts and Pipeline explicitly show prospecting origin, badges and timeline continuity.
 - Conversations and Voice AI include prospect-origin handoff queues as part of their normal operator flow.
 - Creative Studio and Campaigns can present pitch/proposal motions connected to prospecting accounts.
+- Community offers a private member hub with builder, feed, members, events and settings tied to the same workspace context.
 - The private shell includes cross-module quick actions so prospecting can jump into Contacts, Pipeline, Conversations, Voice AI and Campaigns without breaking context.
+
+## Visible Community integration
+- Community Members now exposes a richer member detail surface with role, status, join date, activity level, spaces, recent contributions, events, tags, notes and quick actions.
+- Member records visibly connect to Contacts when a CRM mock record exists, including badges, quick actions and contact timeline continuity.
+- Contacts now surface whether a contact is also a Community member and can jump back into the Community member workflow.
+- Analytics now includes community metrics such as total members, engagement rate, posts this week, event attendance, member growth, top spaces and high-engagement members.
+- Campaigns now includes lightweight community plays for invite, re-engagement, event reminder and new member nurture motions.
+- Workspaces now show the community posture of each workspace as part of the same product shell.
 
 ## Documentation stance
 - The product must still be described as a frontend demo / mockup, not as a backend-connected production system.
 - Prospector AI should be documented as an integrated discovery layer inside Acquisition that already affects CRM mock, outreach, assets and analytics views.
 
 ## Branding and visual rules
-- Base palette from the Ventra logo: cyan, violet, amber over dark obsidian/navy
+- Public shell: dark premium narrative
+- Private shell: clean light operational surfaces with dark sidebar
+- Base product accent: green / teal for core operational actions
 - Fonts: `Space Grotesk` + `Manrope`
 - Shared card treatment via `.ventra-card`
 - Private shell optimized for dense operational screens
@@ -126,7 +150,6 @@
 ## Constraints for future work
 - Do not rename modules away from the Ventra naming contract.
 - Do not reintroduce legacy product names.
-- Do not replace the premium dark design system with generic admin styling.
 - Extend mock data coherently across modules.
 - Keep route aliases aligned with `docs/contract.md`.
-- Keep the quiz tied to module recommendations such as Prospector AI, Widgets, Conversations, Voice AI and Creative Studio.
+- Keep the quiz tied to module recommendations such as Prospector AI, Widgets, Conversations, Voice AI, Creative Studio and Community.

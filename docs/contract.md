@@ -70,6 +70,7 @@ Ventra se organiza como una plataforma de crecimiento comercial con cuatro pilar
 - Creative Studio
 - Conversations
 - Voice AI
+- Community
 
 ### 5.2 Nucleo transversal
 - Overview
@@ -124,7 +125,8 @@ Componentes obligatorios:
 
 Estado actual esperado:
 - `Prospector AI` aparece como entrada visible dentro de la experiencia privada
-- el topbar permite saltos rapidos entre Prospector AI, Contacts, Pipeline, Campaigns y Creative Studio
+- `Community` aparece como modulo nativo dentro del shell privado
+- el topbar permite saltos rapidos entre Prospector AI, Community, Contacts, Pipeline, Campaigns y Creative Studio
 - el shell debe reforzar la sensacion de una plataforma unificada, no de modulos pegados
 
 ### 6.4 Onboarding Shell
@@ -143,6 +145,7 @@ Usado para:
 - Voice AI
 - Creative Studio
 - Conversations
+- Community
 - Pipeline
 - Campaigns
 - Contacts
@@ -196,6 +199,13 @@ Usado para:
 - `/app/creative-studio/templates`
 - `/app/conversations`
 - `/app/conversations/:threadId`
+- `/app/community`
+- `/app/community/setup`
+- `/app/community/home`
+- `/app/community/feed`
+- `/app/community/members`
+- `/app/community/events`
+- `/app/community/settings`
 - `/app/pipeline`
 - `/app/pipeline/:dealId`
 - `/app/campaigns`
@@ -238,6 +248,35 @@ Subareas:
 - sources
 - funnels
 - forms
+
+### 9.3 Community
+Objetivo:
+- permitir que cada workspace lance una comunidad privada sin salir de Ventra
+- convertir audiencia, clientes y partners en miembros visibles dentro del mismo sistema
+- unificar contenido, sesiones, miembros y engagement con el resto del contexto comercial
+
+Debe mostrar:
+- dashboard del modulo con KPIs y quick actions
+- builder / setup de comunidad
+- home con hero, espacios, destacados y actividad reciente
+- feed de publicaciones con comentarios y reacciones mock
+- directorio de miembros con roles y estado
+- eventos o sesiones programadas
+- settings de branding, acceso, categorias, moderacion, invitaciones y dominio mock
+
+Integraciones visibles:
+- Workspaces define el contexto multi-tenant
+- Contacts puede actuar como origen o lookup comercial del miembro
+- Campaigns alimenta invitaciones, sesiones y activacion
+- Analytics debe poder leer engagement y contribucion
+- Settings convive con la configuracion propia del modulo
+
+## Changelog
+
+### 2026-03-13
+- Cambio: se agrega `Community` como modulo privado mock con overview, setup, home, feed, members, events y settings.
+- Tipo: non-breaking
+- Impacto: nuevas rutas y nuevas superficies UI dentro del shell privado, sin backend ni cambios de contrato HTTP.
 - quiz
 - intent scoring
 - handoff inicial

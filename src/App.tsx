@@ -34,6 +34,15 @@ import {
   WorkspacesPage,
 } from "@/pages/app-pages";
 import {
+  CommunityEventsPage,
+  CommunityFeedPage,
+  CommunityHomePage,
+  CommunityMembersPage,
+  CommunityOverviewPage,
+  CommunitySettingsPage,
+  CommunitySetupPage,
+} from "@/modules/community/community-page";
+import {
   ForgotPasswordPage,
   LandingPage,
   LoginPage,
@@ -129,6 +138,13 @@ function AppRoutes() {
           <Route path="creative-studio/templates" element={<CreativeStudioPage />} />
           <Route path="conversations" element={<ConversationsPage />} />
           <Route path="conversations/:threadId" element={<ConversationsPage />} />
+          <Route path="community" element={<CommunityOverviewPage />} />
+          <Route path="community/setup" element={<CommunitySetupPage />} />
+          <Route path="community/home" element={<CommunityHomePage />} />
+          <Route path="community/feed" element={<CommunityFeedPage />} />
+          <Route path="community/members" element={<CommunityMembersPage />} />
+          <Route path="community/events" element={<CommunityEventsPage />} />
+          <Route path="community/settings" element={<CommunitySettingsPage />} />
           <Route path="pipeline" element={<PipelinePage />} />
           <Route path="pipeline/:dealId" element={<PipelinePage />} />
           <Route path="campaigns" element={<CampaignsPage />} />

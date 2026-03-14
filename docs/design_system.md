@@ -1,17 +1,17 @@
 # Ventra Design System
 
 ## Brand intent
-Ventra should feel like a revenue operating system for LATAM: premium, dark, fast and commercially confident.
+Ventra should feel like a revenue operating system for LATAM: premium, commercially confident and operationally clear.
 
 ## Core tokens
 
 ### Color roles
-- Background: deep obsidian and midnight navy
-- Foreground: soft white with cool slate secondaries
-- Primary: electric cyan
-- Secondary: vivid violet
-- Accent highlight: restrained amber
-- Success: green reserved for positive outcomes, not brand identity
+- Public shell: deep obsidian and midnight navy
+- Private shell: clean warm-light surfaces with dark matte sidebar
+- Primary: operational green / teal
+- Secondary: soft neutral surfaces
+- Accent highlight: restrained info / warning states
+- Success: green reserved for positive outcomes and member / workflow health
 
 ### Typography
 - Display: `Space Grotesk`
@@ -31,11 +31,9 @@ Use for:
 - detail modules
 
 Characteristics:
-- dark elevated surface
-- subtle top-light gradient
-- thin border
-- soft backdrop blur
-- deep shadow with controlled glow
+- private shell: light operational surface, thin border and soft shadow
+- public shell: can still use elevated dramatic treatment when needed
+- keep spacing generous and avoid decorative glow in operator views
 
 ### `ventra-panel`
 Use for:
@@ -48,13 +46,12 @@ Use for:
 - dark, matte, premium
 - grouped navigation
 - visible active state
-- workspace summary near top
 - user identity near bottom
 
 ### Topbar
 - sticky
 - thin border bottom
-- translucent dark background
+- clean light background in the private shell
 - search, workspace switcher, quick actions and notifications
 
 ## Interaction patterns
@@ -84,6 +81,11 @@ Saved searches, score badges, signal chips and action layers should stay visible
 - subtle hover
 - badge-supported statuses
 - commercial relevance over exhaustive column count
+
+### Community module
+- use the same private-shell visual system
+- combine hero, metrics, feed, member directory and event cards without looking like a separate app
+- keep a clear sub-navigation between overview, builder, home, feed, members, events and settings
 
 ### Status language
 - `success`: active, won, live, ready, recovered

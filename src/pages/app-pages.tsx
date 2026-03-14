@@ -48,6 +48,7 @@ import {
   type Thread,
   type Widget,
 } from "@/data/mock-data";
+import { getCommunityWorkspaceData } from "@/data/community-data";
 import { getProspectorWorkspaceData } from "@/data/prospector-data";
 import { useSession } from "@/lib/session";
 import { ProspectorAIPage } from "@/modules/prospector/prospector-page";
@@ -65,10 +66,10 @@ function GlassBlock({ children, className = "" }: { children: ReactNode; classNa
 
 function MiniStat({ label, value, detail }: { label: string; value: string; detail?: string }) {
   return (
-    <div className="rounded-[18px] border border-white/10 bg-white/[0.03] px-4 py-3.5">
-      <p className="text-[10px] uppercase tracking-[0.16em] text-slate-500">{label}</p>
-      <p className="mt-2 text-base font-semibold text-white">{value}</p>
-      {detail ? <p className="mt-1 text-xs text-slate-400">{detail}</p> : null}
+    <div className="rounded-[18px] border border-border bg-muted/40 px-4 py-3.5">
+      <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
+      <p className="mt-2 text-base font-semibold text-foreground">{value}</p>
+      {detail ? <p className="mt-1 text-xs text-muted-foreground">{detail}</p> : null}
     </div>
   );
 }
@@ -93,19 +94,19 @@ function QuickActionTile({
   return (
     <Link
       to={to}
-      className="group rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-4 transition hover:border-cyan-300/20 hover:bg-white/[0.05]"
+      className="group rounded-[18px] border border-border bg-card px-4 py-4 transition-colors hover:bg-muted/50"
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-[14px] border border-white/10 bg-[#0b1626]">
-            <Icon className="h-4 w-4 text-cyan-200" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-[14px] bg-accent text-accent-foreground">
+            <Icon className="h-4 w-4" />
           </div>
           <div>
-            <p className="text-sm font-medium text-white">{label}</p>
-            <p className="mt-1 text-xs text-slate-400">{detail}</p>
+            <p className="text-sm font-medium text-foreground">{label}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{detail}</p>
           </div>
         </div>
-        <ArrowRight className="h-4 w-4 text-slate-500 transition group-hover:text-cyan-200" />
+        <ArrowRight className="h-4 w-4 text-muted-foreground transition group-hover:text-primary" />
       </div>
     </Link>
   );
@@ -147,20 +148,36 @@ function getProspectorBridge(data: ReturnType<typeof getWorkspaceData>) {
   };
 }
 
+function getCommunityBridge(workspaceId: string | null | undefined) {
+  const community = getCommunityWorkspaceData(workspaceId);
+  const membersByContactId = new Map(community.members.filter((member) => member.contactId).map((member) => [member.contactId as string, member]));
+  const crmLinkedMembers = community.members.filter((member) => member.contactId);
+  const atRiskMembers = community.members.filter((member) => member.status === "At risk");
+  const upcomingMemberEvents = community.events.filter((event) => event.status !== "Replay ready");
+
+  return {
+    community,
+    membersByContactId,
+    crmLinkedMembers,
+    atRiskMembers,
+    upcomingMemberEvents,
+  };
+}
+
 function TimelineFeed({ contactId, compact = false }: { contactId: string; compact?: boolean }) {
   const timeline = getContactTimeline(contactId);
 
   return (
     <div className="space-y-3">
       {timeline.map((item) => (
-        <div key={item.id} className={`rounded-[18px] border border-white/10 bg-white/[0.03] ${compact ? "px-4 py-3" : "px-4 py-4"}`}>
+        <div key={item.id} className={`rounded-[18px] border border-border bg-muted/40 ${compact ? "px-4 py-3" : "px-4 py-4"}`}>
           <div className="flex items-center justify-between gap-4">
-            <p className="text-[10px] uppercase tracking-[0.18em] text-cyan-200/80">{item.module}</p>
+            <p className="text-[10px] uppercase tracking-[0.18em] text-primary">{item.module}</p>
             <StatusBadge value={item.outcome} tone={item.tone} />
           </div>
-          <p className="mt-2 font-medium text-white">{item.title}</p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.detail}</p>
-          <p className="mt-2 text-[10px] uppercase tracking-[0.16em] text-slate-500">{item.time}</p>
+          <p className="mt-2 font-medium text-foreground">{item.title}</p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.detail}</p>
+          <p className="mt-2 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{item.time}</p>
         </div>
       ))}
     </div>
@@ -173,6 +190,7 @@ function useContact360(data: ReturnType<typeof getWorkspaceData>, contactId: str
     if (!contact) return null;
     const lead = data.leads.find((item) => item.id === contact.leadId) ?? null;
     const prospectsById = new Map(getProspectorWorkspaceData(data.workspace.id).prospects.map((prospect) => [prospect.id, prospect]));
+    const communityBridge = getCommunityBridge(data.workspace.id);
 
     return {
       contact,
@@ -183,6 +201,7 @@ function useContact360(data: ReturnType<typeof getWorkspaceData>, contactId: str
       calls: data.voiceCalls.filter((item) => item.contactId === contact.id),
       tasks: getContactTasks(contact.id),
       touches: getContactCampaignTouches(contact.id),
+      communityMember: communityBridge.membersByContactId.get(contact.id) ?? null,
     };
   }, [contactId, data]);
 }
@@ -200,6 +219,7 @@ function ContactRecord({ record }: { record: NonNullable<ReturnType<typeof useCo
               <StatusBadge value={record.contact.originModule ?? "Inbound"} tone={record.contact.originModule === "Prospector AI" ? "success" : "info"} />
               {record.contact.originLabel ? <StatusBadge value={record.contact.originLabel} tone="neutral" /> : null}
               {record.prospect ? <StatusBadge value={record.prospect.potential} tone={toneForPotential(record.prospect.potential)} /> : null}
+              {record.communityMember ? <StatusBadge value={`Community ${record.communityMember.role}`} tone="success" /> : null}
             </div>
           </div>
           <StatusBadge value={record.contact.health} tone={toneForStatus(record.contact.health)} />
@@ -222,6 +242,11 @@ function ContactRecord({ record }: { record: NonNullable<ReturnType<typeof useCo
             <MiniStat label="Conversation" value={record.thread?.status ?? "Not opened"} detail={record.thread?.channel} />
             <MiniStat label="Voice AI" value={record.calls[0]?.status ?? "No call"} detail={record.calls[0]?.objective} />
             <MiniStat label="Campaign touch" value={record.touches[0]?.label ?? "Not linked"} detail={record.touches[0]?.impact} />
+            <MiniStat
+              label="Community"
+              value={record.communityMember ? `${record.communityMember.role}` : "Not linked"}
+              detail={record.communityMember ? `${record.communityMember.activityLevel} activity · ${record.communityMember.status}` : "Invite or map from Community Members"}
+            />
           </div>
         </GlassBlock>
 
@@ -271,6 +296,12 @@ function ContactRecord({ record }: { record: NonNullable<ReturnType<typeof useCo
                 detail="Inspect the original audit, offer and recommended outreach path"
               />
             ) : null}
+            <QuickActionTile
+              to="/app/community/members"
+              icon={Users}
+              label={record.communityMember ? "Open community member" : "Open Community members"}
+              detail={record.communityMember ? "Review the linked member detail and activity notes" : "Check if this contact should be activated inside Community"}
+            />
           </div>
         </GlassBlock>
       </div>
@@ -282,164 +313,217 @@ export function OverviewPage() {
   const { activeWorkspaceId } = useSession();
   const data = getWorkspaceData(activeWorkspaceId);
   const prospectorBridge = useMemo(() => getProspectorBridge(data), [data]);
-  const primaryContactId = prospectorBridge.sourcedContacts[0]?.id ?? data.contacts[0]?.id;
-  const record = useContact360(data, primaryContactId);
-  const timelineContactId = prospectorBridge.sourcedContacts[0]?.id ?? data.contacts[0]?.id;
+  const overviewMetrics = [
+    {
+      id: "qualified-demand",
+      label: data.metrics[0]?.label ?? "Demanda calificada",
+      value: data.metrics[0]?.value ?? `${data.leads.length}`,
+      delta: data.metrics[0]?.delta ?? `${data.leads.length} leads activos`,
+      trend: data.metrics[0]?.trend ?? "up",
+      icon: Users,
+    },
+    {
+      id: "live-conversations",
+      label: "Conversaciones activas",
+      value: `${data.threads.filter((item) => item.status === "Live").length}`,
+      delta: `${data.threads.length} hilos abiertos`,
+      trend: "up" as const,
+      icon: MessageSquareMore,
+    },
+    {
+      id: "open-opportunities",
+      label: "Oportunidades abiertas",
+      value: `${data.deals.length}`,
+      delta: `${data.deals.filter((item) => item.stage === "Commit").length} en commit`,
+      trend: "up" as const,
+      icon: BriefcaseBusiness,
+    },
+    {
+      id: "pending-followups",
+      label: "Seguimientos pendientes",
+      value: `${data.tasks.filter((item) => item.status !== "Queued").length}`,
+      delta: `${data.tasks.filter((item) => item.status === "Now").length} urgentes`,
+      trend: "flat" as const,
+      icon: Clock3,
+    },
+    {
+      id: "prospects-found",
+      label: "Prospector AI detectado",
+      value: `${prospectorBridge.prospector.prospects.length}`,
+      delta: `${prospectorBridge.crmReady.length} ya en CRM`,
+      trend: "up" as const,
+      icon: ScanSearch,
+    },
+    {
+      id: "campaigns-active",
+      label: "Campañas activas",
+      value: `${data.campaigns.filter((item) => item.status === "Active").length}`,
+      delta: `${data.campaigns.length} motions visibles`,
+      trend: "up" as const,
+      icon: ChartColumnIncreasing,
+    },
+    {
+      id: "close-rate",
+      label: "Tasa de cierre",
+      value: data.metrics[2]?.value ?? "31%",
+      delta: data.metrics[2]?.delta ?? "Mejora operativa visible",
+      trend: data.metrics[2]?.trend ?? "up",
+      icon: Activity,
+    },
+    {
+      id: "pipeline-under-control",
+      label: "Pipeline influenciado",
+      value: data.metrics[1]?.value ?? data.workspace.monthlyPipeline,
+      delta: data.metrics[1]?.delta ?? "Revenue conectado",
+      trend: data.metrics[1]?.trend ?? "up",
+      icon: AudioWaveform,
+    },
+  ];
+  const insightToneMap: Record<string, { border: string; icon: string }> = {
+    primary: { border: "border-l-primary", icon: "text-primary" },
+    warning: { border: "border-l-warning", icon: "text-warning" },
+    info: { border: "border-l-info", icon: "text-info" },
+  };
+  const activityToneMap: Record<string, string> = {
+    lead: "bg-info",
+    conversation: "bg-muted-foreground",
+    call: "bg-warning",
+    creative: "bg-info",
+    campaign: "bg-primary",
+    prospector: "bg-primary",
+  };
+  const hottestLeads = [...data.leads].sort((left, right) => right.score - left.score).slice(0, 5);
+  const chartBars = [
+    28, 42, 37, 55, 49, 66, 60, 74, 69, 82, 76, 87, 71, 89, 84, 92, 88, 96, 79, 98, 92, 85, 100, 95, 88, 92, 98, 105, 100, 108,
+  ];
 
   return (
-    <>
-      <PageHeader
-        eyebrow="Growth OS overview"
-        title={`Operate ${data.workspace.name} from one commercial system`}
-        description="This command center now makes the central contact record visible across acquisition, conversations, Voice AI, pipeline and launch assets."
-        icon={Activity}
-      />
+    <div className="space-y-6">
+      <div>
+        <h2 className="font-display text-[1.95rem] font-semibold text-foreground">Overview</h2>
+      </div>
 
-      <div className="grid gap-4 xl:grid-cols-4">
-        {data.metrics.map((metric, index) => (
-          <MetricCard key={metric.id} label={metric.label} value={metric.value} delta={metric.delta} trend={metric.trend} icon={[Target, MessageSquareMore, BriefcaseBusiness, AudioWaveform][index] ?? Activity} />
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {overviewMetrics.map((metric) => (
+          <MetricCard
+            key={metric.id}
+            label={metric.label}
+            value={metric.value}
+            delta={metric.delta}
+            trend={metric.trend}
+            icon={metric.icon}
+          />
         ))}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <GlassBlock className="p-6">
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">Prospector AI pulse</p>
-              <h2 className="mt-2 font-display text-2xl font-semibold text-white">Net-new discovery is now visible in the operating overview</h2>
-            </div>
-            <Button asChild variant="outline" className="rounded-full border-white/10 bg-transparent text-slate-300 hover:bg-white/[0.04]">
-              <Link to="/app/acquisition/prospector-ai">Open Prospector AI</Link>
-            </Button>
-          </div>
-          <div className="mt-6 grid gap-3 sm:grid-cols-4">
-            <MiniStat label="Prospects found" value={`${prospectorBridge.prospector.prospects.length}`} detail="Saved searches and audits connected" />
-            <MiniStat label="Saved to CRM" value={`${prospectorBridge.crmReady.length}`} detail="Accounts now visible in Contacts" />
-            <MiniStat label="Open opportunities" value={`${prospectorBridge.opportunitiesReady.length}`} detail="Strategic accounts already routed" />
-            <MiniStat label="Outreach live" value={`${prospectorBridge.conversationQueue.length + prospectorBridge.voiceQueue.length}`} detail="Conversations and Voice AI queues" />
-          </div>
-          <div className="mt-6 space-y-3">
-            {prospectorBridge.sourcedContacts.slice(0, 2).map((contact) => {
-              const prospect = contact.prospectId ? prospectorBridge.prospectsById.get(contact.prospectId) : null;
-              const deal = data.deals.find((item) => item.contactId === contact.id);
-              return (
-                <div key={contact.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="font-medium text-white">{contact.company}</p>
-                      <p className="mt-1 text-sm text-slate-400">{contact.originLabel ?? prospect?.suggestedOpportunity ?? "Prospector-sourced motion"}</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <StatusBadge value={contact.originModule ?? "Inbound"} tone="success" />
-                      {deal ? <StatusBadge value={deal.stage} tone={toneForStatus(deal.stage)} /> : null}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </GlassBlock>
-
-        <GlassBlock className="p-6">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Cross-module launchpad</p>
-          <h2 className="mt-2 font-display text-2xl font-semibold text-white">Quick actions now follow the same prospecting motion</h2>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <QuickActionTile to="/app/contacts/con-4" icon={Users} label="Open sourced contact" detail="Review the account record created from Prospector AI" />
-            <QuickActionTile to="/app/pipeline/deal-4" icon={BriefcaseBusiness} label="Open partner opportunity" detail="Inspect the prospect-origin deal detail and next action" />
-            <QuickActionTile to="/app/conversations/thr-3" icon={MessageSquareMore} label="Continue partner thread" detail="Resume the live conversation opened from the audit" />
-            <QuickActionTile to="/app/campaigns/camp-3" icon={ChartColumnIncreasing} label="Review partner campaign" detail="See the campaign, pitch and influenced pipeline tied to discovery" />
-          </div>
-        </GlassBlock>
-      </div>
-
-      <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-        <GlassBlock className="p-6">
-          <div className="mb-6 flex items-center justify-between">
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Commercial velocity</p>
-              <h2 className="mt-2 font-display text-2xl font-semibold text-white">How acquisition becomes revenue movement</h2>
+              <h3 className="font-display text-xl font-semibold text-foreground">Rendimiento comercial</h3>
             </div>
             <div className="flex gap-2">
+              <FilterPill>7d</FilterPill>
               <FilterPill active>30d</FilterPill>
               <FilterPill>90d</FilterPill>
             </div>
           </div>
-          <div className="h-[320px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={performanceSeries}>
-                <defs>
-                  <linearGradient id="prospectorGradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.34} />
-                    <stop offset="100%" stopColor="#f59e0b" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="acquisitionGradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#3BB9FF" stopOpacity={0.45} />
-                    <stop offset="100%" stopColor="#3BB9FF" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="revenueGradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#8B5CF6" stopOpacity={0.42} />
-                    <stop offset="100%" stopColor="#8B5CF6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
-                <XAxis dataKey="week" stroke="#64748b" tickLine={false} axisLine={false} />
-                <YAxis stroke="#64748b" tickLine={false} axisLine={false} />
-                <Tooltip cursor={{ stroke: "rgba(255,255,255,0.06)" }} contentStyle={{ background: "#071121", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16 }} />
-                <Area type="monotone" dataKey="prospector" stroke="#f59e0b" fill="url(#prospectorGradient)" strokeWidth={2} />
-                <Area type="monotone" dataKey="acquisition" stroke="#3BB9FF" fill="url(#acquisitionGradient)" strokeWidth={2} />
-                <Area type="monotone" dataKey="revenue" stroke="#8B5CF6" fill="url(#revenueGradient)" strokeWidth={2} />
-              </AreaChart>
-            </ResponsiveContainer>
+
+          <div className="mt-6 flex h-64 items-end gap-2">
+            {chartBars.map((value, index) => (
+              <div
+                key={`bar-${value}-${index}`}
+                className="flex-1 rounded-t-sm transition-opacity hover:opacity-80"
+                style={{
+                  height: `${(value / 110) * 100}%`,
+                  background: value > 78 ? "hsl(var(--primary))" : "hsl(var(--accent))",
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="mt-3 flex justify-between text-[10px] text-muted-foreground">
+            <span>1 Mar</span>
+            <span>15 Mar</span>
+            <span>30 Mar</span>
           </div>
         </GlassBlock>
 
-        <GlassBlock className="p-6">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Contact spotlight</p>
-          {record ? <ContactRecord record={record} /> : null}
-        </GlassBlock>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-display text-xl font-semibold text-foreground">Insights inteligentes</h3>
+          </div>
+          {data.insights.slice(0, 3).map((insight) => {
+            const tone = insightToneMap[insight.tone];
+            const Icon = insight.tone === "warning" ? Target : insight.tone === "info" ? Sparkles : Activity;
+
+            return (
+              <GlassBlock key={insight.id} className={`border-l-2 p-4 ${tone.border}`}>
+                <div className="flex items-start gap-3">
+                  <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${tone.icon}`} />
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{insight.title}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{insight.detail}</p>
+                  </div>
+                </div>
+              </GlassBlock>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+      <div className="grid gap-6 xl:grid-cols-2">
         <GlassBlock className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Top pipeline deals</p>
-              <h2 className="mt-2 font-display text-2xl font-semibold text-white">Priority deals with next action visible</h2>
-            </div>
-            <Button variant="outline" className="rounded-full border-white/10 bg-transparent text-slate-300 hover:bg-white/[0.04]">Open pipeline</Button>
+          <h3 className="font-display text-xl font-semibold text-foreground">Leads más calientes</h3>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-muted-foreground">
+                  <th className="px-4 py-3 font-medium">Lead</th>
+                  <th className="px-4 py-3 font-medium">Score</th>
+                  <th className="px-4 py-3 font-medium">Estado</th>
+                  <th className="px-4 py-3 font-medium">Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                {hottestLeads.map((lead) => (
+                  <tr key={lead.id} className="border-b border-border last:border-0">
+                    <td className="px-4 py-3 font-medium text-foreground">{lead.name}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
+                          <div className="h-full rounded-full bg-primary" style={{ width: `${lead.score}%` }} />
+                        </div>
+                        <span className="text-xs text-foreground">{lead.score}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <StatusBadge value={lead.stage} tone={toneForStatus(lead.stage)} />
+                    </td>
+                    <td className="px-4 py-3 font-medium text-foreground">{lead.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div className="mt-6 space-y-3">
-            {data.deals.map((deal) => (
-              <div key={deal.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="font-medium text-white">{deal.title}</p>
-                    <p className="mt-1 text-sm text-slate-400">{deal.nextStep}</p>
-                    {deal.originModule ? <p className="mt-2 text-xs text-cyan-200/80">{deal.originModule} | {deal.originLabel}</p> : null}
-                  </div>
-                  <StatusBadge value={deal.stage} tone={toneForStatus(deal.stage)} />
-                </div>
-                <div className="mt-4 flex items-center justify-between text-sm text-slate-300">
-                  <span>{deal.value}</span>
-                  <span>{deal.probability}% probability</span>
+        </GlassBlock>
+
+        <GlassBlock className="p-6">
+          <h3 className="font-display text-xl font-semibold text-foreground">Actividad reciente</h3>
+          <div className="mt-4 space-y-3">
+            {data.events.slice(0, 6).map((event) => (
+              <div key={event.id} className="flex items-start gap-3 border-b border-border py-2 last:border-0">
+                <div className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${activityToneMap[event.type] ?? "bg-muted-foreground"}`} />
+                <div className="min-w-0">
+                  <p className="text-sm text-foreground">{event.title}</p>
+                  <p className="mt-0.5 text-[10px] text-muted-foreground">{event.time}</p>
                 </div>
               </div>
             ))}
           </div>
         </GlassBlock>
-
-        <GlassBlock className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Unified timeline preview</p>
-              <h2 className="mt-2 font-display text-2xl font-semibold text-white">Prospector AI activity now lands in the same account timeline</h2>
-            </div>
-            <Button variant="outline" className="rounded-full border-white/10 bg-transparent text-slate-300 hover:bg-white/[0.04]">View contacts</Button>
-          </div>
-          {timelineContactId ? <div className="mt-6"><TimelineFeed contactId={timelineContactId} compact /></div> : null}
-        </GlassBlock>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -1183,21 +1267,57 @@ export function CampaignsPage() {
   const { activeWorkspaceId } = useSession();
   const data = getWorkspaceData(activeWorkspaceId);
   const prospectorBridge = useMemo(() => getProspectorBridge(data), [data]);
+  const communityBridge = useMemo(() => getCommunityBridge(activeWorkspaceId), [activeWorkspaceId]);
 
   return (
     <>
       <PageHeader
         eyebrow="Campaigns"
         title="Launch assets, audiences and results from one system"
-        description="Campaigns now show how Creative Studio, Acquisition and opportunity movement reinforce each other inside the same commercial environment."
+        description="Campaigns now show how Creative Studio, Acquisition, Community and opportunity movement reinforce each other inside the same commercial environment."
         icon={ChartColumnIncreasing}
       />
-      <div className="grid gap-4 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard label="Prospector-linked campaigns" value={`${prospectorBridge.linkedCampaigns.length}`} delta="+1 strategic motion live" icon={ScanSearch} />
         <MetricCard label="Creative proofs attached" value={`${prospectorBridge.linkedCreativeProjects.length}`} delta="Pitch kits ready to launch" icon={Sparkles} />
         <MetricCard label="Influenced sourced deals" value={`${prospectorBridge.sourcedDeals.length}`} delta="+2 in active review" icon={BriefcaseBusiness} />
         <MetricCard label="Campaign-ready accounts" value={`${prospectorBridge.campaignQueue.length}`} delta="Discovery already connected to outreach" icon={Target} />
+        <MetricCard label="Community plays" value={`${communityBridge.community.campaignPlays.length}`} delta="Invite, reminder and nurture motions" icon={Megaphone} />
+        <MetricCard label="Invite-ready members" value={`${communityBridge.community.members.filter((member) => member.status === "Invited").length}`} delta="Waiting for campaign activation" icon={Users} />
+        <MetricCard label="At-risk re-engagement" value={`${communityBridge.atRiskMembers.length}`} delta="Community can reopen the relationship" icon={Workflow} />
+        <MetricCard label="Event reminder audience" value={`${communityBridge.upcomingMemberEvents.reduce((total, event) => total + event.attendees, 0)}`} delta="Upcoming session attendance" icon={CalendarClock} />
       </div>
+      <GlassBlock className="p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Community to Campaigns</p>
+            <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">Lightweight campaign plays now bridge member activation, reminders and re-engagement</h2>
+          </div>
+          <Button asChild variant="outline" className="rounded-full">
+            <Link to="/app/community/members">Open Community Members</Link>
+          </Button>
+        </div>
+        <div className="mt-5 grid gap-4 xl:grid-cols-2">
+          {communityBridge.community.campaignPlays.map((play) => (
+            <div key={play.id} className="rounded-[20px] border border-border bg-muted/40 p-5">
+              <div className="flex items-center justify-between gap-3">
+                <StatusBadge value={play.type} tone={play.type === "Re-engagement" ? "warning" : "info"} />
+                <span className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">{play.audience}</span>
+              </div>
+              <h3 className="mt-4 font-display text-xl font-semibold text-foreground">{play.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{play.detail}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Button asChild variant="outline" className="h-9 rounded-xl px-4 text-xs">
+                  <Link to={play.to}>{play.ctaLabel}</Link>
+                </Button>
+                <Button className="h-9 rounded-xl px-4 text-xs" onClick={() => toast.success(`${play.type} prepared in the frontend demo.`)}>
+                  Launch mock
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </GlassBlock>
       <div className="grid gap-4 xl:grid-cols-3">
         {data.campaigns.map((campaign) => (
           <GlassBlock key={campaign.id} className="p-6">
@@ -1216,6 +1336,7 @@ export function CampaignsPage() {
               {campaign.assets.map((asset) => (
                 <StatusBadge key={asset} value={asset} />
               ))}
+              {communityBridge.community.campaignPlays.some((play) => play.campaignId === campaign.id) ? <StatusBadge value="Community-connected" tone="success" /> : null}
             </div>
             <Button asChild variant="outline" className="mt-6 w-full rounded-full border-white/10 bg-transparent text-slate-300 hover:bg-white/[0.04]">
               <Link to={`/app/campaigns/${campaign.id}`}>Open campaign detail</Link>
@@ -1299,6 +1420,7 @@ export function ContactsPage() {
   const { contactId } = useParams();
   const { activeWorkspaceId } = useSession();
   const data = getWorkspaceData(activeWorkspaceId);
+  const communityBridge = useMemo(() => getCommunityBridge(activeWorkspaceId), [activeWorkspaceId]);
   const defaultContactId = data.contacts[0]?.id ?? null;
   const [selectedContactId, setSelectedContactId] = useState<string | null>(contactId ?? defaultContactId);
   useEffect(() => {
@@ -1315,7 +1437,7 @@ export function ContactsPage() {
       <PageHeader
         eyebrow="Contacts"
         title="Commercial memory anchored in one contact profile"
-        description="This screen is now the clearest expression of the Ventra backbone: one record consolidating source, pipeline, conversation, Voice AI and campaign context."
+        description="This screen is now the clearest expression of the Ventra backbone: one record consolidating source, pipeline, conversation, Voice AI, campaign context and community activity."
         icon={Users}
       />
       <div className="grid gap-6 xl:grid-cols-[1.02fr_1.18fr]">
@@ -1328,6 +1450,7 @@ export function ContactsPage() {
                   <TableHead>Origin</TableHead>
                   <TableHead>Channel</TableHead>
                   <TableHead>Health</TableHead>
+                  <TableHead>Community</TableHead>
                   <TableHead>Owner</TableHead>
                   <TableHead>Value</TableHead>
                 </TableRow>
@@ -1349,6 +1472,19 @@ export function ContactsPage() {
                     </TableCell>
                     <TableCell className="text-slate-300">{item.channel}</TableCell>
                     <TableCell><StatusBadge value={item.health} tone={toneForStatus(item.health)} /></TableCell>
+                    <TableCell>
+                      {communityBridge.membersByContactId.get(item.id) ? (
+                        <div className="space-y-2">
+                          <StatusBadge value="Community member" tone="success" />
+                          <p className="text-xs text-slate-500">{communityBridge.membersByContactId.get(item.id)?.role} · {communityBridge.membersByContactId.get(item.id)?.activityLevel} activity</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <StatusBadge value="Not linked" tone="warning" />
+                          <p className="text-xs text-slate-500">Ready for invite or mapping from Community.</p>
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell className="text-slate-300">{item.owner}</TableCell>
                     <TableCell className="font-medium text-white">{item.value}</TableCell>
                   </TableRow>
@@ -1386,20 +1522,25 @@ export function AnalyticsPage() {
   const { activeWorkspaceId } = useSession();
   const data = getWorkspaceData(activeWorkspaceId);
   const prospectorBridge = useMemo(() => getProspectorBridge(data), [data]);
+  const communityBridge = useMemo(() => getCommunityBridge(activeWorkspaceId), [activeWorkspaceId]);
 
   return (
     <>
       <PageHeader
         eyebrow="Analytics"
         title="Executive visibility without losing operational meaning"
-        description="Analytics now reads more clearly as a commercial scoreboard fed by the same contact-driven operating system, including Prospector AI discovery and cross-module activation."
+        description="Analytics now reads as a commercial scoreboard fed by the same contact-driven operating system, including Prospector AI discovery, Community engagement and cross-module activation."
         icon={Activity}
       />
-      <div className="grid gap-4 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard label="Prospects discovered" value={`${prospectorBridge.prospector.prospects.length}`} delta="+27 across the last 6 weeks" icon={ScanSearch} />
         <MetricCard label="Prospect to CRM" value={`${Math.round((prospectorBridge.crmReady.length / Math.max(prospectorBridge.prospector.prospects.length, 1)) * 100)}%`} delta={`${prospectorBridge.crmReady.length} accounts now in Contacts`} icon={Users} />
         <MetricCard label="Prospect to opportunity" value={`${prospectorBridge.opportunitiesReady.length}`} delta="Partner and strategic motions live" icon={BriefcaseBusiness} />
         <MetricCard label="Outreach activated" value={`${prospectorBridge.conversationQueue.length + prospectorBridge.voiceQueue.length + prospectorBridge.campaignQueue.length}`} delta="Conversations, Voice AI and Campaigns connected" icon={Workflow} />
+        <MetricCard label="Total members" value={`${communityBridge.community.summary.totalMembers}`} delta={`${communityBridge.crmLinkedMembers.length} tied to Contacts`} icon={Users} />
+        <MetricCard label="Engagement rate" value={communityBridge.community.analytics.engagementRate} delta={`${communityBridge.community.summary.activeMembers} active members`} icon={Sparkles} />
+        <MetricCard label="Posts this week" value={`${communityBridge.community.summary.postsThisWeek}`} delta={communityBridge.community.analytics.memberGrowth} icon={MessageSquareMore} />
+        <MetricCard label="Event attendance" value={communityBridge.community.analytics.eventAttendance} delta={`${communityBridge.upcomingMemberEvents.length} sessions still influencing pipeline`} icon={CalendarClock} />
       </div>
       <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
         <GlassBlock className="p-6">
@@ -1459,8 +1600,76 @@ export function AnalyticsPage() {
                 "Prospector AI is now the fastest net-new path into pipeline because Contacts, Campaigns and outreach are already aligned.",
                 "Voice AI performs best when it receives a prospecting audit, not just a cold phone target.",
                 "Creative Studio increases prospect conversion when it is used to generate pitches and proposal proof for strategic accounts.",
+                "Community adds a retention layer where campaigns, sessions and member activity can be measured next to commercial outcomes.",
               ].map((item) => (
                 <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-300">{item}</div>
+              ))}
+            </div>
+          </GlassBlock>
+        </div>
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
+        <GlassBlock className="p-6">
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-primary">Community pulse</p>
+              <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">Member growth, activity and content now read inside Analytics</h2>
+            </div>
+            <StatusBadge value={communityBridge.community.analytics.memberGrowth} tone="success" />
+          </div>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={communityBridge.community.analytics.growthSeries}>
+                <defs>
+                  <linearGradient id="communityMembersGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="#14b8a6" stopOpacity={0.28} />
+                    <stop offset="100%" stopColor="#14b8a6" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="communityPostsGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.22} />
+                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid stroke="rgba(15,23,42,0.08)" vertical={false} />
+                <XAxis dataKey="label" stroke="#94a3b8" tickLine={false} axisLine={false} />
+                <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+                <Tooltip cursor={{ stroke: "rgba(15,23,42,0.08)" }} contentStyle={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.08)", borderRadius: 16 }} />
+                <Area type="monotone" dataKey="members" stroke="#14b8a6" fill="url(#communityMembersGradient)" strokeWidth={2} />
+                <Area type="monotone" dataKey="posts" stroke="#3b82f6" fill="url(#communityPostsGradient)" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </GlassBlock>
+
+        <div className="space-y-6">
+          <GlassBlock className="p-6">
+            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Top spaces and categories</p>
+            <div className="mt-4 space-y-3">
+              {communityBridge.community.analytics.topSpaces.map((space) => (
+                <div key={space.id} className="rounded-2xl border border-border bg-muted/40 p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-medium text-foreground">{space.name}</p>
+                    <StatusBadge value={space.engagement} tone="success" />
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">{space.members} members · {space.activityDelta}</p>
+                </div>
+              ))}
+            </div>
+          </GlassBlock>
+
+          <GlassBlock className="p-6">
+            <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">High-engagement members</p>
+            <div className="mt-4 space-y-3">
+              {communityBridge.community.analytics.highEngagementMembers.map((member) => (
+                <div key={member.memberId} className="rounded-2xl border border-border bg-muted/40 p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-medium text-foreground">{member.name}</p>
+                    <StatusBadge value={`${member.score}`} tone="success" />
+                  </div>
+                  <p className="mt-2 text-sm text-foreground">{member.label}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{member.detail}</p>
+                </div>
               ))}
             </div>
           </GlassBlock>
@@ -1514,13 +1723,28 @@ export function WorkspacesPage() {
       <div className="grid gap-4 md:grid-cols-2">
         {workspaces.map((workspace) => (
           <GlassBlock key={workspace.id} className="p-6">
-            <StatusBadge value={workspace.plan} tone={workspace.plan === "Scale" ? "success" : "info"} />
-            <h2 className="mt-4 font-display text-2xl font-semibold text-white">{workspace.name}</h2>
-            <p className="mt-2 text-sm text-slate-400">{workspace.industry} | {workspace.region}</p>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <MiniStat label="Members" value={`${workspace.members}`} />
-              <MiniStat label="Contacts" value={`${workspace.activeContacts}`} />
-            </div>
+            {(() => {
+              const community = getCommunityWorkspaceData(workspace.id);
+
+              return (
+                <>
+                  <StatusBadge value={workspace.plan} tone={workspace.plan === "Scale" ? "success" : "info"} />
+                  <h2 className="mt-4 font-display text-2xl font-semibold text-white">{workspace.name}</h2>
+                  <p className="mt-2 text-sm text-slate-400">{workspace.industry} | {workspace.region}</p>
+                  <div className="mt-6 grid gap-3 sm:grid-cols-4">
+                    <MiniStat label="Team" value={`${workspace.members}`} />
+                    <MiniStat label="Contacts" value={`${workspace.activeContacts}`} />
+                    <MiniStat label="Community" value={`${community.summary.totalMembers}`} detail={community.profile.name} />
+                    <MiniStat label="Engagement" value={community.analytics.engagementRate} detail={community.analytics.memberGrowth} />
+                  </div>
+                  <div className="mt-5 rounded-[20px] border border-white/10 bg-white/[0.03] p-4">
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Community posture</p>
+                    <p className="mt-3 font-medium text-white">{community.profile.tagline}</p>
+                    <p className="mt-2 text-sm text-slate-400">{community.analytics.syncCoverage}</p>
+                  </div>
+                </>
+              );
+            })()}
           </GlassBlock>
         ))}
       </div>
@@ -1549,7 +1773,7 @@ export function SettingsPage() {
         <GlassBlock className="p-6">
           <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Integrations and rollout</p>
           <div className="mt-4 space-y-3">
-            {["Meta Ads source sync", "WhatsApp channel bridge", "Voice AI routing", "Creative asset publishing"].map((item) => (
+            {["Meta Ads source sync", "WhatsApp channel bridge", "Voice AI routing", "Creative asset publishing", "Community member hub"].map((item) => (
               <div key={item} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-slate-300">
                 {item}
                 <StatusBadge value="Configured" tone="success" />

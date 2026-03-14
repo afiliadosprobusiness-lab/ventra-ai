@@ -8,20 +8,16 @@ type VentraLogoProps = {
 export function VentraLogo({ compact = false, className }: VentraLogoProps) {
   return (
     <div className={cn("inline-flex items-center gap-3", className)}>
-      <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-white/[0.05] shadow-[0_0_45px_rgba(59,130,246,0.22)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_left_top,rgba(56,189,248,0.45),transparent_45%),radial-gradient(circle_at_right,rgba(139,92,246,0.42),transparent_52%),radial-gradient(circle_at_top,rgba(251,191,36,0.32),transparent_36%)]" />
-        <div className="relative flex items-end gap-1">
-          <span className="h-3 w-1.5 rounded-full bg-sky-300" />
-          <span className="h-5 w-1.5 rounded-full bg-blue-300" />
-          <span className="h-7 w-1.5 rounded-full bg-violet-300" />
+      <div className={cn("inline-flex items-center gap-3 rounded-xl border border-[#0f766e]/35 bg-[#07111b] px-3 py-2", compact && "px-2.5")}>
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#0f766e]/35 bg-[#0d1b27]">
+          <div className="flex items-end gap-1">
+            <span className="h-2.5 w-1 rounded-full bg-[#2dd4bf]" />
+            <span className="h-4 w-1 rounded-full bg-[#14b8a6]" />
+            <span className="h-5.5 w-1 rounded-full bg-[#0f766e]" />
+          </div>
         </div>
+        {!compact ? <span className="font-display text-lg font-semibold tracking-tight text-white">Ventra</span> : null}
       </div>
-      {!compact ? (
-        <div className="flex flex-col">
-          <span className="font-display text-lg font-bold tracking-tight text-white">Ventra</span>
-          <span className="text-[10px] uppercase tracking-[0.24em] text-slate-400">Revenue OS</span>
-        </div>
-      ) : null}
     </div>
   );
 }

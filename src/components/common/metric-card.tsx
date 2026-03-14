@@ -21,18 +21,23 @@ export function MetricCard({
   const TrendIcon = trend === "down" ? ArrowDownRight : trend === "flat" ? ArrowRight : ArrowUpRight;
 
   return (
-    <article className={cn("ventra-card relative overflow-hidden p-5", className)}>
-      <div className="relative flex items-start justify-between gap-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-[16px] border border-white/10 bg-cyan-300/10">
-          <Icon className="h-5 w-5 text-sky-200" />
+    <article className={cn("ventra-card p-5", className)}>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+          <Icon className="h-4 w-4" />
         </div>
-        <div className="inline-flex items-center gap-1 text-xs text-slate-300">
+        <div
+          className={cn(
+            "inline-flex items-center gap-1 text-xs font-medium",
+            trend === "down" ? "text-destructive" : "text-primary",
+          )}
+        >
           <TrendIcon className="h-3.5 w-3.5" />
           {delta}
         </div>
       </div>
-      <p className="mt-5 font-display text-[2rem] font-semibold tracking-tight text-white">{value}</p>
-      <p className="mt-1 text-sm text-slate-400">{label}</p>
+      <p className="mt-5 font-display text-[2rem] font-bold tracking-tight text-foreground">{value}</p>
+      <p className="mt-1 text-sm text-muted-foreground">{label}</p>
     </article>
   );
 }

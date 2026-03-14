@@ -184,6 +184,119 @@
     z-index: -1;
     filter: blur(24px);
   }
+
+  .ventra-private-ui {
+    --background: 150 10% 97%;
+    --foreground: 220 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 10%;
+    --primary: 160 84% 29%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 150 15% 93%;
+    --secondary-foreground: 220 25% 10%;
+    --muted: 150 10% 94%;
+    --muted-foreground: 220 10% 46%;
+    --accent: 160 60% 94%;
+    --accent-foreground: 160 84% 22%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 150 10% 90%;
+    --input: 150 10% 90%;
+    --ring: 160 84% 29%;
+    --success: 160 84% 29%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 210 80% 52%;
+    --info-foreground: 0 0% 100%;
+    --sidebar-background: 220 25% 7%;
+    --sidebar-foreground: 220 10% 70%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 220 20% 14%;
+    --sidebar-ring: 160 84% 39%;
+    --radius: 0.875rem;
+    color: hsl(var(--foreground));
+    background: hsl(var(--background));
+  }
+
+  .ventra-private-ui * {
+    border-color: hsl(var(--border));
+  }
+
+  .ventra-private-ui .ventra-card,
+  .ventra-private-ui .ventra-panel,
+  .ventra-private-ui .ventra-shell {
+    border-radius: 1rem;
+    border-color: hsl(var(--border));
+    background: hsl(var(--card));
+    box-shadow: 0 4px 16px hsl(220 25% 10% / 0.06);
+    backdrop-filter: none;
+    background-image: none;
+  }
+
+  .ventra-private-ui .ventra-grid,
+  .ventra-private-ui .ventra-glow::before {
+    background-image: none;
+    box-shadow: none;
+    display: none;
+  }
+
+  .ventra-private-ui .text-white,
+  .ventra-private-ui .text-slate-300,
+  .ventra-private-ui .text-slate-200 {
+    color: hsl(var(--foreground));
+  }
+
+  .ventra-private-ui .text-slate-400,
+  .ventra-private-ui .text-slate-500 {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .ventra-private-ui [class*="border-white/10"],
+  .ventra-private-ui [class*="border-cyan-300/15"],
+  .ventra-private-ui [class*="border-cyan-300/20"],
+  .ventra-private-ui [class*="border-cyan-300/25"] {
+    border-color: hsl(var(--border));
+  }
+
+  .ventra-private-ui [class*="bg-[#081425]"],
+  .ventra-private-ui [class*="bg-[#0b1626]"],
+  .ventra-private-ui [class*="bg-[#0d1b31]"],
+  .ventra-private-ui [class*="bg-white/[0.03]"],
+  .ventra-private-ui [class*="bg-white/[0.04]"] {
+    background: hsl(var(--card));
+  }
+
+  .ventra-private-ui [class*="bg-cyan-300/10"] {
+    background: hsl(var(--accent));
+  }
+
+  .ventra-private-ui [class*="text-cyan-200/80"],
+  .ventra-private-ui [class*="text-cyan-100"],
+  .ventra-private-ui [class*="text-sky-200"] {
+    color: hsl(var(--primary));
+  }
+
+  .ventra-private-ui [class*="shadow-[0_22px_54px_-34px_rgba(2,12,38,0.72)]"],
+  .ventra-private-ui [class*="shadow-[0_24px_60px_-36px_rgba(2,12,38,0.82)]"] {
+    box-shadow: 0 4px 16px hsl(220 25% 10% / 0.06);
+  }
+
+  .ventra-private-ui .recharts-cartesian-grid line {
+    stroke: hsl(var(--border));
+  }
+
+  .ventra-private-ui .recharts-tooltip-wrapper .recharts-default-tooltip {
+    border-radius: 0.875rem;
+    border-color: hsl(var(--border)) !important;
+    background: hsl(var(--card)) !important;
+    box-shadow: 0 4px 16px hsl(220 25% 10% / 0.08);
+  }
 }
 
 @layer utilities {
