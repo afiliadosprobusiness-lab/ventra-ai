@@ -46,6 +46,7 @@ Eso significa:
 - los datasets son mock y viven en frontend
 - no existe backend real detras de auth, contacts, pipeline o analytics
 - no existe integracion productiva con CRM, WhatsApp, Voice AI o billing
+- el acceso de prueba se resuelve con almacenamiento local en el navegador
 
 ## Base actual del producto
 
@@ -67,7 +68,7 @@ La app hoy comunica:
 
 La app no comunica:
 - persistencia real
-- permisos reales
+- permisos reales de backend
 - detalle profundo por entidad
 - automatizaciones o llamadas ejecutadas en produccion
 

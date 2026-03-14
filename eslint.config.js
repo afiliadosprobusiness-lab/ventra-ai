@@ -24,7 +24,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/components/ui/**/*.{ts,tsx}", "src/lib/session.tsx"],
+    files: ["src/components/ui/**/*.{ts,tsx}", "src/lib/session.tsx", "src/lib/demo-auth.tsx"],
     rules: {
       "react-refresh/only-export-components": "off",
     },

@@ -19,7 +19,7 @@ Incluye:
 
 No incluye:
 - backend real
-- persistencia productiva
+- persistencia productiva de servidor
 - integraciones externas reales
 - multi-tenant funcional a nivel servidor
 - workflows profundos por entidad
@@ -33,6 +33,7 @@ Reglas:
 - no prometer integraciones reales con CRM, WhatsApp, telefonia o billing
 - no documentar automatizaciones como si ejecutaran procesos productivos
 - usar la base Lovable como source of truth de estructura y experiencia
+- el acceso demo usa solo `localStorage` del navegador
 
 ## 3. Stack vigente
 
@@ -65,6 +66,7 @@ No introducir otro framework base.
 - `src/components/ui/`: primitives de shadcn/ui
 - `src/layouts/`: layout principal autenticado
 - `src/lib/mock-data.ts`: datasets mock unificados
+- `src/lib/demo-auth.tsx`: sesion mock, usuario demo y registro local
 
 ## 5. Rutas principales
 
@@ -154,6 +156,6 @@ El repo actual representa:
 
 El repo no representa:
 - producto listo para produccion backend
-- autorizacion real
-- estado persistente entre sesiones
+- autorizacion real de servidor
+- seguridad real de credenciales
 - flujos operativos profundos por entidad

@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { VentraLogo } from "@/components/brand/ventra-logo";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -67,11 +68,8 @@ export default function LandingPage() {
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b">
         <div className="container mx-auto flex items-center justify-between h-16 px-4">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg gradient-ventra flex items-center justify-center">
-              <span className="text-sm font-bold text-primary-foreground">V</span>
-            </div>
-            <span className="font-bold text-xl tracking-tight">Ventra</span>
+          <Link to="/" className="inline-flex">
+            <VentraLogo markClassName="h-10 w-10" wordmarkClassName="text-2xl" />
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <a href="#modules" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Módulos</a>
@@ -344,11 +342,8 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="h-7 w-7 rounded-md gradient-ventra flex items-center justify-center">
-                  <span className="text-xs font-bold text-primary-foreground">V</span>
-                </div>
-                <span className="font-bold">Ventra</span>
+              <div className="mb-4">
+                <VentraLogo markClassName="h-9 w-9" wordmarkClassName="text-xl" />
               </div>
               <p className="text-sm text-muted-foreground">Revenue OS para equipos que quieren cerrar más.</p>
             </div>

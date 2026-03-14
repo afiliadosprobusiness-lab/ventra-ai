@@ -57,8 +57,8 @@
 ## Data stance
 
 - core demo data lives in `src/lib/mock-data.ts`
-- no auth/session persistence from the old frontend remains
-- no route guards remain in the current base
+- frontend auth now lives in `src/lib/demo-auth.tsx`
+- session is stored locally for demo use only
 - all app modules are present as static or mock-driven views
 
 ## Visual stance
